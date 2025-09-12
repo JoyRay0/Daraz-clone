@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bottom_nav_icon_text_selected">#FF5722</color>
+    <color name="bottom_nav_text_unselected">#988080</color>
+</resources>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="#F6F3F3"
+    android:weightSum="4">
+
+    <!-- home -->
+    <LinearLayout
+        android:id="@+id/ll_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:tooltipText="Home"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_badge1"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:text="0"
+            android:textSize="8sp"
+            android:textColor="#fff"
+            android:background="@drawable/sh_badge_bg"
+            android:gravity="center"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="15dp"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home_outline"
+            android:layout_gravity="center"
+            android:layout_marginTop="-7dp"
+            />
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="13sp"
+            android:textColor="#988080"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+    </LinearLayout>
+    <!-- home -->
+
+    <!-- message -->
+    <LinearLayout
+        android:id="@+id/ll_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:tooltipText="Messages"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_badge2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:text="0"
+            android:textSize="8sp"
+            android:textColor="#fff"
+            android:background="@drawable/sh_badge_bg"
+            android:gravity="center"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="14dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chat_outline"
+            android:layout_gravity="center"
+            android:layout_marginTop="-7dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:textSize="13sp"
+            android:textColor="#988080"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+    </LinearLayout>
+    <!-- message -->
+
+    <!-- Cart -->
+    <LinearLayout
+        android:id="@+id/ll_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:tooltipText="Cart"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_badge3"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:text="0"
+            android:textSize="8sp"
+            android:textColor="#fff"
+            android:background="@drawable/sh_badge_bg"
+            android:gravity="center"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="14dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cart_outline"
+            android:layout_gravity="center"
+            android:layout_marginTop="-7dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart"
+            android:textSize="13sp"
+            android:textColor="#988080"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+    <!-- cart -->
+
+    <!-- Account -->
+    <LinearLayout
+        android:id="@+id/ll_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:tooltipText="Account"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_badge4"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:text="0"
+            android:textSize="8sp"
+            android:textColor="#fff"
+            android:background="@drawable/sh_badge_bg"
+            android:gravity="center"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="14dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_account_outline"
+            android:layout_gravity="center"
+            android:layout_marginTop="-7dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account"
+            android:textSize="13sp"
+            android:textColor="#988080"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+    </LinearLayout>
+    <!-- Account -->
+
+
+
+
+</LinearLayout>
