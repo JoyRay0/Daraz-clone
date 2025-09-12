@@ -1,9 +1,7 @@
-package com.rk_sofwares.e_commerce.activity.activity
+package com.rk_sofwares.e_commerce.activity
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +9,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.core.graphics.toColorInt
-import androidx.core.view.isGone
-import androidx.core.view.marginTop
 import com.rk_sofwares.e_commerce.R
 
 class Act_home : AppCompatActivity() {
@@ -50,6 +46,7 @@ class Act_home : AppCompatActivity() {
     private lateinit var iv_up_down : AppCompatImageView
     private lateinit var fl_bottom_navigation : FrameLayout
     private lateinit var fl_tool_bar : FrameLayout
+    private lateinit var fl_container : FrameLayout
 
     //XML id's------------------------------------------------------------
 
@@ -88,11 +85,14 @@ class Act_home : AppCompatActivity() {
         iv_up_down = findViewById(R.id.iv_up_down);
         fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
         fl_tool_bar = findViewById(R.id.fl_tool_bar);
-
+        fl_container = findViewById(R.id.fl_container);
 
         //identity period---------------------------------------------------
 
         bottom_nav()
+
+        val fg = supportFragmentManager
+        fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
         // bottom and toolbar visibility
         iv_up_down.tag = "open"
@@ -157,7 +157,6 @@ class Act_home : AppCompatActivity() {
         val unselectedColor = "#988080".toColorInt()
         val itemBadge = "1"
 
-
         iv_home.setImageResource(R.drawable.ic_home_fill)
         tv_home.setTextColor(selectedColor)
         tv_badge1.text = itemBadge
@@ -186,7 +185,8 @@ class Act_home : AppCompatActivity() {
             tv_home.setTextColor(selectedColor)
             tv_badge1.visibility = View.INVISIBLE
 
-
+            val fg = supportFragmentManager
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
             iv_message.setImageResource(R.drawable.ic_chat_outline)
             tv_message.setTextColor(unselectedColor)
@@ -268,7 +268,6 @@ class Act_home : AppCompatActivity() {
 
 
         }
-
 
     }
 
