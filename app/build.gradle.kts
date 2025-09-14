@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.gson)
     implementation(libs.dotsindicator)
-    implementation("com.nex3z:notification-badge:1.0.5")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     val roomVersion = "2.6.1" // সর্বশেষ ভার্সন ব্যবহার করো
 

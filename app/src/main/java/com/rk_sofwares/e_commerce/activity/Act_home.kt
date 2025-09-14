@@ -35,17 +35,9 @@ class Act_home : AppCompatActivity() {
     private lateinit var tv_badge3 : AppCompatTextView
     private lateinit var tv_badge4 : AppCompatTextView
 
-    //toolbar
-    private lateinit var iv_scan : AppCompatImageView
-    private lateinit var cv_search : CardView
-    private lateinit var iv_camera : AppCompatImageView
-    private lateinit var tv_search_btn : AppCompatTextView
-    private lateinit var iv_upload : AppCompatImageView
-
     //main activity
     private lateinit var iv_up_down : AppCompatImageView
     private lateinit var fl_bottom_navigation : FrameLayout
-    private lateinit var fl_tool_bar : FrameLayout
     private lateinit var fl_container : FrameLayout
 
     //XML id's------------------------------------------------------------
@@ -75,24 +67,18 @@ class Act_home : AppCompatActivity() {
         tv_badge3 = findViewById(R.id.tv_badge3);
         tv_badge4 = findViewById(R.id.tv_badge4);
 
-
-        iv_scan = findViewById(R.id.iv_scan);
-        cv_search = findViewById(R.id.cv_search);
-        iv_camera = findViewById(R.id.iv_camera);
-        tv_search_btn = findViewById(R.id.tv_search_btn);
-        iv_upload = findViewById(R.id.iv_upload);
-
         iv_up_down = findViewById(R.id.iv_up_down);
         fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
-        fl_tool_bar = findViewById(R.id.fl_tool_bar);
         fl_container = findViewById(R.id.fl_container);
 
         //identity period---------------------------------------------------
 
-        bottom_nav()
+
 
         val fg = supportFragmentManager
-        fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+        fg.beginTransaction().add(R.id.fl_container, Fg_home()).commit()
+
+        bottom_nav()
 
         // bottom and toolbar visibility
         iv_up_down.tag = "open"
@@ -104,16 +90,9 @@ class Act_home : AppCompatActivity() {
             if (currentTag == "open"){
 
                 fl_bottom_navigation.visibility = View.GONE
-                fl_tool_bar.visibility = View.GONE
 
                 fl_bottom_navigation.animate()
                     .translationY(-fl_bottom_navigation.height.toFloat())
-                    .alpha(0f)
-                    .setDuration(300)
-                    .start()
-
-                fl_tool_bar.animate()
-                    .translationY(-fl_tool_bar.height.toFloat())
                     .alpha(0f)
                     .setDuration(300)
                     .start()
@@ -124,19 +103,12 @@ class Act_home : AppCompatActivity() {
             }else if (currentTag == "close"){
 
                 fl_bottom_navigation.visibility = View.VISIBLE
-                fl_tool_bar.visibility = View.VISIBLE
-
                 fl_bottom_navigation.animate()
                     .translationY(0f)
                     .alpha(1f)
                     .setDuration(300)
                     .start()
 
-                fl_tool_bar.animate()
-                    .translationY(0f)
-                    .alpha(1f)
-                    .setDuration(300)
-                    .start()
 
                 iv_up_down.setImageResource(R.drawable.ic_open_eye)
                 iv_up_down.tag = "open"
@@ -181,12 +153,13 @@ class Act_home : AppCompatActivity() {
 
         ll_home.setOnClickListener {
 
+            val fg = supportFragmentManager
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+
+
             iv_home.setImageResource(R.drawable.ic_home_fill)
             tv_home.setTextColor(selectedColor)
             tv_badge1.visibility = View.INVISIBLE
-
-            val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
             iv_message.setImageResource(R.drawable.ic_chat_outline)
             tv_message.setTextColor(unselectedColor)
@@ -222,6 +195,10 @@ class Act_home : AppCompatActivity() {
             tv_account.setTextColor(unselectedColor)
             tv_badge4.visibility = View.VISIBLE
 
+            val fg = supportFragmentManager
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+
+
         }
 
         ll_message.setOnClickListener {
@@ -244,6 +221,9 @@ class Act_home : AppCompatActivity() {
             tv_account.setTextColor(unselectedColor)
             tv_badge4.visibility = View.VISIBLE
 
+            val fg = supportFragmentManager
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+
 
         }
 
@@ -265,6 +245,10 @@ class Act_home : AppCompatActivity() {
             iv_cart.setImageResource(R.drawable.ic_cart_outline)
             tv_cart.setTextColor(unselectedColor)
             tv_badge3.visibility = View.VISIBLE
+
+            val fg = supportFragmentManager
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+
 
 
         }

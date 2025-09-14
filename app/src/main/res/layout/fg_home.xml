@@ -1,20 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.Fg_home"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <!-- toolbar -->
+    <FrameLayout
+        android:id="@+id/fl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fragment worked"
-        android:textSize="30sp"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        >
+        <include layout="@layout/lay_home_toolbar"/>
+
+    </FrameLayout>
+    <!-- toolbar -->
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_margin="10dp"
+
+                />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/dotsIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:dotsColor="#E6D1D1"
+                app:dotsSize="10dp"
+                app:dotsSpacing="5dp"
+                app:dotsStrokeColor="#10D3EB"
+                android:layout_margin="10dp"
+
+                />
 
 
+        </LinearLayout>
 
-</LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

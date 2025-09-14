@@ -36,10 +36,11 @@
             android:weightSum="4"
             >
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_searchBar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="search today for sale"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="#423B3B"
                 android:layout_marginStart="5dp"
