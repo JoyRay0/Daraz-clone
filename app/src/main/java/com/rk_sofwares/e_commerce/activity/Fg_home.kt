@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -18,6 +19,7 @@ import com.google.gson.Gson
 import com.rk_sofwares.e_commerce.Model.ItemModel
 import com.rk_sofwares.e_commerce.Model.ViewpagerModel
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.Uitily.Cache
 import com.rk_sofwares.e_commerce.adapter.ItemAdapter
 import com.rk_sofwares.e_commerce.adapter.ViewpagerAdapter
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -62,6 +64,11 @@ class Fg_home : Fragment() {
     private lateinit var viewPagerAdapter : ViewpagerAdapter
 
     private lateinit var dotsIndicator : WormDotsIndicator
+    private lateinit var fl_item_image_loading : FrameLayout
+    private lateinit var fl_vp_image_loading : FrameLayout
+
+    private lateinit var cache : Cache
+    private var isViewPagerVisible : Boolean = false
 
     //XML id's--------------------------------------------------------------
 
@@ -84,6 +91,8 @@ class Fg_home : Fragment() {
         tv_searchBar_text = view.findViewById(R.id.tv_searchBar_text);
         vp_image = view.findViewById(R.id.vp_image);
         dotsIndicator = view.findViewById(R.id.dotsIndicator)
+        fl_item_image_loading = view.findViewById(R.id.fl_item_image_loading)
+        fl_vp_image_loading = view.findViewById(R.id.fl_vp_image_loading)
 
         //identity period----------------------------------------------------
 
@@ -96,12 +105,21 @@ class Fg_home : Fragment() {
         dotsIndicator.attachTo(vp_image)
 
 
-        item_image()    // showing item images
+        cache = Cache(requireContext(), "Fg_home")
+
+
 
         changeSearchBarText()   //changing search bar text after 10 seconds
 
-        viewpager()
-        viewpager_infinite_loop()
+
+
+        dataFromCache()
+
+        if (isViewPagerVisible){
+
+            viewpager_infinite_loop()
+
+        }
 
         return view
     }//on create=================================================================
@@ -123,7 +141,9 @@ class Fg_home : Fragment() {
 
                 CoroutineScope(Dispatchers.Main).launch {
 
-                    Toast.makeText(requireContext(), "No internet", Toast.LENGTH_SHORT).show()
+
+                    rv_item.visibility = View.GONE
+                    fl_item_image_loading.visibility = View.GONE
 
                 }
 
@@ -152,9 +172,14 @@ class Fg_home : Fragment() {
 
                             }
 
+                            cache.setCache("item_image", gson.toJson(itemImage))
+
                             CoroutineScope(Dispatchers.Main).launch {
 
                                 itemAdapter.notifyDataSetChanged()
+
+                                rv_item.visibility = View.VISIBLE
+                                fl_item_image_loading.visibility = View.GONE
 
                             }
 
@@ -216,8 +241,10 @@ class Fg_home : Fragment() {
 
                 CoroutineScope(Dispatchers.Main).launch {
 
-                    Toast.makeText(requireContext(), "No internet", Toast.LENGTH_SHORT).show()
-
+                    vp_image.visibility = View.GONE
+                    fl_vp_image_loading.visibility = View.GONE
+                    dotsIndicator.visibility = View.GONE
+                    isViewPagerVisible = false
                 }
 
             }
@@ -244,8 +271,14 @@ class Fg_home : Fragment() {
 
                             }
 
+                            cache.setCache("vp_image", gson.toJson(vp_img))
+
                             CoroutineScope(Dispatchers.Main).launch {
 
+                                isViewPagerVisible = true
+                                vp_image.visibility = View.VISIBLE
+                                dotsIndicator.visibility = View.VISIBLE
+                                fl_vp_image_loading.visibility = View.GONE
                                 viewPagerAdapter.notifyDataSetChanged()
 
                             }
@@ -280,6 +313,78 @@ class Fg_home : Fragment() {
 
             }
 
+        }
+
+    }
+
+    //data from cache---------------------------------------------------
+    private fun dataFromCache(){
+
+        val cacheData = cache.getCache("item_image", 1)
+        val vpCacheImage = cache.getCache("vp_image", 1)
+
+        if (!cacheData.isNullOrEmpty()){
+
+            val gson = Gson()
+
+            val itemImage = gson.fromJson(cacheData, ItemModel::class.java)
+
+            item_list.clear()
+
+            for (item in itemImage.images){
+
+               // Log.i("cache", item.toString())
+
+                item_map = HashMap()
+                item_map["image"] = item.image.toString()
+                item_map["text"] = item.text.toString()
+                item_list.add(item_map)
+
+            }
+
+            rv_item.visibility = View.VISIBLE
+            fl_item_image_loading.visibility = View.GONE
+            itemAdapter.notifyDataSetChanged()
+
+        }else{
+
+            rv_item.visibility = View.GONE
+            fl_item_image_loading.visibility = View.VISIBLE
+            item_image()    // showing item images
+        }
+
+        if (!vpCacheImage.isNullOrEmpty()){
+
+            val gson = Gson()
+
+            val vp = gson.fromJson(vpCacheImage, ViewpagerModel::class.java)
+
+            vp_list.clear()
+
+            for (i in vp.images){
+
+                //Log.i("cache", i.toString())
+
+                vp_map = HashMap()
+                vp_map["image"] = i.vp_image.toString()
+                vp_list.add(vp_map)
+
+            }
+
+            isViewPagerVisible = true
+            vp_image.visibility = View.VISIBLE
+            dotsIndicator.visibility = View.VISIBLE
+            fl_vp_image_loading.visibility = View.GONE
+            itemAdapter.notifyDataSetChanged()
+
+
+        }else{
+
+            isViewPagerVisible = false
+            vp_image.visibility = View.GONE
+            dotsIndicator.visibility = View.GONE
+            fl_vp_image_loading.visibility = View.VISIBLE
+            viewpager()
         }
 
     }

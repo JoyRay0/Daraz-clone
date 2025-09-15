@@ -35,6 +35,17 @@
             android:orientation="vertical"
             >
 
+            <FrameLayout
+                android:id="@+id/fl_item_image_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                >
+
+                <include layout="@layout/lay_item_images_loading"/>
+
+            </FrameLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_item"
                 android:layout_width="match_parent"
@@ -42,13 +53,25 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_margin="10dp"
-
+                android:visibility="gone"
                 />
+
+            <FrameLayout
+                android:id="@+id/fl_vp_image_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                >
+
+                <include layout="@layout/lay_vp_image_loading"/>
+
+            </FrameLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:visibility="gone"
                 />
 
             <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -61,7 +84,7 @@
                 app:dotsSpacing="5dp"
                 app:dotsStrokeColor="#10D3EB"
                 android:layout_margin="10dp"
-
+                android:visibility="gone"
                 />
 
 
