@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_flash_sale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flash Sale"
+        android:textSize="14sp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:layout_margin="7dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_shop_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop More"
+        android:textSize="9sp"
+        android:textColor="#FF5722"
+        android:textStyle="normal"
+        android:fontFamily="@font/roboto"
+        android:layout_margin="7dp"
+        android:gravity="center"
+        android:drawableEnd="@drawable/ic_right"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <!-- sale item images -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/tv_flash_sale"
+        android:weightSum="3"
+        >
+
+        <!-- image 1  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_image1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_image1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:background="#EBE2E2"
+                        android:src="@drawable/loading_daraz_img"
+                        android:scaleType="fitXY"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_item_left1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Only 0 left"
+                        android:textSize="13sp"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:background="#7E3B3232"
+                        />
+
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sh_image_item_price"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_price1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#ED4F86"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_alignParentStart="true"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_discount1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-0%"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:background="@drawable/sh_item_price_discount"
+                    android:layout_alignParentEnd="true"
+                    android:padding="3dp"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- image 2  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_image2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:background="#EBE2E2"
+                        android:src="@drawable/loading_daraz_img"
+                        android:scaleType="fitXY"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_item_left2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Only 0 left"
+                        android:textSize="13sp"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:background="#7E3B3232"
+                        />
+
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sh_image_item_price"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_price2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#ED4F86"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_alignParentStart="true"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_discount2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-0%"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:background="@drawable/sh_item_price_discount"
+                    android:layout_alignParentEnd="true"
+                    android:padding="3dp"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- image 3  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_image3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_image3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:background="#EBE2E2"
+                        android:src="@drawable/loading_daraz_img"
+                        android:scaleType="fitXY"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_item_left3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Only 0 left"
+                        android:textSize="13sp"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:background="#7E3B3232"
+                        />
+
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sh_image_item_price"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_price3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#ED4F86"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_alignParentStart="true"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_image_item_discount3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-0%"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:background="@drawable/sh_item_price_discount"
+                    android:layout_alignParentEnd="true"
+                    android:padding="3dp"
+
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -134,8 +134,8 @@ switch ($resource) {
 
             [
                 'id' => '1',
-                'oth_image' => '',
-                'text' => ''
+                'oth_image' => 'https://blog.daraz.com.bd/wp-content/uploads/2020/08/New-User-Voucher-of-Daraz.jpg',
+                'text' => 'Coupon image'
             ],
             [
                 'id' => '2',
@@ -146,6 +146,35 @@ switch ($resource) {
                 'id' => '3',
                 'oth_image' => '',
                 'text' => ''
+            ]
+
+        ];
+        break;
+
+    //flash sale images----------------------------------------------------------------------
+    case 'flash_sale_images':
+        $images = [
+
+            [
+                'id' => '1',
+                'sale_image' => 'https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTExL3JtMzYyLTAxYS1tb2NrdXAuanBn.jpg',
+                'text' => 'Only 10 left',
+                'price' => '৳200',
+                'discount' => '-50%'
+            ],
+            [
+                'id' => '2',
+                'sale_image' => 'https://plus.unsplash.com/premium_photo-1664392147011-2a720f214e01?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D',
+                'text' => '300 Sold',
+                'price' => '৳500',
+                'discount' => '-30%'
+            ],
+            [
+                'id' => '3',
+                'sale_image' => 'https://off.com.ph/_next/image?url=https%3A%2F%2Fedge.sitecorecloud.io%2Fscjohnsonana080-dart-production-40df%2Fmedia%2Fproject%2Fdart%2Foff%2Fphilippines%2Fhomepage%2Fcategory-images%2Foff_ph_4x3_720x540_category_card-overtime.png%3Fh%3D540%26iar%3D0%26w%3D720&w=3840&q=75',
+                'text' => 'Only 2 left',
+                'price' => '৳100',
+                'discount' => '-30%'
             ]
 
         ];

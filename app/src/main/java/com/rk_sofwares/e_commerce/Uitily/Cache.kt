@@ -6,8 +6,8 @@ import androidx.core.content.edit
 
 class Cache {
 
-    private var context: Context ?= null
-    private var pref : String ?= ""
+    private var context: Context
+    private var pref : String
 
 
     constructor(context: Context, pref: String){

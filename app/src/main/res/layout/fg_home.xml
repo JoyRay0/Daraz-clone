@@ -52,9 +52,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_margin="10dp"
                 android:visibility="gone"
                 />
+
+            <FrameLayout
+                android:id="@+id/fl_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:visibility="visible"
+                >
+
+                <include layout="@layout/lay_new_user_coupon"/>
+
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fl_vp_image_loading"
@@ -83,8 +93,27 @@
                 app:dotsSize="10dp"
                 app:dotsSpacing="5dp"
                 app:dotsStrokeColor="#10D3EB"
-                android:layout_margin="10dp"
+                android:layout_marginTop="-30dp"
                 android:visibility="gone"
+                />
+
+            <FrameLayout
+                android:id="@+id/fl_flash_sale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="15dp"
+                >
+
+                <include layout="@layout/lay_flash_sale_img"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A9D1B8B8"
+                android:layout_marginTop="10dp"
                 />
 
 

@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
+    android:layout_margin="5dp"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -26,10 +26,11 @@
         android:layout_height="wrap_content"
         android:text="item"
         android:textSize="10sp"
+        android:fontFamily="@font/roboto"
         android:textColor="#000"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_margin="5dp"
+
         />
 
 </LinearLayout>
