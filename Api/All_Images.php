@@ -112,18 +112,58 @@ switch ($resource) {
 
             [
                 'id' => '1',
-                'cate_image' => '',
-                'text' => ''
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/1628/1628388.png',
+                'text' => 'For you'
             ],
             [
                 'id' => '2',
-                'cate_image' => '',
-                'text' => ''
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/3534/3534312.png',
+                'text' => 'Women & Girls Fashion'
             ],
             [
                 'id' => '3',
-                'cate_image' => '',
-                'text' => ''
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/343/343418.png',
+                'text' => 'Men & Boys Fashion'
+            ],
+            [
+                'id' => '4',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/4319/4319109.png',
+                'text' => 'Electronic Accessories'
+            ],
+            [
+                'id' => '5',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/4352/4352957.png',
+                'text' => 'TV & Home Appliances'
+            ],
+            [
+                'id' => '6',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/639/639371.png',
+                'text' => 'Electronic Devices'
+            ],
+            [
+                'id' => '7',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/1746/1746356.png',
+                'text' => 'Mother & Baby'
+            ],
+            [
+                'id' => '8',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/3097/3097182.png',
+                'text' => 'Automotive & Motorbike'
+            ],
+            [
+                'id' => '9',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/18899/18899933.png',
+                'text' => 'Sports & outdoors'
+            ],
+            [
+                'id' => '10',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/17441/17441258.png',
+                'text' => 'Home & Lifestyle'
+            ],
+            [
+                'id' => '11',
+                'cate_image' => 'https://cdn-icons-png.flaticon.com/128/859/859270.png',
+                'text' => 'Groceries'
             ]
 
         ];

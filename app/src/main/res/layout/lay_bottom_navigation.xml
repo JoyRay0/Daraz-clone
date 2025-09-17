@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:tooltipText="Home"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
 
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:tooltipText="Messages"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
 
@@ -111,6 +111,34 @@
     </LinearLayout>
     <!-- message -->
 
+    <!-- animation
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_weight="1"
+
+
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:lottie_rawRes="@raw/discount"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
+-->
+
     <!-- Cart -->
     <LinearLayout
         android:id="@+id/ll_cart"
@@ -118,7 +146,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:tooltipText="Cart"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
 
@@ -167,7 +195,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:tooltipText="Account"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
 

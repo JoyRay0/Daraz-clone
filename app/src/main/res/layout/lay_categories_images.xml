@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="Hardcodedtext"
+    android:id="@+id/rl_cate_btn"
+    >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_cat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:textSize="13sp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_find_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find More"
+        android:textSize="10sp"
+        android:textColor="#FF5722"
+        android:textStyle="normal"
+        android:fontFamily="@font/roboto"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:drawableEnd="@drawable/ic_right"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tv_cat"
+        android:layout_alignBottom="@id/tv_find_more"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_below="@id/tv_cat"
+        />
+
+</RelativeLayout>

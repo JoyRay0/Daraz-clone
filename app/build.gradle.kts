@@ -50,7 +50,8 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.gson)
     implementation(libs.dotsindicator)
-    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation(libs.circleimageview)
+    implementation(libs.lottie)
 
     val roomVersion = "2.6.1" // সর্বশেষ ভার্সন ব্যবহার করো
 

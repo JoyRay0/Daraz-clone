@@ -7,10 +7,8 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.cardview.widget.CardView
 import androidx.core.graphics.toColorInt
 import com.rk_sofwares.e_commerce.R
-import com.rk_sofwares.e_commerce.Uitily.Cache
 
 class Act_home : AppCompatActivity() {
 
@@ -37,7 +35,6 @@ class Act_home : AppCompatActivity() {
     private lateinit var tv_badge4 : AppCompatTextView
 
     //main activity
-    private lateinit var iv_up_down : AppCompatImageView
     private lateinit var fl_bottom_navigation : FrameLayout
     private lateinit var fl_container : FrameLayout
 
@@ -68,62 +65,20 @@ class Act_home : AppCompatActivity() {
         tv_badge3 = findViewById(R.id.tv_badge3);
         tv_badge4 = findViewById(R.id.tv_badge4);
 
-        iv_up_down = findViewById(R.id.iv_up_down);
         fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
         fl_container = findViewById(R.id.fl_container);
 
         //identity period---------------------------------------------------
 
-
-
         val fg = supportFragmentManager
-        fg.beginTransaction().add(R.id.fl_container, Fg_home()).commit()
+        fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
         bottom_nav()
-
-        // bottom and toolbar visibility
-        iv_up_down.tag = "open"
-
-        iv_up_down.setOnClickListener {
-
-            var currentTag = iv_up_down.tag.toString()
-
-            if (currentTag == "open"){
-
-                fl_bottom_navigation.visibility = View.GONE
-
-                fl_bottom_navigation.animate()
-                    .translationY(-fl_bottom_navigation.height.toFloat())
-                    .alpha(0f)
-                    .setDuration(300)
-                    .start()
-
-                iv_up_down.setImageResource(R.drawable.ic_close_eye)
-                iv_up_down.tag = "close"
-
-            }else if (currentTag == "close"){
-
-                fl_bottom_navigation.visibility = View.VISIBLE
-                fl_bottom_navigation.animate()
-                    .translationY(0f)
-                    .alpha(1f)
-                    .setDuration(300)
-                    .start()
-
-
-                iv_up_down.setImageResource(R.drawable.ic_open_eye)
-                iv_up_down.tag = "open"
-
-            }
-
-
-        }
 
 
     }//on create===========================================================
 
     //bottom navigation -------------------------------------------------------
-
     private fun bottom_nav(){
 
         val selectedColor = "#FF5722".toColorInt()
@@ -250,8 +205,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
-
-
+            
         }
 
     }

@@ -19,27 +19,6 @@
            android:layout_above="@id/fl_bottom_navigation"
             />
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_above="@id/fl_bottom_navigation"
-           android:layout_centerHorizontal="true"
-           app:cardCornerRadius="30dp"
-           app:cardElevation="5dp"
-           app:cardBackgroundColor="#FFFFFF"
-           android:layout_margin="10dp"
-
-           >
-           <androidx.appcompat.widget.AppCompatImageView
-               android:id="@+id/iv_up_down"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/ic_open_eye"
-               android:layout_gravity="center"
-               android:layout_margin="5dp"
-               />
-
-       </androidx.cardview.widget.CardView>
 
        <FrameLayout
            android:id="@+id/fl_bottom_navigation"

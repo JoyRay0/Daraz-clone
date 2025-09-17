@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_flash_sale_btn"
+    >
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_flash_sale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Flash Sale"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:textColor="#000"
         android:textStyle="bold"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:layout_margin="7dp"
+        android:layout_margin="5dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         />
@@ -24,22 +27,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Shop More"
-        android:textSize="9sp"
+        android:textSize="10sp"
         android:textColor="#FF5722"
         android:textStyle="normal"
         android:fontFamily="@font/roboto"
-        android:layout_margin="7dp"
+        android:layout_marginEnd="5dp"
         android:gravity="center"
         android:drawableEnd="@drawable/ic_right"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/tv_flash_sale"
+        android:layout_alignBottom="@id/tv_flash_sale"
         />
 
     <!-- sale item images -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/tv_flash_sale"
         android:weightSum="3"
@@ -59,6 +63,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp"
+                app:cardElevation="2dp"
                 >
 
                 <LinearLayout
@@ -72,20 +77,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:background="#EBE2E2"
-                        android:src="@drawable/loading_daraz_img"
+                        android:src="@drawable/img_loading_daraz"
                         android:scaleType="fitXY"
                         />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_item_left1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Only 0 left"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textColor="#fff"
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:background="#7E3B3232"
+                        android:background="#B93E3434"
+                        android:layout_marginTop="-22dp"
+                        android:padding="3dp"
                         />
 
 
@@ -102,6 +109,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="-4dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="2dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -150,6 +160,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp"
+                app:cardElevation="2dp"
                 >
 
                 <LinearLayout
@@ -163,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:background="#EBE2E2"
-                        android:src="@drawable/loading_daraz_img"
+                        android:src="@drawable/img_loading_daraz"
                         android:scaleType="fitXY"
                         />
 
@@ -172,11 +183,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Only 0 left"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textColor="#fff"
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:background="#7E3B3232"
+                        android:background="#973E3434"
+                        android:layout_marginTop="-22dp"
+                        android:padding="3dp"
                         />
 
 
@@ -193,6 +206,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="-4dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="2dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -241,6 +257,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp"
+                app:cardElevation="2dp"
                 >
 
                 <LinearLayout
@@ -254,7 +271,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:background="#EBE2E2"
-                        android:src="@drawable/loading_daraz_img"
+                        android:src="@drawable/img_loading_daraz"
                         android:scaleType="fitXY"
                         />
 
@@ -263,11 +280,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Only 0 left"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textColor="#fff"
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:background="#7E3B3232"
+                        android:background="#973E3434"
+                        android:layout_marginTop="-22dp"
+                        android:padding="3dp"
                         />
 
 
@@ -284,6 +303,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="-4dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="2dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView

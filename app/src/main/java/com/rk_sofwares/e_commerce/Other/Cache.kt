@@ -1,8 +1,6 @@
-package com.rk_sofwares.e_commerce.Uitily
+package com.rk_sofwares.e_commerce.Other
 
 import android.content.Context
-import kotlin.time.Clock
-import androidx.core.content.edit
 
 class Cache {
 

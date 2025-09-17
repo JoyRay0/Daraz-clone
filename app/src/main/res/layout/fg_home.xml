@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
+            <!-- item images -->
             <FrameLayout
                 android:id="@+id/fl_item_image_loading"
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:visibility="gone"
                 />
-
+            <!-- coupon -->
             <FrameLayout
                 android:id="@+id/fl_coupon"
                 android:layout_width="match_parent"
@@ -66,6 +66,7 @@
 
             </FrameLayout>
 
+            <!-- viewpager -->
             <FrameLayout
                 android:id="@+id/fl_vp_image_loading"
                 android:layout_width="match_parent"
@@ -97,6 +98,7 @@
                 android:visibility="gone"
                 />
 
+            <!-- flash sale -->
             <FrameLayout
                 android:id="@+id/fl_flash_sale"
                 android:layout_width="match_parent"
@@ -113,12 +115,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#A9D1B8B8"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 />
+
+            <!-- categories -->
+            <FrameLayout
+                android:id="@+id/fl_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="15dp"
+                >
+
+                <include layout="@layout/lay_categories_images"/>
+
+            </FrameLayout>
 
 
         </LinearLayout>
-
 
     </androidx.core.widget.NestedScrollView>
 

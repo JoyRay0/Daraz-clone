@@ -2,24 +2,29 @@ package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
+import com.rk_sofwares.e_commerce.Model.CategoriesModel
 import com.rk_sofwares.e_commerce.Model.CouponModel
 import com.rk_sofwares.e_commerce.Model.FlashSaleModel
 import com.rk_sofwares.e_commerce.Model.ItemModel
 import com.rk_sofwares.e_commerce.Model.ViewpagerModel
+import com.rk_sofwares.e_commerce.Model.c_images
 import com.rk_sofwares.e_commerce.R
-import com.rk_sofwares.e_commerce.Uitily.Cache
+import com.rk_sofwares.e_commerce.Other.Cache
+import com.rk_sofwares.e_commerce.adapter.Categories
 import com.rk_sofwares.e_commerce.adapter.ItemAdapter
 import com.rk_sofwares.e_commerce.adapter.ViewpagerAdapter
 import com.squareup.picasso.Picasso
@@ -40,6 +45,7 @@ import java.util.ArrayList
 class Fg_home : Fragment() {
 
     //XML id's--------------------------------------------------------------
+
     //toolbar
     private lateinit var iv_scan : AppCompatImageView
     private lateinit var cv_search : CardView
@@ -48,35 +54,34 @@ class Fg_home : Fragment() {
     private lateinit var iv_upload : AppCompatImageView
     private lateinit var tv_searchBar_text : AppCompatTextView
 
-    //Recyclerview & viewpager
+    //item image
     private lateinit var rv_item : RecyclerView
-    private lateinit var vp_image : ViewPager2
+    private lateinit var itemAdapter : ItemAdapter
+    private lateinit var fl_item_image_loading : FrameLayout
 
-    //arraylist & hashmaps
     private var item_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var item_map : HashMap<String, String>
+
+    //viewpager
+    private lateinit var vp_image : ViewPager2
+    private lateinit var viewPagerAdapter : ViewpagerAdapter
+    private lateinit var fl_vp_image_loading : FrameLayout
+    private lateinit var dotsIndicator : WormDotsIndicator
+    private var isViewPagerVisible : Boolean = false
 
     private var vp_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var vp_map : HashMap<String, String>
 
-    // adapter
-    private lateinit var itemAdapter : ItemAdapter
-    private lateinit var viewPagerAdapter : ViewpagerAdapter
-
-    private lateinit var dotsIndicator : WormDotsIndicator
-
-    private lateinit var fl_item_image_loading : FrameLayout
-    private lateinit var fl_vp_image_loading : FrameLayout
-    private lateinit var fl_coupon : FrameLayout
-    private lateinit var fl_flash_sale : FrameLayout
-
+    // others
     private lateinit var cache : Cache
-    private var isViewPagerVisible : Boolean = false
 
     //coupon image
     private lateinit var iv_coupon_img : AppCompatImageView
+    private lateinit var fl_coupon : FrameLayout
 
     //flash sale
+    private lateinit var fl_flash_sale : FrameLayout
+    private lateinit var rl_flash_sale_btn : RelativeLayout
     private lateinit var iv_image1 : AppCompatImageView
     private lateinit var tv_item_left1 : AppCompatTextView
     private lateinit var tv_image_item_price1 : AppCompatTextView
@@ -92,34 +97,47 @@ class Fg_home : Fragment() {
     private lateinit var tv_image_item_price3 : AppCompatTextView
     private lateinit var tv_image_item_discount3 : AppCompatTextView
 
+    //categories
+    private lateinit var fl_categories : FrameLayout
+    private lateinit var rl_cate_btn : RelativeLayout
+    private lateinit var rv_cat : RecyclerView
+    private lateinit var catrgories : Categories
+    private var cate_list : ArrayList<HashMap<String, String>> = ArrayList()
+    private lateinit var cate_map : HashMap<String, String>
 
     //XML id's--------------------------------------------------------------
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fg_home, container, false)
 
         //identity period----------------------------------------------------
 
+        //toolbar
         iv_scan = view.findViewById(R.id.iv_scan);
         cv_search = view.findViewById(R.id.cv_search);
         iv_camera = view.findViewById(R.id.iv_camera);
         tv_search_btn = view.findViewById(R.id.tv_search_btn);
         iv_upload = view.findViewById(R.id.iv_upload);
-        rv_item = view.findViewById(R.id.rv_item)
         tv_searchBar_text = view.findViewById(R.id.tv_searchBar_text);
+
+        //item image
+        rv_item = view.findViewById(R.id.rv_item)
+        fl_item_image_loading = view.findViewById(R.id.fl_item_image_loading)
+
+        //viewpager
         vp_image = view.findViewById(R.id.vp_image);
         dotsIndicator = view.findViewById(R.id.dotsIndicator)
-        fl_item_image_loading = view.findViewById(R.id.fl_item_image_loading)
         fl_vp_image_loading = view.findViewById(R.id.fl_vp_image_loading)
+
+        //coupon
         fl_coupon = view.findViewById(R.id.fl_coupon)
         iv_coupon_img = view.findViewById(R.id.iv_coupon_img)
-        fl_flash_sale = view.findViewById(R.id.fl_flash_sale)
 
+        //flash sale
+        fl_flash_sale = view.findViewById(R.id.fl_flash_sale)
+        rl_flash_sale_btn = view.findViewById(R.id.rl_flash_sale_btn)
         iv_image1 = view.findViewById(R.id.iv_image1)
         tv_item_left1 = view.findViewById(R.id.tv_item_left1)
         tv_image_item_price1 = view.findViewById(R.id.tv_image_item_price1)
@@ -133,6 +151,10 @@ class Fg_home : Fragment() {
         tv_image_item_price3 = view.findViewById(R.id.tv_image_item_price3)
         tv_image_item_discount3 = view.findViewById(R.id.tv_image_item_discount3)
 
+        //categories
+        fl_categories = view.findViewById(R.id.fl_categories)
+        rl_cate_btn = view.findViewById(R.id.rl_cate_btn)
+        rv_cat = view.findViewById(R.id.rv_cat)
 
         //identity period----------------------------------------------------
 
@@ -144,15 +166,14 @@ class Fg_home : Fragment() {
         vp_image.adapter = viewPagerAdapter
         dotsIndicator.attachTo(vp_image)
 
+        catrgories = Categories(requireContext(), cate_list)
+        rv_cat.adapter = catrgories
 
         cache = Cache(requireContext(), "Fg_home")
-
-
 
         changeSearchBarText()   //changing search bar text after 10 seconds
 
         dataFromCache()
-
 
         if (isViewPagerVisible){
 
@@ -359,10 +380,11 @@ class Fg_home : Fragment() {
     //data from cache---------------------------------------------------
     private fun dataFromCache(){
 
-        val cacheData = cache.getCache("item_image", 1)
-        val vpCacheImage = cache.getCache("vp_image", 1)
-        val couponImage = cache.getCache("coupon_image", 1)
-        val flashSale = cache.getCache("flash_sale_image", 1)
+        val cacheData = cache.getCache("item_image", 5)
+        val vpCacheImage = cache.getCache("vp_image", 5)
+        val couponImage = cache.getCache("coupon_image", 5)
+        val flashSale = cache.getCache("flash_sale_image", 5)
+        val categories = cache.getCache("cate_image", 5)
 
         //item image
         if (!cacheData.isNullOrEmpty()){
@@ -486,6 +508,36 @@ class Fg_home : Fragment() {
 
             fl_flash_sale.visibility = View.GONE
             flash_sale()
+        }
+
+        //categories
+        if (!categories.isNullOrEmpty()){
+
+            val gson = Gson()
+
+            val ci = gson.fromJson(categories, CategoriesModel::class.java)
+
+
+            fl_categories.visibility = View.VISIBLE
+
+            if (ci.images.isNotEmpty()){
+
+                for (item in ci.images){
+
+                    cate_map = HashMap()
+                    cate_map["image"] = item.cate_image ?: ""
+                    cate_map["text"] = item.text ?: ""
+                    cate_list.add(cate_map)
+
+                }
+
+            }
+
+
+        }else{
+
+            fl_categories.visibility = View.GONE
+            categories()
         }
 
     }
@@ -617,6 +669,77 @@ class Fg_home : Fragment() {
 
                                 }
 
+
+                            }
+
+                        }
+
+                    }catch (e : Exception){
+
+                        e.printStackTrace()
+
+                    }
+
+                }
+
+
+            }
+        })
+
+    }
+
+    //viewpager-------------------------------------------------------------
+    private fun categories(){
+
+        val client = OkHttpClient()
+
+        val gson = Gson()
+
+        val request = Request.Builder()
+            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=category_image")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback{
+
+            override fun onFailure(call: Call, e: IOException) {
+
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    fl_categories.visibility = View.GONE
+
+                }
+
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+
+                if (response.isSuccessful){
+
+                    val data = response.body.string()
+
+                    try {
+
+                        val c_img = gson.fromJson(data, CategoriesModel::class.java)
+
+                        if (c_img.status == "successful"){
+
+                            cate_list.clear()
+
+                            for (item in c_img.images){
+
+                                cate_map = HashMap()
+                                cate_map["image"] = item.cate_image ?: ""
+                                cate_map["text"] = item.text ?: ""
+                                cate_list.add(cate_map)
+
+                            }
+
+                           cache.setCache("cate_image", gson.toJson(c_img))
+
+                            CoroutineScope(Dispatchers.Main).launch {
+
+                                fl_categories.visibility = View.VISIBLE
+                                catrgories.notifyDataSetChanged()
 
                             }
 
