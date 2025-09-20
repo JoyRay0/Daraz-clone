@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.Fg_home"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#37F3EBEB"
+    >
 
-    <!-- toolbar -->
     <FrameLayout
         android:id="@+id/fl_toolbar"
         android:layout_width="match_parent"
@@ -19,14 +21,12 @@
         <include layout="@layout/lay_home_toolbar"/>
 
     </FrameLayout>
-    <!-- toolbar -->
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/fl_toolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         >
 
         <LinearLayout
@@ -132,8 +132,29 @@
             </FrameLayout>
 
 
+            <!-- tab layout -->
+            <FrameLayout
+                android:id="@+id/fl_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                >
+
+                <include layout="@layout/lay_tablayout"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_ch_tab_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 
 </RelativeLayout>

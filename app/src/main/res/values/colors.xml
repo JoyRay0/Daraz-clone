@@ -2,4 +2,6 @@
 <resources>
     <color name="bottom_nav_icon_text_selected">#FF5722</color>
     <color name="bottom_nav_text_unselected">#988080</color>
+
+    <color name="tab_item_selected_and_bg">#BEFFFFFF</color>
 </resources>

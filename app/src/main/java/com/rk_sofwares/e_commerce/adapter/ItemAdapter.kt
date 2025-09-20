@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rk_sofwares.e_commerce.R
@@ -38,10 +39,16 @@ class ItemAdapter() : RecyclerView.Adapter<ItemAdapter.viewHolder>() {
 
         //Log.i("item", item.size.toString())
 
-        Picasso.get().load(item["image"] ?: "null").into(holder.iv_item_image)
-        holder.tv_item_title.text = item["text"] ?: "null"
+        if (!item["text"].isNullOrEmpty() && !item["image"].isNullOrEmpty()){
 
+            Picasso.get().load(item["image"] ?: "null").into(holder.iv_item_image)
+            holder.tv_item_title.text = item["text"] ?: "null"
 
+        }else{
+
+            Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 

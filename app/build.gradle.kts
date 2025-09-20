@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.lottie)
 
+
     val roomVersion = "2.6.1" // সর্বশেষ ভার্সন ব্যবহার করো
 
     implementation(libs.androidx.room.runtime)

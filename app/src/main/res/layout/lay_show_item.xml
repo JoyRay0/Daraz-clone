@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardElevation="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/cv_btn"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- image -->
+            <FrameLayout
+                android:id="@+id/fl_item_image"
+                android:layout_width="160dp"
+                android:layout_height="170dp"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_loading_daraz"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+            <!-- free delivery-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_free_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FREE DELIVERY"
+                android:textSize="7sp"
+                android:textColor="#fff"
+                android:fontFamily="@font/roboto"
+                android:drawableStart="@drawable/ic_delivery"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:background="@drawable/sh_side_text"
+                android:layout_alignBottom="@id/fl_item_image"
+                android:layout_alignStart="@id/fl_item_image"
+                />
+
+            <!-- title-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="12sp"
+                android:textColor="#675C5C"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textStyle="normal"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:fontFamily="@font/roboto"
+                android:layout_below="@id/fl_item_image"
+                />
+
+            <!-- price-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="13sp"
+                android:textColor="#FF5722"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_taka"
+                android:layout_below="@id/tv_title"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_alignParentStart="true"
+                />
+
+            <!-- discount-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-50"
+                android:textSize="10sp"
+                android:paddingStart="5dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="5dp"
+                android:textColor="#FF5722"
+                android:textStyle="normal"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:drawableEnd="@drawable/ic_discount"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/tv_price"
+                android:layout_alignBottom="@id/tv_price"
+                android:background="@drawable/sh_item_discount"
+                />
+
+            <!-- rating-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.5"
+                android:textSize="10sp"
+                android:textColor="#866A6A"
+                android:textStyle="normal"
+                android:fontFamily="@font/roboto"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_rating"
+                android:layout_below="@id/tv_price"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="7dp"
+                />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:background="#C69090"
+                android:layout_below="@id/tv_price"
+                android:layout_toEndOf="@id/tv_rating"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="7dp"
+                />
+
+            <!-- stock-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="In Stock"
+                android:textSize="10sp"
+                android:textColor="#665757"
+                android:textStyle="normal"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_below="@id/tv_price"
+                android:layout_toEndOf="@id/divider"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="7dp"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</LinearLayout>

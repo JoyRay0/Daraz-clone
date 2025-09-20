@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        android:textSize="20sp"
+        android:textColor="#F2000000"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_mark_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark all as read"
+        android:textSize="12sp"
+        android:textColor="#2B2525"
+        android:gravity="center"
+        android:textStyle="normal"
+        android:drawableStart="@drawable/ic_cleaner"
+        android:drawablePadding="7dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        />
+
+</RelativeLayout>

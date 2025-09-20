@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,16 @@ class ViewpagerAdapter() : RecyclerView.Adapter<ViewpagerAdapter.viewHolder>() {
     override fun onBindViewHolder(holder: viewHolder, position: Int){
 
         val item = vp_list[position]
-        Picasso.get().load(item["image"]).into(holder.vp_image)
+
+        if (!item["image"].isNullOrEmpty()){
+
+            Picasso.get().load(item["image"]).into(holder.vp_image)
+
+        }else{
+
+            Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 

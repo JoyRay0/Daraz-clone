@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,8 +35,16 @@ class Categories() : RecyclerView.Adapter<Categories.catHolder>() {
 
         val item = itemList[position]
 
-        holder.tv_cat_name.text = item["text"] ?: ""
-        Picasso.get().load(item["image"] ?: "").into(holder.iv_cat)
+        if (!item["text"].isNullOrEmpty() && !item["image"].isNullOrEmpty()){
+
+            holder.tv_cat_name.text = item["text"] ?: ""
+            Picasso.get().load(item["image"] ?: "").into(holder.iv_cat)
+
+        }else{
+
+            Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 

@@ -1,6 +1,7 @@
 package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,10 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
+import androidx.core.view.ViewCompat
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
@@ -24,6 +31,7 @@ import com.rk_sofwares.e_commerce.Model.ViewpagerModel
 import com.rk_sofwares.e_commerce.Model.c_images
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.Other.Cache
+import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.adapter.Categories
 import com.rk_sofwares.e_commerce.adapter.ItemAdapter
 import com.rk_sofwares.e_commerce.adapter.ViewpagerAdapter
@@ -42,6 +50,7 @@ import okio.IOException
 import java.lang.Exception
 import java.util.ArrayList
 
+
 class Fg_home : Fragment() {
 
     //XML id's--------------------------------------------------------------
@@ -53,6 +62,7 @@ class Fg_home : Fragment() {
     private lateinit var tv_search_btn : AppCompatTextView
     private lateinit var iv_upload : AppCompatImageView
     private lateinit var tv_searchBar_text : AppCompatTextView
+    private lateinit var fl_toolbar : FrameLayout
 
     //item image
     private lateinit var rv_item : RecyclerView
@@ -74,6 +84,7 @@ class Fg_home : Fragment() {
 
     // others
     private lateinit var cache : Cache
+    private lateinit var nsv_scroll : NestedScrollView
 
     //coupon image
     private lateinit var iv_coupon_img : AppCompatImageView
@@ -105,6 +116,31 @@ class Fg_home : Fragment() {
     private var cate_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var cate_map : HashMap<String, String>
 
+    //tab item
+    private lateinit var ll_for_you : LinearLayout
+    private lateinit var ll_hot_deals : LinearLayout
+    private lateinit var ll_voucher_max : LinearLayout
+    private lateinit var ll_daraz_look : LinearLayout
+    private lateinit var ll_free_delivery : LinearLayout
+    private lateinit var ll_buy_any : LinearLayout
+    private lateinit var ll_buy_more : LinearLayout
+    private lateinit var ll_new_arrival : LinearLayout
+    private lateinit var ll_must_buy : LinearLayout
+    private lateinit var fl_ch_tab_item : FrameLayout
+    private lateinit var tv_for_you : AppCompatTextView
+    private lateinit var tv_hot_deals : AppCompatTextView
+    private lateinit var tv_voucher_max : AppCompatTextView
+    private lateinit var tv_daraz_look : AppCompatTextView
+    private lateinit var tv_free_delivery : AppCompatTextView
+    private lateinit var tv_buy_any : AppCompatTextView
+    private lateinit var tv_buy_more : AppCompatTextView
+    private lateinit var tv_new_arrival : AppCompatTextView
+    private lateinit var tv_must_buy : AppCompatTextView
+    private lateinit var fl_tablayout : FrameLayout
+
+
+
+
     //XML id's--------------------------------------------------------------
 
     @SuppressLint("MissingInflatedId")
@@ -114,6 +150,8 @@ class Fg_home : Fragment() {
 
         //identity period----------------------------------------------------
 
+        nsv_scroll = view.findViewById(R.id.nsv_scroll);
+
         //toolbar
         iv_scan = view.findViewById(R.id.iv_scan);
         cv_search = view.findViewById(R.id.cv_search);
@@ -121,6 +159,7 @@ class Fg_home : Fragment() {
         tv_search_btn = view.findViewById(R.id.tv_search_btn);
         iv_upload = view.findViewById(R.id.iv_upload);
         tv_searchBar_text = view.findViewById(R.id.tv_searchBar_text);
+        fl_toolbar = view.findViewById(R.id.fl_toolbar);
 
         //item image
         rv_item = view.findViewById(R.id.rv_item)
@@ -156,6 +195,28 @@ class Fg_home : Fragment() {
         rl_cate_btn = view.findViewById(R.id.rl_cate_btn)
         rv_cat = view.findViewById(R.id.rv_cat)
 
+        //tab item
+        ll_for_you = view.findViewById(R.id.ll_for_you)
+        ll_hot_deals = view.findViewById(R.id.ll_hot_deals)
+        ll_voucher_max = view.findViewById(R.id.ll_voucher_max)
+        ll_daraz_look = view.findViewById(R.id.ll_daraz_look)
+        ll_free_delivery = view.findViewById(R.id.ll_free_delivery)
+        ll_buy_any = view.findViewById(R.id.ll_buy_any)
+        ll_buy_more = view.findViewById(R.id.ll_buy_more)
+        ll_new_arrival = view.findViewById(R.id.ll_new_arrival)
+        ll_must_buy = view.findViewById(R.id.ll_must_buy)
+        fl_ch_tab_item = view.findViewById(R.id.fl_ch_tab_item)
+        tv_for_you = view.findViewById(R.id.tv_for_you)
+        tv_hot_deals = view.findViewById(R.id.tv_hot_deals)
+        tv_voucher_max = view.findViewById(R.id.tv_voucher_max)
+        tv_daraz_look = view.findViewById(R.id.tv_daraz_look)
+        tv_free_delivery = view.findViewById(R.id.tv_free_delivery)
+        tv_buy_any = view.findViewById(R.id.tv_buy_any)
+        tv_buy_more = view.findViewById(R.id.tv_buy_more)
+        tv_new_arrival = view.findViewById(R.id.tv_new_arrival)
+        tv_must_buy = view.findViewById(R.id.tv_must_buy)
+        fl_tablayout = view.findViewById(R.id.fl_tablayout)
+
         //identity period----------------------------------------------------
 
 
@@ -171,15 +232,28 @@ class Fg_home : Fragment() {
 
         cache = Cache(requireContext(), "Fg_home")
 
+
+
         changeSearchBarText()   //changing search bar text after 10 seconds
 
-        dataFromCache()
+        CoroutineScope(Dispatchers.Main).launch {
+
+            dataFromCache()
+            child_fragment()
+            delay(2000)
+
+        }
+
 
         if (isViewPagerVisible){
 
             viewpager_infinite_loop()
 
         }
+
+        val edge_to_edge = EdgeToEdge(requireActivity())
+        edge_to_edge.setToolBar(fl_toolbar)
+
 
         return view
     }//on create=================================================================
@@ -756,6 +830,388 @@ class Fg_home : Fragment() {
 
             }
         })
+
+    }
+
+    //child fragment----------------------------------------------------------------
+    private fun child_fragment(){
+
+        childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+        val selectedBackground = ContextCompat.getDrawable(requireContext(), R.drawable.sh_tab_item)
+        val unSelectedBackground = null
+        val selectedTextColor = "#FF5722".toColorInt()
+        val unSelectedTextColor = "#5B4949".toColorInt()
+        val boldText = Typeface.DEFAULT_BOLD
+        val normalText = Typeface.DEFAULT
+
+
+        //default
+        ll_for_you.background = selectedBackground
+        tv_for_you.setTextColor(selectedTextColor)
+        tv_for_you.typeface = boldText
+
+        //normal
+        tv_hot_deals.setTextColor(unSelectedTextColor)
+        tv_voucher_max.setTextColor(unSelectedTextColor)
+        tv_daraz_look.setTextColor(unSelectedTextColor)
+        tv_free_delivery.setTextColor(unSelectedTextColor)
+        tv_buy_any.setTextColor(unSelectedTextColor)
+        tv_buy_more.setTextColor(unSelectedTextColor)
+        tv_new_arrival.setTextColor(unSelectedTextColor)
+        tv_must_buy.setTextColor(unSelectedTextColor)
+
+        tv_hot_deals.typeface = normalText
+        tv_voucher_max.typeface = normalText
+        tv_daraz_look.typeface = normalText
+        tv_free_delivery.typeface = normalText
+        tv_buy_any.typeface = normalText
+        tv_buy_more.typeface = normalText
+        tv_new_arrival.typeface = normalText
+        tv_must_buy.typeface = normalText
+
+        //for you
+        ll_for_you.setOnClickListener {
+
+            ll_for_you.background = selectedBackground
+            tv_for_you.setTextColor(selectedTextColor)
+            tv_for_you.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+
+        }
+
+        //hot deals
+        ll_hot_deals.setOnClickListener {
+
+            ll_hot_deals.background = selectedBackground
+            tv_hot_deals.setTextColor(selectedTextColor)
+            tv_hot_deals.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //voucher
+        ll_voucher_max.setOnClickListener {
+
+            ll_voucher_max.background = selectedBackground
+            tv_voucher_max.setTextColor(selectedTextColor)
+            tv_voucher_max.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //daraz look
+        ll_daraz_look.setOnClickListener {
+
+            ll_daraz_look.background = selectedBackground
+            tv_daraz_look.setTextColor(selectedTextColor)
+            tv_daraz_look.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //free delivery
+        ll_free_delivery.setOnClickListener {
+
+            ll_free_delivery.background = selectedBackground
+            tv_free_delivery.setTextColor(selectedTextColor)
+            tv_free_delivery.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_hot_deals.typeface = normalText
+
+        }
+
+        //buy any 4
+        ll_buy_any.setOnClickListener {
+
+            ll_buy_any.background = selectedBackground
+            tv_buy_any.setTextColor(selectedTextColor)
+            tv_buy_any.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //buy more save more
+        ll_buy_more.setOnClickListener {
+
+            ll_buy_more.background = selectedBackground
+            tv_buy_more.setTextColor(selectedTextColor)
+            tv_buy_more.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //new arrival
+        ll_new_arrival.setOnClickListener {
+
+            ll_new_arrival.background = selectedBackground
+            tv_new_arrival.setTextColor(selectedTextColor)
+            tv_new_arrival.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_must_buy.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_must_buy.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_must_buy.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
+
+        //must buy
+        ll_must_buy.setOnClickListener {
+
+            ll_must_buy.background = selectedBackground
+            tv_must_buy.setTextColor(selectedTextColor)
+            tv_must_buy.typeface = boldText
+
+            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+
+            tv_for_you.setTextColor(unSelectedTextColor)
+            tv_hot_deals.setTextColor(unSelectedTextColor)
+            tv_daraz_look.setTextColor(unSelectedTextColor)
+            tv_voucher_max.setTextColor(unSelectedTextColor)
+            tv_free_delivery.setTextColor(unSelectedTextColor)
+            tv_buy_any.setTextColor(unSelectedTextColor)
+            tv_buy_more.setTextColor(unSelectedTextColor)
+            tv_new_arrival.setTextColor(unSelectedTextColor)
+
+            ll_for_you.background = unSelectedBackground
+            ll_hot_deals.background = unSelectedBackground
+            ll_voucher_max.background = unSelectedBackground
+            ll_daraz_look.background = unSelectedBackground
+            ll_free_delivery.background = unSelectedBackground
+            ll_buy_any.background = unSelectedBackground
+            ll_buy_more.background = unSelectedBackground
+            ll_new_arrival.background = unSelectedBackground
+
+            tv_hot_deals.typeface = normalText
+            tv_voucher_max.typeface = normalText
+            tv_daraz_look.typeface = normalText
+            tv_free_delivery.typeface = normalText
+            tv_buy_any.typeface = normalText
+            tv_buy_more.typeface = normalText
+            tv_new_arrival.typeface = normalText
+            tv_for_you.typeface = normalText
+
+        }
 
     }
 

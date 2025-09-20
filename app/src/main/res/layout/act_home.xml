@@ -5,19 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Act_home">
+    tools:context=".activity.Act_home"
+    >
 
 
    <RelativeLayout
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="match_parent"
+       >
 
        <FrameLayout
            android:id="@+id/fl_container"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_above="@id/fl_bottom_navigation"
-            />
+
+           />
 
 
        <FrameLayout
