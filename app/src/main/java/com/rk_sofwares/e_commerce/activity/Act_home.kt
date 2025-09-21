@@ -103,7 +103,7 @@ class Act_home : AppCompatActivity() {
         val unselectedColor = "#988080".toColorInt()
         val itemBadge = "1"
 
-        edge_to_edge.statusBarColor("#FF5722")
+        edge_to_edge.statusBarColor("#FF5722", false)
 
         iv_home.setImageResource(R.drawable.ic_home_fill)
         tv_home.setTextColor(selectedColor)
@@ -132,7 +132,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722")
+            edge_to_edge.statusBarColor("#FF5722", false)
 
             iv_home.setImageResource(R.drawable.ic_home_fill)
             tv_home.setTextColor(selectedColor)
@@ -175,7 +175,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722")
+            edge_to_edge.statusBarColor("#FF5722", false)
 
         }
 
@@ -202,7 +202,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_messages()).commit()
 
-            edge_to_edge.statusBarColor("#FFFFFF")
+            edge_to_edge.statusBarColor("#FFFFFF", true)
 
         }
 
@@ -228,7 +228,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722")
+            edge_to_edge.statusBarColor("#FF5722", false)
         }
 
     }

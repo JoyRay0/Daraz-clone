@@ -220,6 +220,65 @@ switch ($resource) {
         ];
         break;
 
+    //message----------------------------------------------------------
+    case 'messages':
+
+        $images = [
+
+            [
+            'id' => '1',
+            'title' =>  'MEGA DEALS শেষ সুযোগ🛍️🔥',
+            'date' => '12/9/2025',
+            'image' => 'https://icms-image.slatic.net/images/ims-web/899c7769-8408-4ccf-a9af-85ab4e42e063.png',
+            'offer_message' => 'DOUBLE VOUCHER, FREE DELIVERY, 9 delas এই সব একসাথে পেতে Order Now',
+            'item' => 'activities'
+            ],
+            [
+            'id' => '2',
+            'title' =>  '৫০% পর্যন্ত ছাড়🤯',
+            'date' => '7/9/2025',
+            'image' => 'https://icms-image.slatic.net/images/ims-web/b4b529e4-9c5d-472e-a511-1a8f7e1ffa22.jpg',
+            'offer_message' => 'খুব কম সময়ের জন্য',
+            'item' => 'promos'
+            ],
+            [
+            'id' => '3',
+            'title' =>  'Pre sale offer✨',
+            'date' => '20/9/2025',
+            'image' => 'https://www.tbsnews.net/sites/default/files/styles/big_2/public/images/2020/11/05/pr_banner_pre_sale.png',
+            'offer_message' => 'এবার সব পাবেন বেশি বেশি',
+            'item' => 'activities'
+            ],
+            [
+            'id' => '4',
+            'title' =>  '9.9 Sale',
+            'date' => '19/9/2025',
+            'image' => 'https://ecdn.dhakatribune.net/contents/cache/images/1200x630x1xxxxx1/uploads/media/2024/09/08/Celebrate-save-more-with-Daraz-9.9-Anniversary-Sale-2f8449884697883890564d40c840e1b0.jpg',
+            'offer_message' => 'আজই দেখুন',
+            'item' => 'promos'
+            ],
+            [
+            'id' => '5',
+            'title' =>  'Big Sale',
+            'date' => '15/9/2025',
+            'image' => 'https://brandpractitioners.com/wp-content/uploads/2023/05/Daraz-Launched-Monthly-Savings-Campaign-Daraz-er-Cherag-1.png',
+            'offer_message' => 'কিনুন আর জিতুন',
+            'item' => 'activities'
+            ],
+            [
+            'id' => '6',
+            'title' =>  'সহজ সমাধান',
+            'date' => '17/9/2025',
+            'image' => 'https://ecdn.dhakatribune.net/contents/cache/images/1200x630x1xxxxx1/uploads/dten/2022/04/05/daraz-logo.png',
+            'offer_message' => 'সব কিছু এখন এক জায়গায়',
+            'item' => 'activities'
+            ],
+           
+            
+        ];
+        
+        break;    
+
     default:
         die(json_encode([
 

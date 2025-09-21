@@ -1,31 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Fg_messages">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.Fg_messages"
+    >
 
-
-
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
+        >
 
         <FrameLayout
             android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <include layout="@layout/lay_messages_toolbar"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_c_o_a_p"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <include layout="@layout/lay_chats_order_activities_promos"/>
 
         </FrameLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_messages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:background="#F6F2F2"
+            />
 
 
-    </com.google.android.material.appbar.AppBarLayout>
 
+    </LinearLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -240,7 +240,6 @@ class Fg_home : Fragment() {
 
             dataFromCache()
             child_fragment()
-            delay(2000)
 
         }
 

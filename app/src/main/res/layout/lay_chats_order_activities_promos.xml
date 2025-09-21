@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:background="#fff"
+    android:weightSum="4">
+
+    <!-- chats -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#0AB1A1"
+            app:cardCornerRadius="200dp"
+            android:layout_gravity="center"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_chat"
+                android:scaleType="fitXY"
+                android:padding="10dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chats"
+            android:textSize="13sp"
+            android:textColor="#2D2929"
+            android:textStyle="normal"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
+
+
+
+    </LinearLayout>
+
+    <!-- orders -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#4F5FB9"
+            app:cardCornerRadius="200dp"
+            android:layout_gravity="center"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_box"
+                android:scaleType="fitXY"
+                android:padding="10dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orders"
+            android:textSize="13sp"
+            android:textColor="#2D2929"
+            android:textStyle="normal"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
+
+
+
+    </LinearLayout>
+
+    <!-- activities -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFAB37"
+            app:cardCornerRadius="200dp"
+            android:layout_gravity="center"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_activity"
+                android:scaleType="fitXY"
+                android:padding="10dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_activities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activities"
+            android:textSize="13sp"
+            android:textColor="#2D2929"
+            android:textStyle="normal"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
+
+
+
+    </LinearLayout>
+
+    <!-- promos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#E91E63"
+            app:cardCornerRadius="200dp"
+            android:layout_gravity="center"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_speaker"
+                android:scaleType="fitXY"
+                android:padding="10dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_promos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Promos"
+            android:textSize="13sp"
+            android:textColor="#2D2929"
+            android:textStyle="normal"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

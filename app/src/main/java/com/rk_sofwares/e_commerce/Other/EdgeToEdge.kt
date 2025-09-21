@@ -48,10 +48,10 @@ class EdgeToEdge(
     }
 
     //status bar
-    fun statusBarColor(color : String){
+    fun statusBarColor(color : String, isLight : Boolean){
 
         activity.window.statusBarColor = color.toColorInt()
-        WindowInsetsControllerCompat(activity.window, activity.window.decorView).isAppearanceLightStatusBars = false
+        WindowInsetsControllerCompat(activity.window, activity.window.decorView).isAppearanceLightStatusBars = isLight
     }
 
 }
