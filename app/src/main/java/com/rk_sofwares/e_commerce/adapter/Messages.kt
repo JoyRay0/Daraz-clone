@@ -5,6 +5,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
@@ -34,7 +37,7 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
 
     }
 
-    override fun onBindViewHolder(holder: mHolder, position: Int) {
+    override fun onBindViewHolder(holder: mHolder, position: Int){
 
         val item = m_list[position]
 
@@ -61,9 +64,46 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
         holder.tv_short_message.text = shot_message
         Picasso.get().load(main_image).error(R.drawable.img_loading_daraz).into(holder.iv_image)
 
+
+        holder.cb_box.visibility = View.GONE
+        holder.iv_delete.visibility = View.GONE
+        holder.cb_box.isChecked = false
+
+        holder.cv_message.setOnLongClickListener {
+
+            holder.cb_box.visibility = View.VISIBLE
+            holder.iv_delete.visibility = View.VISIBLE
+            holder.cb_box.isChecked = true
+
+            true
+        }
+
+        holder.cb_box.setOnClickListener {
+
+            holder.cb_box.visibility = View.GONE
+            holder.iv_delete.visibility = View.GONE
+
+        }
+
         holder.cv_message.setOnClickListener {
 
-            TODO("Not yet implemented")
+            if (holder.cb_box.visibility != View.VISIBLE){
+
+                //Toast.makeText(context, "worled", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        holder.iv_delete.setOnClickListener {
+
+            val pos = holder.adapterPosition
+            if (pos != RecyclerView.NO_POSITION){
+
+                m_list.removeAt(pos)
+                notifyItemRemoved(pos)
+                notifyDataSetChanged()
+
+            }
 
         }
 
@@ -84,6 +124,8 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
         val tv_date = view.findViewById<AppCompatTextView>(R.id.tv_date)
         val iv_image = view.findViewById<AppCompatImageView>(R.id.iv_image)
         val tv_short_message = view.findViewById<AppCompatTextView>(R.id.tv_short_message)
+        val cb_box = view.findViewById<AppCompatCheckBox>(R.id.cb_box)
+        val iv_delete = view.findViewById<AppCompatImageView>(R.id.iv_delete)
 
 
 

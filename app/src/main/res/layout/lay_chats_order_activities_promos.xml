@@ -11,6 +11,7 @@
 
     <!-- chats -->
     <LinearLayout
+        android:id="@+id/ll_chats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -59,6 +60,7 @@
 
     <!-- orders -->
     <LinearLayout
+        android:id="@+id/ll_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -106,6 +108,7 @@
 
     <!-- activities -->
     <LinearLayout
+        android:id="@+id/ll_activities"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -153,6 +156,7 @@
 
     <!-- promos -->
     <LinearLayout
+        android:id="@+id/ll_promos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

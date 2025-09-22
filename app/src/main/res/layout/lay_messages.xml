@@ -1,113 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/cv_message"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#fff"
-    android:layout_margin="10dp"
-    app:cardElevation="3dp"
-    app:cardCornerRadius="10dp"
+    android:orientation="vertical"
     >
-    <RelativeLayout
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cb_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginStart="7dp"
+        style="@style/my_custom_check_box"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:background="?attr/actionBarItemBackground"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- activities or promos -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="200dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="#CBBBBB"
-            android:layout_margin="10dp"
-            >
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_activitiesOrPromos"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="fitXY"
-                android:padding="7dp"
-                />
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- message title -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tilte"
-            android:textSize="11sp"
-            android:textColor="#302D2D"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_marginTop="7dp"
-            android:layout_marginStart="2dp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/cv_image"
-            />
-
-        <!-- message date -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0/0/000"
-            android:textSize="12sp"
-            android:textColor="#7D7070"
-            android:textStyle="normal"
-            android:gravity="center"
-            android:fontFamily="@font/roboto"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="2dp"
-            android:layout_toEndOf="@id/cv_image"
-            android:layout_below="@id/tv_title"
-            />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_main_image"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#fff"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/cb_box"
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_below="@id/cv_image"
-            app:cardCornerRadius="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:cardElevation="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+
             >
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_loading_daraz"
+
+            <!-- activities or promos -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="200dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#CBBBBB"
+                android:layout_margin="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_activitiesOrPromos"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="fitXY"
+                    android:padding="7dp"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- message title -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tilte"
+                android:textSize="11sp"
+                android:textColor="#302D2D"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="2dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/cv_image"
                 />
 
-        </androidx.cardview.widget.CardView>
+            <!-- message date -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/0/000"
+                android:textSize="12sp"
+                android:textColor="#7D7070"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:fontFamily="@font/roboto"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@id/cv_image"
+                android:layout_below="@id/tv_title"
+                />
 
-        <!-- short message -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_short_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Example message"
-            android:textSize="12sp"
-            android:textColor="#7D7070"
-            android:textStyle="normal"
-            android:gravity="start"
-            android:fontFamily="@font/roboto"
-            android:layout_margin="7dp"
-            android:layout_alignStart="@id/cv_main_image"
-            android:layout_alignEnd="@id/cv_main_image"
-            android:layout_toEndOf="@id/cv_image"
-            android:layout_below="@id/cv_main_image"
-            />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_main_image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_below="@id/cv_image"
+                app:cardCornerRadius="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardElevation="0dp"
+
+                >
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_loading_daraz"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- short message -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_short_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Example message"
+                android:textSize="12sp"
+                android:textColor="#7D7070"
+                android:textStyle="normal"
+                android:gravity="start"
+                android:fontFamily="@font/roboto"
+                android:layout_margin="7dp"
+                android:layout_alignStart="@id/cv_main_image"
+                android:layout_alignEnd="@id/cv_main_image"
+                android:layout_toEndOf="@id/cv_image"
+                android:layout_below="@id/cv_main_image"
+                />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

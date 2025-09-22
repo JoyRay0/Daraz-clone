@@ -5,5 +5,10 @@
         <item name="colorPrimary">#FF5722</item>-->
     </style>
 
+    <style name="my_custom_check_box" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+
+        <item name="buttonTint">#FF5722</item>
+    </style>
+
     <style name="Theme.E_commerce" parent="Base.Theme.E_commerce" />
 </resources>
