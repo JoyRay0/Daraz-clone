@@ -1,23 +1,14 @@
 package com.rk_sofwares.e_commerce.activity
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.updatePadding
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
 
@@ -162,7 +153,6 @@ class Act_home : AppCompatActivity() {
 
             iv_home.setImageResource(R.drawable.ic_home_outline)
             tv_home.setTextColor(unselectedColor)
-            tv_badge1.visibility = View.VISIBLE
 
             iv_message.setImageResource(R.drawable.ic_chat_outline)
             tv_message.setTextColor(unselectedColor)
@@ -189,7 +179,6 @@ class Act_home : AppCompatActivity() {
 
             iv_home.setImageResource(R.drawable.ic_home_outline)
             tv_home.setTextColor(unselectedColor)
-            tv_badge1.visibility = View.VISIBLE
 
             iv_cart.setImageResource(R.drawable.ic_cart_outline)
             tv_cart.setTextColor(unselectedColor)
@@ -215,7 +204,6 @@ class Act_home : AppCompatActivity() {
 
             iv_home.setImageResource(R.drawable.ic_home_outline)
             tv_home.setTextColor(unselectedColor)
-            tv_badge1.visibility = View.VISIBLE
 
             iv_message.setImageResource(R.drawable.ic_chat_outline)
             tv_message.setTextColor(unselectedColor)

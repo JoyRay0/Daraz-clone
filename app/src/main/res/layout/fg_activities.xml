@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.Fg_activities">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:background="#fff"
+        >
+
+        <!-- all -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rbtn_all"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="#8D7B7B"
+            android:layout_margin="5dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:background="@drawable/sh_radio_btn_unselected"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            />
+
+        <!-- coins -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rbtn_coins"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="Coins"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="#8D7B7B"
+            android:layout_margin="5dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:background="@drawable/sh_radio_btn_unselected"
+            android:layout_toEndOf="@id/rbtn_all"
+            android:layout_alignParentTop="true"
+            />
+
+        <!-- live -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rbtn_live"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Live"
+            android:textColor="#8D7B7B"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:background="@drawable/sh_radio_btn_unselected"
+            android:layout_toEndOf="@id/rbtn_coins"
+            android:layout_alignParentTop="true"
+            />
+
+        <!-- services -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rbtn_service"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Services"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="#8D7B7B"
+            android:layout_margin="5dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:background="@drawable/sh_radio_btn_unselected"
+            android:layout_toEndOf="@id/rbtn_live"
+            android:layout_alignParentTop="true"
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl"
+        android:background="#97F4F3F3"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        />
+
+</RelativeLayout>

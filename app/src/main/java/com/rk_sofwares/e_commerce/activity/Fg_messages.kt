@@ -1,11 +1,14 @@
 package com.rk_sofwares.e_commerce.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
@@ -35,6 +38,17 @@ class Fg_messages : Fragment() {
     //toolbar
     private lateinit var fl_toolbar : FrameLayout
     private lateinit var fl_c_o_a_p : FrameLayout
+
+    //chats orders activities promos
+    private lateinit var ll_chats : LinearLayout
+    private lateinit var ll_orders : LinearLayout
+    private lateinit var ll_activities : LinearLayout
+    private lateinit var ll_promos : LinearLayout
+    private lateinit var tv_act_dot : AppCompatTextView
+    private lateinit var tv_pro_dot : AppCompatTextView
+
+    private lateinit var tv_mark_read : AppCompatTextView
+
     private lateinit var rv_messages : RecyclerView
 
     private var m_list : ArrayList<HashMap<String, String>> = ArrayList()
@@ -43,6 +57,9 @@ class Fg_messages : Fragment() {
     //other
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var mAdapter : Messages
+
+    var actCount = 0
+    var proCount = 0
 
 
     //XML id's---------------------------------------------------------------
@@ -56,18 +73,41 @@ class Fg_messages : Fragment() {
         //toolbar
         fl_toolbar = view.findViewById(R.id.fl_toolbar)
         fl_c_o_a_p = view.findViewById(R.id.fl_c_o_a_p)
+
+        //c,o,a,p
+        ll_chats = view.findViewById(R.id.ll_chats)
+        ll_orders = view.findViewById(R.id.ll_orders)
+        ll_activities = view.findViewById(R.id.ll_activities)
+        ll_promos = view.findViewById(R.id.ll_promos)
+        tv_act_dot = view.findViewById(R.id.tv_act_dot)
+        tv_pro_dot = view.findViewById(R.id.tv_pro_dot)
+        tv_mark_read = view.findViewById(R.id.tv_mark_read)
+
+        //recyclerview
         rv_messages = view.findViewById(R.id.rv_messages)
 
         //identity period---------------------------------------------------
 
         edge_to_edge = EdgeToEdge(requireActivity())
-
         edge_to_edge.setToolBar(fl_toolbar)
 
         mAdapter = Messages(requireActivity(), m_list)
         rv_messages.adapter = mAdapter
 
         message()
+
+        sentIntent()
+
+        tv_mark_read.setOnClickListener {
+
+            tv_act_dot.visibility = View.INVISIBLE
+            tv_pro_dot.visibility = View.INVISIBLE
+            actCount = 0
+            proCount = 0
+
+        }
+
+
 
         return view
     }//on create==========================================================
@@ -125,6 +165,24 @@ class Fg_messages : Fragment() {
 
                             CoroutineScope(Dispatchers.Main).launch {
 
+                                for (count in item_message.images){
+
+                                    if (count.item.equals("activities")){
+
+                                        tv_act_dot.visibility = View.VISIBLE
+                                        actCount++
+                                        tv_act_dot.text = actCount.toString()
+
+                                    }else if (count.item.equals("promos")){
+
+                                        tv_pro_dot.visibility = View.VISIBLE
+                                        proCount++
+                                        tv_pro_dot.text = proCount.toString()
+
+                                    }
+
+                                }
+
                                 mAdapter.notifyDataSetChanged()
                                 rv_messages.visibility = View.VISIBLE
 
@@ -144,6 +202,54 @@ class Fg_messages : Fragment() {
 
             }
         })
+
+    }
+
+    //open in another app-----------------------------------------------------
+    private fun sentIntent(){
+
+        val chat ="allChats"
+        val order = "allOrder"
+        val activities = "allActivities"
+        val promos = "allPromos"
+
+        //chats
+        ll_chats.setOnClickListener {
+
+            val intent = Intent(requireActivity(), Act_c_o_a_p::class.java)
+            intent.putExtra("c", chat)
+            startActivity(intent)
+
+        }
+
+        //orders
+        ll_orders.setOnClickListener {
+
+            val intent = Intent(requireActivity(), Act_c_o_a_p::class.java)
+            intent.putExtra("o", order)
+            startActivity(intent)
+
+        }
+
+        //activities
+        ll_activities.setOnClickListener {
+
+            val intent = Intent(requireActivity(), Act_c_o_a_p::class.java)
+            intent.putExtra("a", activities)
+            startActivity(intent)
+
+        }
+
+        //promos
+        ll_promos.setOnClickListener {
+
+            val intent = Intent(requireActivity(), Act_c_o_a_p::class.java)
+            intent.putExtra("p", promos)
+            startActivity(intent)
+
+        }
+
+
 
     }
 

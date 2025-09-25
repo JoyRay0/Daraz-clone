@@ -69,6 +69,16 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- red dot -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/sh_badge_bg"
+                android:layout_alignTop="@id/cv_image"
+                android:layout_alignEnd="@id/cv_image"
+                />
+
             <!-- message title -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title"

@@ -238,17 +238,19 @@ class Fg_home : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
 
+            if (isViewPagerVisible){
+
+                viewpager_infinite_loop()
+
+            }
+
             dataFromCache()
             child_fragment()
 
         }
 
 
-        if (isViewPagerVisible){
 
-            viewpager_infinite_loop()
-
-        }
 
         val edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)

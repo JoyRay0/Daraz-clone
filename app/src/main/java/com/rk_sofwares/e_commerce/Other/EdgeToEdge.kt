@@ -1,7 +1,6 @@
 package com.rk_sofwares.e_commerce.Other
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.view.View
 import androidx.core.graphics.toColorInt
@@ -38,10 +37,25 @@ class EdgeToEdge(
     }
 
     //bottom navigation
-    fun setBottomNav(bottom_navigation : View){
+    fun setBottomNav(bottom_navigation: View){
 
         ViewCompat.setOnApplyWindowInsetsListener(bottom_navigation) { v, insets ->
-            v.updatePadding(bottom = insets.systemWindowInsetBottom)
+            v.updatePadding(bottom = insets.mandatorySystemGestureInsets.bottom)
+            insets
+        }
+
+    }
+
+    fun noBottomNav(no_nav : View){
+
+        ViewCompat.setOnApplyWindowInsetsListener(no_nav) { v, insets ->
+            // gesture / navigation safe padding
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                insets.systemGestureInsets.bottom  // এখানে bottom inset safe
+            )
             insets
         }
 
