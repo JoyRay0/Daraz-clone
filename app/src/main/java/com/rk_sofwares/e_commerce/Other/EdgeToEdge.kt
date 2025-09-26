@@ -1,13 +1,17 @@
 package com.rk_sofwares.e_commerce.Other
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updatePadding
+import com.rk_sofwares.e_commerce.R
 
 
 class EdgeToEdge(
@@ -67,5 +71,7 @@ class EdgeToEdge(
         activity.window.statusBarColor = color.toColorInt()
         WindowInsetsControllerCompat(activity.window, activity.window.decorView).isAppearanceLightStatusBars = isLight
     }
+
+
 
 }

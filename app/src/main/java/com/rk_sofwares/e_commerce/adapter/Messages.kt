@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Fg_messages
 import com.squareup.picasso.Picasso
 
 class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
@@ -21,10 +22,19 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
     private var m_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var context: Context
 
+    var isDotVisible : Boolean = false
+
     constructor(context: Context, list : ArrayList<HashMap<String, String>>):this(){
 
         this.context = context
         this.m_list = list
+
+    }
+
+    fun updateVisibility(isVisible : Boolean){
+
+        this.isDotVisible = isVisible
+        notifyDataSetChanged()
 
     }
 
@@ -68,6 +78,17 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
         holder.cb_box.visibility = View.GONE
         holder.iv_delete.visibility = View.GONE
         holder.cb_box.isChecked = false
+
+
+
+        if (isDotVisible){
+
+            holder.tv_dot.visibility = View.GONE
+
+        }else{
+
+            holder.tv_dot.visibility = View.VISIBLE
+        }
 
         holder.cv_message.setOnLongClickListener {
 
@@ -126,7 +147,7 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
         val tv_short_message = view.findViewById<AppCompatTextView>(R.id.tv_short_message)
         val cb_box = view.findViewById<AppCompatCheckBox>(R.id.cb_box)
         val iv_delete = view.findViewById<AppCompatImageView>(R.id.iv_delete)
-
+        val tv_dot = view.findViewById<AppCompatTextView>(R.id.tv_dot)
 
 
     }

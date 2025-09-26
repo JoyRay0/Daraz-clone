@@ -163,9 +163,9 @@ class Act_home : AppCompatActivity() {
             tv_badge4.visibility = View.VISIBLE
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_cart()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722", false)
+            edge_to_edge.statusBarColor("#FFFFFF", true)
 
         }
 
@@ -214,9 +214,9 @@ class Act_home : AppCompatActivity() {
             tv_badge3.visibility = View.VISIBLE
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_profile()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722", false)
+            edge_to_edge.statusBarColor("#FFFFFF", true)
         }
 
     }

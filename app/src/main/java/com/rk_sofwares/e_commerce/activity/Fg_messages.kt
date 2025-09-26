@@ -58,6 +58,7 @@ class Fg_messages : Fragment() {
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var mAdapter : Messages
 
+
     var actCount = 0
     var proCount = 0
 
@@ -104,6 +105,7 @@ class Fg_messages : Fragment() {
             tv_pro_dot.visibility = View.INVISIBLE
             actCount = 0
             proCount = 0
+            mAdapter.updateVisibility(true)
 
         }
 

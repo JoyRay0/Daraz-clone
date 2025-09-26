@@ -1,10 +1,13 @@
 package com.rk_sofwares.e_commerce.activity
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Switch
@@ -36,6 +39,8 @@ class Fg_activities : Fragment() {
     private lateinit var rbtn_coins : AppCompatTextView
     private lateinit var rbtn_live : AppCompatTextView
     private lateinit var rbtn_service : AppCompatTextView
+    private lateinit var ll_no_item : LinearLayout
+    private lateinit var btn_start_shopping : AppCompatTextView
 
     private var m_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var m_map : HashMap<String, String>
@@ -44,6 +49,7 @@ class Fg_activities : Fragment() {
 
     //XML id's-------------------------------------------------------
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fg_activities, container, false)
@@ -55,6 +61,8 @@ class Fg_activities : Fragment() {
         rbtn_coins = view.findViewById(R.id.rbtn_coins)
         rbtn_live = view.findViewById(R.id.rbtn_live)
         rbtn_service = view.findViewById(R.id.rbtn_service)
+        ll_no_item = view.findViewById(R.id.ll_no_item)
+        btn_start_shopping = view.findViewById(R.id.btn_start_shopping)
 
         //identity period-------------------------------------------------------
 
@@ -64,6 +72,12 @@ class Fg_activities : Fragment() {
 
         selectedItem()
         dataFromServer()
+
+        btn_start_shopping.setOnClickListener {
+
+            startActivity(Intent(requireActivity(), Act_home::class.java))
+
+        }
 
         return view
     }// on create===============================================================
@@ -102,6 +116,9 @@ class Fg_activities : Fragment() {
             rbtn_live.background = unSelectedBackground
             rbtn_service.background = unSelectedBackground
 
+            rv_items.visibility = View.VISIBLE
+            ll_no_item.visibility = View.GONE
+
         }
 
         rbtn_coins.setOnClickListener {
@@ -117,6 +134,9 @@ class Fg_activities : Fragment() {
             rbtn_live.background = unSelectedBackground
             rbtn_service.background = unSelectedBackground
 
+            rv_items.visibility = View.VISIBLE
+            ll_no_item.visibility = View.GONE
+
         }
 
         rbtn_live.setOnClickListener {
@@ -131,6 +151,9 @@ class Fg_activities : Fragment() {
             rbtn_all.background = unSelectedBackground
             rbtn_coins.background = unSelectedBackground
             rbtn_service.background = unSelectedBackground
+
+            rv_items.visibility = View.GONE
+            ll_no_item.visibility = View.VISIBLE
 
         }
 
@@ -148,6 +171,9 @@ class Fg_activities : Fragment() {
             rbtn_all.background = unSelectedBackground
             rbtn_coins.background = unSelectedBackground
             rbtn_live.background = unSelectedBackground
+
+            rv_items.visibility = View.GONE
+            ll_no_item.visibility = View.VISIBLE
 
         }
 

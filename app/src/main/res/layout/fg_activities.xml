@@ -101,7 +101,63 @@
         android:layout_below="@id/rl"
         android:background="#97F4F3F3"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
+        android:visibility="gone"
         />
+
+    <LinearLayout
+        android:id="@+id/ll_no_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="150dp"
+        android:visibility="gone"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:lottie_rawRes="@raw/search"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_gravity="center"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_text"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="No message yet, Explore our irresistible products now"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textStyle="normal"
+            android:fontFamily="@font/roboto"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_start_shopping"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Start shopping"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/sh_btn_start_shopping"
+            android:elevation="5dp"
+            android:tooltipText="start your shopping now"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
