@@ -4,7 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.Fg_profile">
+
+    <!-- toolbar -->
+    <FrameLayout
+        android:id="@+id/fl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        >
+
+        <include layout="@layout/lay_profile_toolbar"/>
+
+    </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_toolbar"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!-- count item -->
+            <FrameLayout
+                android:id="@+id/fl_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent">
+
+                <include layout="@layout/lay_w_f_v_c"/>
+
+            </FrameLayout>
+
+            <!-- orders-->
+            <FrameLayout
+                android:id="@+id/fl_my_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent">
+
+                <include layout="@layout/lay_profile_my_oders"/>
+
+            </FrameLayout>
+
+            <!-- gifs-->
+            <FrameLayout
+                android:id="@+id/fl_gifs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent"
+                android:visibility="gone"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                >
+
+                <include layout="@layout/lay_profile_gifs"/>
+
+            </FrameLayout>
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 
 

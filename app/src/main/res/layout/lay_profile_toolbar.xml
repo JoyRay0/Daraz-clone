@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    >
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="pin"
+            >
+
+            <!-- profile image -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Profile"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:textColor="#141313"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- profile image -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="#F1F0F0"
+                app:cardCornerRadius="200dp"
+                android:layout_below="@id/tv_my_profile"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="17dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_profile_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_smile"
+                    android:scaleType="fitXY"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- camera svg -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_camera_photo"
+                android:layout_alignEnd="@id/cv_profile_image"
+                android:layout_alignBottom="@id/cv_profile_image"
+                android:elevation="5dp"
+                />
+
+            <!-- user name -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guest"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:textColor="#393030"
+                android:layout_alignTop="@id/cv_profile_image"
+                android:layout_alignBottom="@id/cv_profile_image"
+                android:layout_marginStart="18dp"
+                android:gravity="center"
+                android:layout_toEndOf="@id/cv_profile_image"
+                />
+
+            <!-- setting svg -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_setting"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/tv_my_profile"
+                android:layout_marginEnd="17dp"
+                android:elevation="5dp"
+                android:tooltipText="Settings"
+                android:background="?attr/actionBarItemBackground"
+                />
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+</com.google.android.material.appbar.AppBarLayout>

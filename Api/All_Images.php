@@ -277,6 +277,31 @@ switch ($resource) {
             
         ];
         
+        break;
+        
+     //GIF images----------------------------------------------------------------------
+    case 'gifs':
+        $images = [
+
+            [
+                'id' => '1',
+                'gif' => 'https://rashad-stack-daraz.netlify.app/images/icons/261876cd-28b2-4dbc-b441-3bd8d054a571.gif',
+                'gif_title' => 'Daraz Shopping',
+                'gif_information' => 'Check and enjoy Shipping Fee',
+                'gif_button' => 'Collect',
+                
+            ],
+            [
+                'id' => '2',
+                'gif' => 'https://i.tribune.com.pk/media/images/Black-Friday-GIF-2/Black-Friday-GIF-2.gif',
+                'gif_title' => 'Black Friday Offer',
+                'gif_information' => 'Check out Black Friday Discount',
+                'gif_button' => 'Check',
+                
+            ],
+            
+
+        ];
         break;    
 
     default:

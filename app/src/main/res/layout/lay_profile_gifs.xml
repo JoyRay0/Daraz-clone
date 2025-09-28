@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <!-- 1st gifs -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="7dp"
+        app:cardBackgroundColor="#FBF7F7"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="7dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_gif_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GIF title"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_gif1"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="7dp"
+                android:layout_margin="3dp"
+                android:layout_below="@id/tv_gif_title1"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gif1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_loading_daraz"
+                   android:scaleType="fitXY"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_gif_info1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No GIF informatoation"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="#695F5F"
+                android:gravity="start|center"
+                android:layout_alignTop="@id/cv_gif1"
+                android:layout_toEndOf="@id/cv_gif1"
+               android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                android:textSize="11sp"
+                android:textColor="#fff"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:background="@drawable/sh_gif_btn"
+                android:layout_alignBottom="@id/cv_gif1"
+                android:layout_toEndOf="@id/cv_gif1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="3dp"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- 2nd gifs -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="7dp"
+        app:cardBackgroundColor="#FBF7F7"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="7dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_gif_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GIF title"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_gif2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="7dp"
+                android:layout_margin="3dp"
+                android:layout_below="@id/tv_gif_title2"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gif2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_loading_daraz"
+                    android:scaleType="fitXY"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_gif_info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No GIF informatoation"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="#695F5F"
+                android:gravity="start|center"
+                android:layout_alignTop="@id/cv_gif2"
+                android:layout_toEndOf="@id/cv_gif2"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                android:textSize="11sp"
+                android:textColor="#fff"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:background="@drawable/sh_gif_btn"
+                android:layout_toEndOf="@id/cv_gif2"
+                android:layout_alignBottom="@id/cv_gif2"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="3dp"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

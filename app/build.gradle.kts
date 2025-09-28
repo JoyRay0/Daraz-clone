@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.dotsindicator)
     implementation(libs.circleimageview)
     implementation(libs.lottie)
+    implementation(libs.coil)
+    implementation(libs.coil.gif)
+
 
 
     val roomVersion = "2.6.1" // সর্বশেষ ভার্সন ব্যবহার করো
