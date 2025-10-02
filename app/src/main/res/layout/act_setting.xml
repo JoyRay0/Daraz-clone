@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Act_setting"
+    android:background="#63F1EEEE"
+    >
+
+    <!-- back toolbar -->
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="#ffff"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/ic_back"
+            android:layout_margin="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/actionBarItemBackground"
+            android:tooltipText="Back"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="17sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/roboto"
+            android:layout_toEndOf="@id/iv_back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_toolbar"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!-- account info and account security -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_accountInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Information"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_accountSecurity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Security"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_addressBook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address Book"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- messages and country and language -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <!-- messages -->
+                    <RelativeLayout
+                        android:id="@+id/rl_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="10dp"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_messages"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Messages"
+                            android:textSize="17sp"
+                            android:textColor="#000"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="start"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_onOff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="On"
+                            android:textSize="14sp"
+                            android:textColor="#8B6A6A"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="end"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+
+                    <!-- country -->
+                    <RelativeLayout
+                        android:id="@+id/rl_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="10dp"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Country"
+                            android:textSize="17sp"
+                            android:textColor="#000"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="start"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_countryName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bangladesh"
+                            android:textSize="14sp"
+                            android:textColor="#8B6A6A"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="end"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+                    <!-- language -->
+                    <RelativeLayout
+                        android:id="@+id/rl_language"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="10dp"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_language"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Language"
+                            android:textSize="17sp"
+                            android:textColor="#000"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="start"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_languageName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="English"
+                            android:textSize="14sp"
+                            android:textColor="#8B6A6A"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="end"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- policies and help and feedback -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_policies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Policies"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Help"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4C9C9"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Feedback"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_forword"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- log out-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                android:layout_margin="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_logOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:textSize="17sp"
+                    android:textColor="#F44336"
+                    android:textStyle="normal"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:background="?attr/selectableItemBackground"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

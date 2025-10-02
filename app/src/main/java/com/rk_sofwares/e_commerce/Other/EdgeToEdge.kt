@@ -41,6 +41,7 @@ class EdgeToEdge(
     }
 
     //bottom navigation
+    /*
     fun setBottomNav(bottom_navigation: View){
 
         ViewCompat.setOnApplyWindowInsetsListener(bottom_navigation) { v, insets ->
@@ -50,9 +51,12 @@ class EdgeToEdge(
 
     }
 
-    fun noBottomNav(no_nav : View){
+     */
 
-        ViewCompat.setOnApplyWindowInsetsListener(no_nav) { v, insets ->
+    //bottom navigation
+    fun setBottomNav(nav : View){
+
+        ViewCompat.setOnApplyWindowInsetsListener(nav) { v, insets ->
             // gesture / navigation safe padding
             v.setPadding(
                 v.paddingLeft,

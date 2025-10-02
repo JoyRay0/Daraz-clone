@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/ll_click"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        android:layout_margin="7dp"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#fff"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_loading_daraz"
+            android:scaleType="fitXY"
+            android:padding="3dp"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Demo"
+        android:fontFamily="@font/roboto"
+        android:textSize="11sp"
+        android:textColor="#4E4343"
+        android:gravity="center"
+        android:layout_gravity="center"
+        />
+
+
+
+
+
+
+</LinearLayout>

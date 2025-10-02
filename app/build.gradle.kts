@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.cast.framework)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -54,10 +55,6 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.coil)
     implementation(libs.coil.gif)
-
-
-
-    val roomVersion = "2.6.1" // সর্বশেষ ভার্সন ব্যবহার করো
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

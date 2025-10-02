@@ -1,9 +1,11 @@
 package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +14,11 @@ import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
-import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -28,10 +28,10 @@ import com.rk_sofwares.e_commerce.Model.CouponModel
 import com.rk_sofwares.e_commerce.Model.FlashSaleModel
 import com.rk_sofwares.e_commerce.Model.ItemModel
 import com.rk_sofwares.e_commerce.Model.ViewpagerModel
-import com.rk_sofwares.e_commerce.Model.c_images
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.Other.Cache
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
+import com.rk_sofwares.e_commerce.Other.PermissionHelper
 import com.rk_sofwares.e_commerce.adapter.Categories
 import com.rk_sofwares.e_commerce.adapter.ItemAdapter
 import com.rk_sofwares.e_commerce.adapter.ViewpagerAdapter
@@ -139,6 +139,8 @@ class Fg_home : Fragment() {
     private lateinit var fl_tablayout : FrameLayout
 
 
+    //other
+    private lateinit var permission : PermissionHelper
 
 
     //XML id's--------------------------------------------------------------
@@ -249,15 +251,30 @@ class Fg_home : Fragment() {
 
         }
 
-
-
-
         val edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
 
 
+        //permission = PermissionHelper(requireActivity())
+
+        iv_scan.setOnClickListener {
+
+
+
+        }
+
+        iv_camera.setOnClickListener {
+
+
+
+        }
+
         return view
     }//on create=================================================================
+
+
+
+    //checking images-----------------------------------------------
 
     //item image from server----------------------------------------
     private fun item_image(){
@@ -1215,5 +1232,6 @@ class Fg_home : Fragment() {
         }
 
     }
+
 
 }//public class=============================================================

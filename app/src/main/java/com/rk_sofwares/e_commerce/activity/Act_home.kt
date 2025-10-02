@@ -5,12 +5,20 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.graphics.toColorInt
+import com.google.android.material.card.MaterialCardView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
+import com.rk_sofwares.e_commerce.Other.FragmentHelper
+import com.rk_sofwares.e_commerce.Other.PermissionHelper
 import com.rk_sofwares.e_commerce.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class Act_home : AppCompatActivity() {
 
@@ -40,7 +48,11 @@ class Act_home : AppCompatActivity() {
     private lateinit var fl_bottom_navigation : FrameLayout
     private lateinit var fl_container : FrameLayout
 
+    //others
     private lateinit var edge_to_edge : EdgeToEdge
+    private lateinit var helper : FragmentHelper
+
+
 
     //XML id's------------------------------------------------------------
 
@@ -52,7 +64,7 @@ class Act_home : AppCompatActivity() {
         edge_to_edge.setEdgeToEdge()
 
         //identity period---------------------------------------------------
-        val main = findViewById<RelativeLayout>(R.id.main)
+        //bottom na
         ll_home = findViewById(R.id.ll_home);
         ll_cart = findViewById(R.id.ll_cart);
         ll_message = findViewById(R.id.ll_message);
@@ -82,8 +94,13 @@ class Act_home : AppCompatActivity() {
 
         bottom_nav()
 
+        helper = FragmentHelper(this)
+
+        verifyIntent()
 
         edge_to_edge.setBottomNav(fl_bottom_navigation)
+
+
 
     }//on create===========================================================
 
@@ -94,7 +111,7 @@ class Act_home : AppCompatActivity() {
         val unselectedColor = "#988080".toColorInt()
         val itemBadge = "1"
 
-        edge_to_edge.statusBarColor("#FF5722", false)
+        edge_to_edge.statusBarColor("#FFFFFF", true)
 
         iv_home.setImageResource(R.drawable.ic_home_fill)
         tv_home.setTextColor(selectedColor)
@@ -123,7 +140,7 @@ class Act_home : AppCompatActivity() {
             val fg = supportFragmentManager
             fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
 
-            edge_to_edge.statusBarColor("#FF5722", false)
+            edge_to_edge.statusBarColor("#FFFFFF", true)
 
             iv_home.setImageResource(R.drawable.ic_home_fill)
             tv_home.setTextColor(selectedColor)
@@ -220,8 +237,19 @@ class Act_home : AppCompatActivity() {
         }
 
     }
-
     //bottom navigation -------------------------------------------------------
 
+    //checking intents----------------------------------------------------
+    private fun verifyIntent(){
+
+        CoroutineScope(Dispatchers.Main).launch {
+
+            helper.setFragment( intent.getStringExtra("p_message").toString() , R.id.fl_container, fl_bottom_navigation)
+
+            delay(100)
+
+        }
+
+    }
 
 }//public class===========================================================

@@ -302,6 +302,70 @@ switch ($resource) {
             
 
         ];
+        break;  
+        
+     //item images----------------------------------------------------------------------
+    case 'profile_item_images':
+        $images = [
+
+            [
+                'id' => '1',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/16566/16566050.png',
+                'text' => 'My Messages',
+                'item' => 'message',
+                
+            ],
+            [
+                'id' => '2',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/16771/16771803.png',
+                'text' => 'Buy Any 4',
+                'item' => 'buy',
+                
+            ],
+            [
+                'id' => '3',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/2682/2682165.png',
+                'text' => 'Daraz Look',
+                'item' => 'look',
+                
+            ],
+            [
+                'id' => '4',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/10213/10213241.png',
+                'text' => 'My Affiliates',
+                'item' => 'affiliates',
+                
+            ],
+            [
+                'id' => '5',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/8073/8073476.png',
+                'text' => 'Help Center',
+                'item' => 'help',
+                
+            ],
+            [
+                'id' => '6',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/4753/4753415.png',
+                'text' => 'Contact Customer Care',
+                'item' => 'customer_care',
+                
+            ],
+            [
+                'id' => '7',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/1031/1031795.png',
+                'text' => 'My Reviews',
+                'item' => 'ratings',
+                
+            ],
+            [
+                'id' => '8',
+                'image' => 'https://cdn-icons-png.flaticon.com/128/8983/8983163.png',
+                'text' => 'Payment Options',
+                'item' => 'payment',
+                
+            ],
+            
+        ];
         break;    
 
     default:

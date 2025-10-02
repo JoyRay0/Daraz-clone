@@ -48,7 +48,7 @@ class Act_c_o_a_p : AppCompatActivity() {
         edge_to_edge.setEdgeToEdge()
         edge_to_edge.setToolBar(fl_toolbar)
         edge_to_edge.statusBarColor("#FFFFFF", true)
-        edge_to_edge.noBottomNav(fl_container)
+        edge_to_edge.setBottomNav(fl_container)
 
         //back button--------------------------------------------------
         iv_back.setOnClickListener {
