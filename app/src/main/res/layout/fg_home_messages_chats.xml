@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.Fg_chats">
+    tools:context=".fragment.Fg_home_messages_chats_child">
 
 
     <LinearLayout

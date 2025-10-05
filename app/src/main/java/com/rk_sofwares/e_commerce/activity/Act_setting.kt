@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
+import com.rk_sofwares.e_commerce.Other.IntentHelper
 import com.rk_sofwares.e_commerce.Other.StorageHelper
 import com.rk_sofwares.e_commerce.R
 
@@ -116,55 +117,47 @@ class Act_setting : AppCompatActivity() {
 
         tv_accountInfo.setOnClickListener {
 
-            intent("info", accountInfo)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "info", accountInfo)
 
         }
 
         tv_accountSecurity.setOnClickListener {
 
-            intent("security", accountSecurity)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "security", accountSecurity)
 
         }
 
         tv_addressBook.setOnClickListener {
 
-            intent("address", addressBook)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "address", addressBook)
 
         }
 
         rl_message.setOnClickListener {
 
-            intent("message", messages)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "message", messages)
 
         }
 
         tv_policies.setOnClickListener {
 
-            intent("policies", policies)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "policies", policies)
 
         }
 
         tv_help.setOnClickListener {
 
-            intent("help", help)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "help", help)
 
         }
 
         tv_feedback.setOnClickListener {
 
-            intent("feedback", feedBack)
+            IntentHelper.setDataIntent(this, Act_child_settings::class.java, "feedback", feedBack)
 
         }
 
 
     }
 
-    private fun intent(key : String, value : String){
-
-        val intent = Intent(this, Act_child_settings::class.java)
-        intent.putExtra(key, value)
-        startActivity(intent)
-        finishAffinity()
-
-    }
 }// public class==================================================================

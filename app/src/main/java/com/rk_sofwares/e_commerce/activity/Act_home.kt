@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.graphics.toColorInt
-import com.google.android.material.card.MaterialCardView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.Other.FragmentHelper
-import com.rk_sofwares.e_commerce.Other.PermissionHelper
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.fragment.Fg_home_cart
+import com.rk_sofwares.e_commerce.fragment.Fg_home_home
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages
+import com.rk_sofwares.e_commerce.fragment.Fg_home_profile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -90,7 +90,7 @@ class Act_home : AppCompatActivity() {
         //identity period---------------------------------------------------
 
         val fg = supportFragmentManager
-        fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+        fg.beginTransaction().replace(R.id.fl_container, Fg_home_home()).commit()
 
         bottom_nav()
 
@@ -138,7 +138,7 @@ class Act_home : AppCompatActivity() {
         ll_home.setOnClickListener {
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home_home()).commit()
 
             edge_to_edge.statusBarColor("#FFFFFF", true)
 
@@ -180,7 +180,7 @@ class Act_home : AppCompatActivity() {
             tv_badge4.visibility = View.VISIBLE
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_cart()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home_cart()).commit()
 
             edge_to_edge.statusBarColor("#FFFFFF", true)
 
@@ -206,7 +206,7 @@ class Act_home : AppCompatActivity() {
             tv_badge4.visibility = View.VISIBLE
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_messages()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home_messages()).commit()
 
             edge_to_edge.statusBarColor("#FFFFFF", true)
 
@@ -231,7 +231,7 @@ class Act_home : AppCompatActivity() {
             tv_badge3.visibility = View.VISIBLE
 
             val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_profile()).commit()
+            fg.beginTransaction().replace(R.id.fl_container, Fg_home_profile()).commit()
 
             edge_to_edge.statusBarColor("#FFFFFF", true)
         }

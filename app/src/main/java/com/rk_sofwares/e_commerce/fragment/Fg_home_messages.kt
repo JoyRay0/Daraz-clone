@@ -1,23 +1,20 @@
-package com.rk_sofwares.e_commerce.activity
+package com.rk_sofwares.e_commerce.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.ViewCompat
-import androidx.core.widget.NestedScrollView
-import com.rk_sofwares.e_commerce.Other.EdgeToEdge
-import com.rk_sofwares.e_commerce.R
-import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.rk_sofwares.e_commerce.Model.ItemModel
 import com.rk_sofwares.e_commerce.Model.MessageModel
+import com.rk_sofwares.e_commerce.Other.EdgeToEdge
+import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Act_c_o_a_p
 import com.rk_sofwares.e_commerce.adapter.Messages
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,8 +27,7 @@ import okhttp3.Response
 import okio.IOException
 import java.lang.Exception
 
-
-class Fg_messages : Fragment() {
+class Fg_home_messages : Fragment() {
 
     //XML id's---------------------------------------------------------------
 
@@ -67,7 +63,7 @@ class Fg_messages : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fg_messages, container, false)
+        val view = inflater.inflate(R.layout.fg_home_messages, container, false)
 
         //identity period---------------------------------------------------
 
@@ -125,7 +121,7 @@ class Fg_messages : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=messages")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 

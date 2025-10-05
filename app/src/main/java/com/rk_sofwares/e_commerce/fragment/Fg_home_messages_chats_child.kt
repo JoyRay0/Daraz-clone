@@ -1,15 +1,16 @@
-package com.rk_sofwares.e_commerce.activity
+package com.rk_sofwares.e_commerce.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Act_home
 
-class Fg_chats : Fragment() {
+class Fg_home_messages_chats_child : Fragment() {
 
     //XML id's------------------------------------------------------------
 
@@ -19,7 +20,7 @@ class Fg_chats : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fg_chats, container, false)
+        val view = inflater.inflate(R.layout.fg_home_messages_chats, container, false)
 
         //identity period-------------------------------------------------------
 

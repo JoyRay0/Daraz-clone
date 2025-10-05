@@ -1,12 +1,8 @@
-package com.rk_sofwares.e_commerce.activity
+package com.rk_sofwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +16,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
@@ -28,10 +25,10 @@ import com.rk_sofwares.e_commerce.Model.CouponModel
 import com.rk_sofwares.e_commerce.Model.FlashSaleModel
 import com.rk_sofwares.e_commerce.Model.ItemModel
 import com.rk_sofwares.e_commerce.Model.ViewpagerModel
-import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.Other.Cache
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.Other.PermissionHelper
+import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.adapter.Categories
 import com.rk_sofwares.e_commerce.adapter.ItemAdapter
 import com.rk_sofwares.e_commerce.adapter.ViewpagerAdapter
@@ -50,8 +47,7 @@ import okio.IOException
 import java.lang.Exception
 import java.util.ArrayList
 
-
-class Fg_home : Fragment() {
+class Fg_home_home : Fragment() {
 
     //XML id's--------------------------------------------------------------
 
@@ -148,7 +144,7 @@ class Fg_home : Fragment() {
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fg_home, container, false)
+        val view = inflater.inflate(R.layout.fg_home_home, container, false)
 
         //identity period----------------------------------------------------
 
@@ -287,7 +283,7 @@ class Fg_home : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=item")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
@@ -387,7 +383,7 @@ class Fg_home : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=viewpager")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
@@ -645,7 +641,7 @@ class Fg_home : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=other_images")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
@@ -710,7 +706,7 @@ class Fg_home : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=flash_sale_images")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
@@ -791,7 +787,7 @@ class Fg_home : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=category_image")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
@@ -895,7 +891,10 @@ class Fg_home : Fragment() {
             tv_for_you.setTextColor(selectedTextColor)
             tv_for_you.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
 
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -934,7 +933,10 @@ class Fg_home : Fragment() {
             tv_hot_deals.setTextColor(selectedTextColor)
             tv_hot_deals.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_voucher_max.setTextColor(unSelectedTextColor)
@@ -972,7 +974,10 @@ class Fg_home : Fragment() {
             tv_voucher_max.setTextColor(selectedTextColor)
             tv_voucher_max.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1010,7 +1015,10 @@ class Fg_home : Fragment() {
             tv_daraz_look.setTextColor(selectedTextColor)
             tv_daraz_look.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1048,7 +1056,10 @@ class Fg_home : Fragment() {
             tv_free_delivery.setTextColor(selectedTextColor)
             tv_free_delivery.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1086,7 +1097,10 @@ class Fg_home : Fragment() {
             tv_buy_any.setTextColor(selectedTextColor)
             tv_buy_any.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1124,7 +1138,10 @@ class Fg_home : Fragment() {
             tv_buy_more.setTextColor(selectedTextColor)
             tv_buy_more.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1162,7 +1179,10 @@ class Fg_home : Fragment() {
             tv_new_arrival.setTextColor(selectedTextColor)
             tv_new_arrival.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)
@@ -1200,7 +1220,10 @@ class Fg_home : Fragment() {
             tv_must_buy.setTextColor(selectedTextColor)
             tv_must_buy.typeface = boldText
 
-            childFragmentManager.beginTransaction().replace(R.id.fl_ch_tab_item, Fg_tab_item_for_upu()).commit()
+            childFragmentManager.beginTransaction().replace(
+                R.id.fl_ch_tab_item,
+                Fg_tab_item_for_upu()
+            ).commit()
 
             tv_for_you.setTextColor(unSelectedTextColor)
             tv_hot_deals.setTextColor(unSelectedTextColor)

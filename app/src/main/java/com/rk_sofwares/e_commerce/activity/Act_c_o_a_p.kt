@@ -10,6 +10,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages_activities_child
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages_chats_child
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages_order_child
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages_promos_child
 
 class Act_c_o_a_p : AppCompatActivity() {
 
@@ -81,23 +85,31 @@ class Act_c_o_a_p : AppCompatActivity() {
         if (chat == "allChats") {
 
             toolbar_title.text = "Chats"
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_chats()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_home_messages_chats_child()
+            ).commit()
 
         }else if (order == "allOrder"){
 
             toolbar_title.text = "Orders"
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_order()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_home_messages_order_child()
+            ).commit()
 
 
         }else if (activities == "allActivities"){
 
             toolbar_title.text = "Activities"
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_activities()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_home_messages_activities_child()
+            ).commit()
 
         }else{
 
             toolbar_title.text = "Promos"
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_promos()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_home_messages_promos_child()
+            ).commit()
 
         }
 

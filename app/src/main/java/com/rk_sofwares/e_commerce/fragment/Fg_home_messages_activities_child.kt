@@ -1,23 +1,21 @@
-package com.rk_sofwares.e_commerce.activity
+package com.rk_sofwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Switch
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.rk_sofwares.e_commerce.Model.MessageModel
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Act_home
 import com.rk_sofwares.e_commerce.adapter.Messages
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +28,7 @@ import okhttp3.Response
 import okio.IOException
 import java.lang.Exception
 
-class Fg_activities : Fragment() {
+class Fg_home_messages_activities_child : Fragment() {
 
     //XML id's-------------------------------------------------------
 
@@ -52,7 +50,7 @@ class Fg_activities : Fragment() {
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fg_activities, container, false)
+        val view = inflater.inflate(R.layout.fg_home_messages_activities, container, false)
 
         //identity period-------------------------------------------------------
 
@@ -190,7 +188,7 @@ class Fg_activities : Fragment() {
             .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=messages")
             .build()
 
-        client.newCall(request).enqueue(object : Callback{
+        client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 

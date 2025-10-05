@@ -5,8 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -14,7 +12,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.rk_sofwares.e_commerce.R
-import com.rk_sofwares.e_commerce.activity.Fg_messages
 import com.squareup.picasso.Picasso
 
 class Messages() : RecyclerView.Adapter<Messages.mHolder>() {

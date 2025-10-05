@@ -2,12 +2,10 @@ package com.rk_sofwares.e_commerce.Other
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.rk_sofwares.e_commerce.activity.Fg_cart
-import com.rk_sofwares.e_commerce.activity.Fg_home
-import com.rk_sofwares.e_commerce.activity.Fg_messages
-import com.rk_sofwares.e_commerce.activity.Fg_profile
-import com.rk_sofwares.e_commerce.adapter.ItemAdapter
+import com.rk_sofwares.e_commerce.fragment.Fg_home_cart
+import com.rk_sofwares.e_commerce.fragment.Fg_home_home
+import com.rk_sofwares.e_commerce.fragment.Fg_home_messages
+import com.rk_sofwares.e_commerce.fragment.Fg_home_profile
 
 class FragmentHelper(
 
@@ -24,10 +22,10 @@ class FragmentHelper(
 
             val fragment = when(value){
 
-                "Fg_home" -> Fg_home()
-                "Fg_cart" -> Fg_cart()
-                "Fg_messages" -> Fg_messages()
-                "Fg_profile" -> Fg_profile()
+                "Fg_home" -> Fg_home_home()
+                "Fg_cart" -> Fg_home_cart()
+                "Fg_messages" -> Fg_home_messages()
+                "Fg_profile" -> Fg_home_profile()
 
                 else -> null
 
