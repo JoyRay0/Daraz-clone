@@ -86,10 +86,10 @@
 
             <!-- enable quick login -->
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sc_qucik_login"
+                android:id="@+id/sc_quick_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enable Qucik Login"
+                android:text="Enable Quick Login"
                 android:textSize="14sp"
                 android:textColor="#000"
                 android:gravity="start|center"

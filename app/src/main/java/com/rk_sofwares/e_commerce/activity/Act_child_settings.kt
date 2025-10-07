@@ -1,6 +1,7 @@
 package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -62,6 +63,13 @@ class Act_child_settings : AppCompatActivity() {
         iv_setting.visibility = View.GONE
 
         getDataFromIntent()
+
+        iv_back.setOnClickListener {
+
+            startActivity(Intent(this, Act_setting::class.java))
+            finishAffinity()
+
+        }
 
     }//on create=========================================================
 
