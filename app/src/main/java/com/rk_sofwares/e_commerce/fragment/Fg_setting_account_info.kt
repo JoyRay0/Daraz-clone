@@ -16,7 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.rk_sofwares.e_commerce.Other.IntentHelper
 import com.rk_sofwares.e_commerce.Other.StorageHelper
 import com.rk_sofwares.e_commerce.R
-import com.rk_sofwares.e_commerce.activity.Act_change_email_password
+import com.rk_sofwares.e_commerce.activity.Act_change_email_password_number
 
 class Fg_setting_account_info : Fragment() {
 
@@ -37,6 +37,7 @@ class Fg_setting_account_info : Fragment() {
 
     //other
     private lateinit var storageHelper: StorageHelper
+    private lateinit var numStorage: StorageHelper
 
     //xml id's-------------------------------------------------------
 
@@ -63,6 +64,7 @@ class Fg_setting_account_info : Fragment() {
         //identity period------------------------------------------------------------
 
         storageHelper = StorageHelper(requireActivity(), "account_info")
+        numStorage = StorageHelper(requireActivity(), "mobile_number")
 
         buttonClicked()
         setText()
@@ -96,7 +98,7 @@ class Fg_setting_account_info : Fragment() {
 
         tv_change_password.setOnClickListener {
 
-            IntentHelper.setDataIntent(requireActivity(), Act_change_email_password::class.java, "change_password", "password")
+            IntentHelper.setDataIntent(requireActivity(), Act_change_email_password_number::class.java, "change_password", "password")
 
         }
 
@@ -106,6 +108,12 @@ class Fg_setting_account_info : Fragment() {
 
             storageHelper.deleteData("switch")
             storageHelper.setData("switch", value)
+
+        }
+
+        rl_add_mobile.setOnClickListener {
+
+            IntentHelper.setDataIntent(requireActivity(), Act_change_email_password_number::class.java, "add_number", "number")
 
         }
 
@@ -174,9 +182,13 @@ class Fg_setting_account_info : Fragment() {
     private fun setText(){
 
         val name = storageHelper.getData("user_name")
+        val number = numStorage.getData("user_number")
 
 
-        tv_name.text = name
+        if (!name.isNullOrEmpty()) tv_name.text = name else tv_name.text = "Guest"
+
+        if (!number.isNullOrEmpty()) tv_mobile_number.text = "*****" else tv_mobile_number.text = "Not Set"
+
 
     }
 

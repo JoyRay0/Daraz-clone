@@ -4,15 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.fragment.Fg_add_mobile_number
 import com.rk_sofwares.e_commerce.fragment.Fg_change_password
 import com.rk_sofwares.e_commerce.fragment.Fg_setting_account_info
 
-class Act_change_email_password : AppCompatActivity() {
+class Act_change_email_password_number : AppCompatActivity() {
 
     //xml id's-------------------------------------------------------
 
@@ -32,7 +34,7 @@ class Act_change_email_password : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_change_email_password)
+        setContentView(R.layout.act_change_email_password_number)
 
         //identity period----------------------------------------------
 
@@ -60,6 +62,13 @@ class Act_change_email_password : AppCompatActivity() {
         }
         dataFromIntent()
 
+        onBackPressedDispatcher.addCallback(this, true){
+
+            startActivity(Intent(this@Act_change_email_password_number, Act_setting::class.java))
+            finishAffinity()
+
+        }
+
     }// on create======================================================
 
     //using fragment----------------------------------------------------
@@ -67,6 +76,7 @@ class Act_change_email_password : AppCompatActivity() {
 
         val password = intent.getStringExtra("change_password")
         val email = intent.getStringExtra("")
+        val number = intent.getStringExtra("add_number")
 
         if (password.equals("password")){
 
@@ -74,9 +84,17 @@ class Act_change_email_password : AppCompatActivity() {
 
             toolbar_title.text = "Change Password"
 
+        }else if (number.equals("number")){
+
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_add_mobile_number()).commit()
+
+            toolbar_title.text = "Verify number"
+
         }else{
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_setting_account_info()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_add_mobile_number()).commit()
 
         }
 

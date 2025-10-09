@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
@@ -231,21 +232,17 @@ class Fg_home_home : Fragment() {
         cache = Cache(requireContext(), "Fg_home")
 
 
-
         changeSearchBarText()   //changing search bar text after 10 seconds
 
-        CoroutineScope(Dispatchers.Main).launch {
+        if (isViewPagerVisible){
 
-            if (isViewPagerVisible){
-
-                viewpager_infinite_loop()
-
-            }
-
-            dataFromCache()
-            child_fragment()
+            viewpager_infinite_loop()
 
         }
+
+
+        dataFromCache()
+        child_fragment()
 
         val edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
@@ -450,14 +447,18 @@ class Fg_home_home : Fragment() {
     //infinite viewpager with dot indicator
     private fun viewpager_infinite_loop(){
 
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
 
             while (true){
 
-                delay(5000)
-                val nextItem = (vp_image.currentItem + 1) % vp_list.size
-                vp_image.setCurrentItem(nextItem, true)
+                delay(2000)
 
+                if (vp_list.isNotEmpty()){
+
+                    val nextItem = (vp_image.currentItem + 1) % vp_list.size
+                    vp_image.setCurrentItem(nextItem, true)
+
+                }
 
             }
 
@@ -647,9 +648,7 @@ class Fg_home_home : Fragment() {
 
                 CoroutineScope(Dispatchers.Main).launch {
 
-
                     fl_coupon.visibility = View.GONE
-
 
                 }
 
@@ -712,9 +711,7 @@ class Fg_home_home : Fragment() {
 
                 CoroutineScope(Dispatchers.Main).launch {
 
-
                     fl_flash_sale.visibility = View.GONE
-
 
                 }
 
@@ -840,7 +837,6 @@ class Fg_home_home : Fragment() {
                     }
 
                 }
-
 
             }
         })

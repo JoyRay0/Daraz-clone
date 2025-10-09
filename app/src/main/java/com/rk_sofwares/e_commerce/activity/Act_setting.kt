@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -74,10 +75,17 @@ class Act_setting : AppCompatActivity() {
         iv_back.setOnClickListener {
 
             startActivity(Intent(this, Act_home::class.java))
+            finishAffinity()
             
         }
         sendDataWithIntent()
 
+        onBackPressedDispatcher.addCallback(this, true){
+
+            startActivity(Intent(this@Act_setting, Act_home::class.java))
+            finishAffinity()
+
+        }
 
 
     }// on create=================================================================

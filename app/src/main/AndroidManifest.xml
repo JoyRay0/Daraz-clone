@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
-            android:name=".activity.Act_change_email_password"
+            android:name=".activity.Act_change_email_password_number"
             android:exported="false" />
         <activity
             android:name=".test"

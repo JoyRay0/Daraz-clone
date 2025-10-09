@@ -10,6 +10,10 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.cardview.widget.CardView
 import com.rk_sofwares.e_commerce.Other.StorageHelper
 import com.rk_sofwares.e_commerce.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class Fg_change_password : Fragment() {
@@ -76,11 +80,17 @@ class Fg_change_password : Fragment() {
 
                     changePassword.setData("user_password", confirmPassword)
 
-                    ed_email.text?.clear()
-                    ed_new_password.text?.clear()
-                    ed_confirm_password.text?.clear()
 
                     Toast.makeText(requireActivity(), "Password changed successful", Toast.LENGTH_LONG).show()
+
+                    CoroutineScope(Dispatchers.Main).launch{
+
+                        ed_email.text?.clear()
+                        ed_new_password.text?.clear()
+                        ed_confirm_password.text?.clear()
+                        delay(2000)
+
+                    }
 
                 }else{
 

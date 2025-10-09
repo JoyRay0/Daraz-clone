@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -67,6 +68,13 @@ class Act_child_settings : AppCompatActivity() {
         iv_back.setOnClickListener {
 
             startActivity(Intent(this, Act_setting::class.java))
+            finishAffinity()
+
+        }
+
+        onBackPressedDispatcher.addCallback(this, true){
+
+            startActivity(Intent(this@Act_child_settings, Act_setting::class.java))
             finishAffinity()
 
         }

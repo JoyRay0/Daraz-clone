@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -70,6 +71,13 @@ class Act_c_o_a_p : AppCompatActivity() {
 
 
         sendToFragment()
+
+        onBackPressedDispatcher.addCallback(this, true){
+
+            startActivity(Intent(this@Act_c_o_a_p, Act_home::class.java))
+            finishAffinity()
+
+        }
 
     }// on create==============================================
 
