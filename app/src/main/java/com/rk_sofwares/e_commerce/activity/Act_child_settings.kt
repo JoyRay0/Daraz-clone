@@ -1,6 +1,7 @@
 package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
+import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,7 @@ import com.rk_sofwares.e_commerce.fragment.Fg_setting_account_info
 import com.rk_sofwares.e_commerce.fragment.Fg_setting_feedback
 import com.rk_sofwares.e_commerce.fragment.Fg_setting_help
 import com.rk_sofwares.e_commerce.fragment.Fg_setting_policies
+import com.rk_sofwares.e_commerce.fragment.Fg_system_setting
 
 class Act_child_settings : AppCompatActivity() {
 
@@ -84,56 +86,27 @@ class Act_child_settings : AppCompatActivity() {
     //get data from intent---------------------------------------------------
     private fun getDataFromIntent(){
 
-        if (intent.getStringExtra("info").equals("AccountInformation")){
+        intentChecker("info", "AccountInformation", R.id.fl_container, Fg_setting_account_info(), "Account Information")
+        intentChecker("security", "AccountSecurity", R.id.fl_container, Fg_account_security(), "Privacy protection")
+        intentChecker("address", "AddressBook", R.id.fl_container, Fg_address_book(), "My Address")
+        intentChecker("message", "Messages", R.id.fl_container, Fg_home_profile_setting_messages(), "Messages Settings")
+        intentChecker("policies", "Policies", R.id.fl_container, Fg_setting_policies(), "Policies")
+        intentChecker("help", "Help", R.id.fl_container, Fg_setting_help(), "Help")
+        intentChecker("feedback", "FeedBack", R.id.fl_container, Fg_setting_feedback(), "Feedback")
+        intentChecker("system", "systemSetting", R.id.fl_container, Fg_system_setting(), "System setting")
+        intentChecker("deleted", "accountDeletion", R.id.fl_container, Fg_setting_account_info(), "Account Information")
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_setting_account_info()).commit()
+    }
 
-            toolbar_title.text = "Account Information"
+    private fun intentChecker(key : String, value : String, frameLayout : Int, fragment : androidx.fragment.app.Fragment, text : String){
 
-        }else if (intent.getStringExtra("security").equals("AccountSecurity")){
+        if (intent.getStringExtra(key).equals(value)){
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_account_security()).commit()
+            supportFragmentManager.beginTransaction().replace(frameLayout, fragment).commit()
 
-            toolbar_title.text = "Privacy protection"
-
-        }else if (intent.getStringExtra("address").equals("AddressBook")){
-
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_address_book()).commit()
-
-            toolbar_title.text = "My Address"
-
-        }else if (intent.getStringExtra("message").equals("Messages")){
-
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_home_profile_setting_messages()).commit()
-
-            toolbar_title.text = "Messages Settings"
-
-        }else if (intent.getStringExtra("policies").equals("Policies")){
-
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_setting_policies()).commit()
-
-            toolbar_title.text = "Policies"
-
-        }else if (intent.getStringExtra("help").equals("Help")){
-
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_setting_help()).commit()
-
-            toolbar_title.text = "Help"
-
-        }else{
-
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_setting_feedback()).commit()
-
-            toolbar_title.text = "Feedback"
+            toolbar_title.text = text
 
         }
-
-
 
     }
 

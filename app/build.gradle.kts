@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.coil)
     implementation(libs.coil.gif)
+    implementation("com.ebay.ejmask:ejmask-core:2.0.0")
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

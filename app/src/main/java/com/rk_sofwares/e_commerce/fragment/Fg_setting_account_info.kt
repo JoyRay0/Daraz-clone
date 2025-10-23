@@ -1,22 +1,31 @@
 package com.rk_sofwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import com.ebay.ejmask.core.EJMaskInitializer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.rk_sofwares.e_commerce.Other.IntentHelper
 import com.rk_sofwares.e_commerce.Other.StorageHelper
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.activity.Act_change_email_password_number
+import androidx.core.graphics.drawable.toDrawable
 
 class Fg_setting_account_info : Fragment() {
 
@@ -38,6 +47,9 @@ class Fg_setting_account_info : Fragment() {
     //other
     private lateinit var storageHelper: StorageHelper
     private lateinit var numStorage: StorageHelper
+    private lateinit var emailStorage: StorageHelper
+    private lateinit var genderStorage: StorageHelper
+    private lateinit var birthdayStorage: StorageHelper
 
     //xml id's-------------------------------------------------------
 
@@ -65,11 +77,15 @@ class Fg_setting_account_info : Fragment() {
 
         storageHelper = StorageHelper(requireActivity(), "account_info")
         numStorage = StorageHelper(requireActivity(), "mobile_number")
+        emailStorage = StorageHelper(requireActivity(), "change_email")
+        genderStorage = StorageHelper(requireActivity(), "change_gender")
+        birthdayStorage = StorageHelper(requireActivity(), "change_birthday")
 
         buttonClicked()
         setText()
 
         val switch = storageHelper.getData("switch")
+
 
         if (switch == null){
             sc_quick_login.isChecked = true
@@ -81,7 +97,6 @@ class Fg_setting_account_info : Fragment() {
             if (switch == "on") sc_quick_login.isChecked = true else sc_quick_login.isChecked = false
 
         }
-
 
 
         return view
@@ -114,6 +129,25 @@ class Fg_setting_account_info : Fragment() {
         rl_add_mobile.setOnClickListener {
 
             IntentHelper.setDataIntent(requireActivity(), Act_change_email_password_number::class.java, "add_number", "number")
+
+        }
+
+        rl_change_email.setOnClickListener {
+
+            IntentHelper.setDataIntent(requireActivity(), Act_change_email_password_number::class.java, "change_email", "email")
+
+
+        }
+
+        rl_gender.setOnClickListener {
+
+            genderDialog()
+
+        }
+
+        rl_birthday.setOnClickListener {
+
+            birthdayDialog()
 
         }
 
@@ -183,12 +217,194 @@ class Fg_setting_account_info : Fragment() {
 
         val name = storageHelper.getData("user_name")
         val number = numStorage.getData("user_number")
+        val email = maskEmail(emailStorage.getData("email").toString())
+        val gender = genderStorage.getData("gender")
+        val birthday = birthdayStorage.getData("birthday")
 
 
         if (!name.isNullOrEmpty()) tv_name.text = name else tv_name.text = "Guest"
 
         if (!number.isNullOrEmpty()) tv_mobile_number.text = "*****" else tv_mobile_number.text = "Not Set"
 
+        if (!email.isNullOrEmpty()) tv_change_email.text = email else tv_change_email.text = "Not Set"
+
+        if (!gender.isNullOrEmpty()) tv_gender.text = gender else tv_gender.text = "Not Set"
+
+        if (!birthday.isNullOrEmpty()) tv_birthday.text = birthday else tv_birthday.text = "Not Set"
+
+    }
+
+    //mask email-----------------------------------------------------------------------------
+    private fun maskEmail(email : String): String {
+
+
+        val index = email.indexOf("@")
+
+        if (index > 2){
+
+           return email.substring(0, 2) + "******" + email.substring(index)
+
+        }else{
+
+            return "******" + email.substring(index)
+
+        }
+
+    }
+
+    //gender dialog----------------------------------------------------------
+    private fun genderDialog(){
+
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.lay_gender_dialog)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        dialog.window?.setGravity(Gravity.BOTTOM)
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+
+        val rb_female = dialog.findViewById<AppCompatRadioButton>(R.id.rb_female)
+        val rb_male = dialog.findViewById<AppCompatRadioButton>(R.id.rb_male)
+        val rb_other = dialog.findViewById<AppCompatRadioButton>(R.id.rb_other)
+        val cd_cancel = dialog.findViewById<MaterialCardView>(R.id.cd_cancel)
+        val cd_ok = dialog.findViewById<MaterialCardView>(R.id.cd_ok)
+
+        cd_cancel.setOnClickListener {
+
+            dialog.dismiss()
+
+        }
+
+        cd_ok.setOnClickListener {
+
+            var selectedGender = ""
+
+            if (rb_female.isChecked){
+
+                selectedGender =  rb_female.text.toString()
+
+
+            }else if (rb_male.isChecked){
+
+                selectedGender =  rb_male.text.toString()
+
+            }else if (rb_other.isChecked){
+
+                selectedGender =  rb_other.text.toString()
+
+            }else{
+
+                Toast.makeText(requireActivity(), " Not selected", Toast.LENGTH_SHORT).show()
+
+            }
+
+            tv_gender.text = selectedGender
+
+            genderStorage.deleteData("gender")
+            genderStorage.setData("gender", selectedGender)
+
+            Toast.makeText(requireActivity(), "Saved successful", Toast.LENGTH_SHORT).show()
+
+            dialog.dismiss()
+        }
+
+        val Gender = genderStorage.getData("gender")
+
+        if (Gender == "Other"){
+
+            rb_other.isChecked = true
+
+        }else if (Gender == "Female"){
+
+            rb_female.isChecked = true
+
+        }else if (Gender == "Male"){
+
+            rb_male.isChecked = true
+
+        }else{
+
+            rb_female.isChecked = false
+            rb_male.isChecked = false
+            rb_other.isChecked = false
+
+        }
+
+
+        dialog.show()
+
+    }
+
+    //birthday dialog--------------------------------------------------------------
+    private fun birthdayDialog(){
+
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.lay_change_birthday)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        dialog.window?.setGravity(Gravity.BOTTOM)
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val ed_day = dialog.findViewById<AppCompatEditText>(R.id.ed_day)
+        val ed_month = dialog.findViewById<AppCompatEditText>(R.id.ed_month)
+        val ed_year = dialog.findViewById<AppCompatEditText>(R.id.ed_year)
+        val cd_cancel = dialog.findViewById<MaterialCardView>(R.id.cd_cancel)
+        val cd_ok = dialog.findViewById<MaterialCardView>(R.id.cd_ok)
+
+        ed_day.requestFocus()
+
+        cd_cancel.setOnClickListener {
+
+            dialog.dismiss()
+
+        }
+
+        cd_ok.setOnClickListener {
+
+            val day = ed_day.text.toString().trim()
+            val month = ed_month.text.toString().trim()
+            val year = ed_year.text.toString().trim()
+
+            if (day.isNullOrEmpty()){
+
+                ed_day.error = "Date required"
+
+            }else if (month.isNullOrEmpty()){
+
+                ed_month.error = "Month required"
+
+            }else if (year.isNullOrEmpty()){
+
+                ed_year.error = "Year required"
+
+            }else{
+
+                val totalDate = day+"/"+month+"/"+year
+
+                birthdayStorage.deleteData("birthday")
+                birthdayStorage.setData("birthday", totalDate)
+
+                tv_birthday.text = totalDate
+
+                Toast.makeText(requireActivity(), "Save successful", Toast.LENGTH_SHORT).show()
+
+                dialog.dismiss()
+            }
+
+
+        }
+
+        dialog.show()
 
     }
 

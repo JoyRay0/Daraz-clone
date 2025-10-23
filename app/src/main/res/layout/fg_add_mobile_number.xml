@@ -71,7 +71,7 @@
         app:cardElevation="3dp"
         app:cardCornerRadius="15dp"
         android:layout_gravity="center"
-        android:tooltipText="Reset"
+        android:tooltipText="verify"
         >
 
         <androidx.appcompat.widget.AppCompatTextView

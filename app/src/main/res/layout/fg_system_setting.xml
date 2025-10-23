@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.Fg_system_setting">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#fff"
+        app:cardCornerRadius="13dp"
+        android:layout_margin="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!-- location -->
+            <RelativeLayout
+                android:id="@+id/rl_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_locB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_loc_S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow Daraz to access location information"
+                    android:textSize="13sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                   android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/tv_locB"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sc_loc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:trackTint="@drawable/sel_switch_track_color"
+                    app:thumbTint="@drawable/sel_switch_thumb_color"
+                    android:checked="false"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F3D1D1"
+                />
+
+            <!-- microphone -->
+            <RelativeLayout
+                android:id="@+id/rl_microphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_mic_B"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Microphone"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_mic_S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow Daraz to access microphone"
+                    android:textSize="13sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/tv_mic_B"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sc_mic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:trackTint="@drawable/sel_switch_track_color"
+                    app:thumbTint="@drawable/sel_switch_thumb_color"
+                    android:checked="false"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F3D1D1"
+                />
+
+            <!-- camera -->
+            <RelativeLayout
+                android:id="@+id/rl_camera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_cam_B"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camera"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_cam_S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow Daraz to access camera"
+                    android:textSize="13sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/tv_cam_B"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sc_cam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:trackTint="@drawable/sel_switch_track_color"
+                    app:thumbTint="@drawable/sel_switch_thumb_color"
+                    android:checked="false"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F3D1D1"
+                />
+
+            <!-- photo -->
+            <RelativeLayout
+                android:id="@+id/rl_Gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_gall_B"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_gall_S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow Daraz to access photo album"
+                    android:textSize="13sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/tv_gall_B"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sc_pho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:trackTint="@drawable/sel_switch_track_color"
+                    app:thumbTint="@drawable/sel_switch_thumb_color"
+                    android:checked="false"
+                    />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

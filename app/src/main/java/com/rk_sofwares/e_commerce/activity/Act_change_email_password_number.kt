@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.fragment.Fg_add_mobile_number
+import com.rk_sofwares.e_commerce.fragment.Fg_change_email
 import com.rk_sofwares.e_commerce.fragment.Fg_change_password
 import com.rk_sofwares.e_commerce.fragment.Fg_setting_account_info
 
@@ -75,7 +76,6 @@ class Act_change_email_password_number : AppCompatActivity() {
     private fun dataFromIntent(){
 
         val password = intent.getStringExtra("change_password")
-        val email = intent.getStringExtra("")
         val number = intent.getStringExtra("add_number")
 
         if (password.equals("password")){
@@ -89,12 +89,14 @@ class Act_change_email_password_number : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.fl_container,
                 Fg_add_mobile_number()).commit()
 
-            toolbar_title.text = "Verify number"
+            toolbar_title.text = "Verify Number"
 
         }else{
 
             supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_add_mobile_number()).commit()
+                Fg_change_email()).commit()
+
+            toolbar_title.text = "Change Email"
 
         }
 

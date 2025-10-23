@@ -115,7 +115,7 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
         holder.iv_delete.setOnClickListener {
 
             val pos = holder.adapterPosition
-            if (pos != RecyclerView.NO_POSITION){
+            if (pos != RecyclerView.NO_POSITION && pos < m_list.size){
 
                 m_list.removeAt(pos)
                 notifyItemRemoved(pos)

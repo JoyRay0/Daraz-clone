@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_location"
+        android:layout_centerVertical="true"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:layout_toEndOf="@id/iv_location"
+        android:layout_marginStart="15dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000"
+        android:textSize="15sp"
+        android:textColor="#948181"
+        android:layout_toEndOf="@id/tv_name"
+        android:layout_marginStart="15dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textSize="12sp"
+        android:textColor="#292323"
+        android:layout_toEndOf="@id/iv_location"
+        android:layout_below="@id/tv_name"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_regin_city_district"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regin,City,District"
+        android:textSize="12sp"
+        android:textColor="#292323"
+        android:layout_toEndOf="@id/iv_location"
+        android:layout_below="@id/tv_address"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_add_cate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="2dp"
+        app:strokeColor="#000"
+        app:strokeWidth="0.9dp"
+        android:layout_toEndOf="@id/iv_location"
+        android:layout_below="@id/tv_regin_city_district"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="7dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_add_cate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HOME"
+            android:textAllCaps="true"
+            android:textSize="11sp"
+            android:textColor="#292323"
+            android:gravity="center"
+            android:padding="3dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+    android:id="@+id/cv_shipping_billing"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:strokeColor="#806F6F"
+    app:strokeWidth="0.9dp"
+    android:layout_toEndOf="@id/cv_add_cate"
+    android:layout_below="@id/tv_regin_city_district"
+    android:layout_marginStart="7dp"
+    android:layout_marginTop="7dp"
+    >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_shipping_billing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="Default shipping &amp; billing address"
+            android:textColor="#292323"
+            android:textSize="11sp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="?attr/actionBarItemBackground"
+        />
+
+</RelativeLayout>
