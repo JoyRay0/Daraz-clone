@@ -11,7 +11,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.rk_sofwares.e_commerce.Model.MessageModel
+import com.rk_sofwares.e_commerce.model.MessageModel
+import com.rk_sofwares.e_commerce.Other.DomainHelper
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.activity.Act_c_o_a_p
@@ -118,7 +119,7 @@ class Fg_home_messages : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=messages")
+            .url(DomainHelper.getMessagesLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {

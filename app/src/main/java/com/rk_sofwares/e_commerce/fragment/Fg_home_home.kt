@@ -21,12 +21,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
-import com.rk_sofwares.e_commerce.Model.CategoriesModel
-import com.rk_sofwares.e_commerce.Model.CouponModel
-import com.rk_sofwares.e_commerce.Model.FlashSaleModel
-import com.rk_sofwares.e_commerce.Model.ItemModel
-import com.rk_sofwares.e_commerce.Model.ViewpagerModel
+import com.rk_sofwares.e_commerce.model.CategoriesModel
+import com.rk_sofwares.e_commerce.model.CouponModel
+import com.rk_sofwares.e_commerce.model.FlashSaleModel
+import com.rk_sofwares.e_commerce.model.ItemModel
+import com.rk_sofwares.e_commerce.model.ViewpagerModel
 import com.rk_sofwares.e_commerce.Other.Cache
+import com.rk_sofwares.e_commerce.Other.DomainHelper
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.Other.PermissionHelper
 import com.rk_sofwares.e_commerce.R
@@ -277,7 +278,7 @@ class Fg_home_home : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=item")
+            .url(DomainHelper.getItemLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -377,7 +378,7 @@ class Fg_home_home : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=viewpager")
+            .url(DomainHelper.getViewpagerLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -639,7 +640,7 @@ class Fg_home_home : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=other_images")
+            .url(DomainHelper.getCouponLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -702,7 +703,7 @@ class Fg_home_home : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=flash_sale_images")
+            .url(DomainHelper.getFlashSaleLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -781,7 +782,7 @@ class Fg_home_home : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://rksoftwares.xyz/All_app/Daraz_clone/Api/All_Images.php?resource=category_image")
+            .url(DomainHelper.getCategoryLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback {

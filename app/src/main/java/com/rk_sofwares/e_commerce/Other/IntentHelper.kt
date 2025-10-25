@@ -1,5 +1,6 @@
 package com.rk_sofwares.e_commerce.Other
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 
@@ -10,6 +11,7 @@ object IntentHelper{
         val intent = Intent(context, sendClass)
         intent.putExtra(key, data)
         context.startActivity(intent)
+
 
     }
 

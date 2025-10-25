@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.rk_sofwares.e_commerce.Model.ProductModel
+import com.rk_sofwares.e_commerce.model.ProductModel
 import com.rk_sofwares.e_commerce.Other.Cache
+import com.rk_sofwares.e_commerce.Other.DomainHelper
 import com.rk_sofwares.e_commerce.R
 import com.rk_sofwares.e_commerce.adapter.Product
 import kotlinx.coroutines.CoroutineScope
@@ -72,7 +73,7 @@ class Fg_tab_item_for_upu : Fragment() {
         val gson = Gson()
 
         val request = Request.Builder()
-            .url("https://dummyjson.com/products")
+            .url(DomainHelper.getProductLink())
             .build()
 
         client.newCall(request).enqueue(object : Callback{

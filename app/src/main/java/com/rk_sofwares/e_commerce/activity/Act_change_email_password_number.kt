@@ -10,10 +10,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Act_setting
 import com.rk_sofwares.e_commerce.fragment.Fg_add_mobile_number
 import com.rk_sofwares.e_commerce.fragment.Fg_change_email
 import com.rk_sofwares.e_commerce.fragment.Fg_change_password
-import com.rk_sofwares.e_commerce.fragment.Fg_setting_account_info
 
 class Act_change_email_password_number : AppCompatActivity() {
 
@@ -80,21 +80,27 @@ class Act_change_email_password_number : AppCompatActivity() {
 
         if (password.equals("password")){
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container, Fg_change_password()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
+                Fg_change_password()
+            ).commit()
 
             toolbar_title.text = "Change Password"
 
         }else if (number.equals("number")){
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_add_mobile_number()).commit()
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fl_container,
+                Fg_add_mobile_number()
+            ).commit()
 
             toolbar_title.text = "Verify Number"
 
         }else{
 
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container,
-                Fg_change_email()).commit()
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fl_container,
+                Fg_change_email()
+            ).commit()
 
             toolbar_title.text = "Change Email"
 

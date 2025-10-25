@@ -53,7 +53,9 @@ class AddressAdapter() : RecyclerView.Adapter<AddressAdapter.holder>() {
         holder.tv_address.text = address
         holder.tv_regin_city_district.text = region+","+city+","+district
         holder.tv_add_cate.text = add_cate
-        holder.tv_shipping_billing.text = shipping+"&"+billing
+
+        //holder.tv_shipping_billing.text = shipping+"&"+billing
+        checkingShippingAndBilling(shipping, billing, holder.tv_shipping_billing)
 
         holder.iv_delete.setOnClickListener {
 
@@ -92,6 +94,32 @@ class AddressAdapter() : RecyclerView.Adapter<AddressAdapter.holder>() {
         val tv_shipping_billing = view.findViewById<AppCompatTextView>(R.id.tv_shipping_billing)
         val iv_delete = view.findViewById<AppCompatImageView>(R.id.iv_delete)
 
+
+    }
+
+    private fun checkingShippingAndBilling(shipping : String, billing : String ,tv : AppCompatTextView){
+
+        if (shipping == "off" && billing == "off"){
+
+            tv.visibility = View.VISIBLE
+            tv.text = "Default shipping & billing address"
+
+        }else if (shipping == "on" && billing == "on"){
+
+            tv.visibility = View.VISIBLE
+            tv.text = "Default shipping & billing address"
+
+        }else if (shipping == "on" && billing == "off"){
+
+            tv.visibility = View.VISIBLE
+            tv.text = "Default shipping address"
+
+        } else if (shipping == "off" && billing == "on"){
+
+            tv.visibility = View.VISIBLE
+            tv.text = "Default billing address"
+
+        }
 
     }
 

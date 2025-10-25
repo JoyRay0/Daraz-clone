@@ -1,4 +1,4 @@
-package com.rk_sofwares.e_commerce.Model
+package com.rk_sofwares.e_commerce.model
 
 data class ItemModel(
 

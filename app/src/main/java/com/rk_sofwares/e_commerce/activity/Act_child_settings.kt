@@ -1,7 +1,6 @@
 package com.rk_sofwares.e_commerce.activity
 
 import android.annotation.SuppressLint
-import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,8 +9,10 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.R
+import com.rk_sofwares.e_commerce.activity.Act_setting
 import com.rk_sofwares.e_commerce.fragment.Fg_account_security
 import com.rk_sofwares.e_commerce.fragment.Fg_address_book
 import com.rk_sofwares.e_commerce.fragment.Fg_home_profile_setting_messages
@@ -89,7 +90,8 @@ class Act_child_settings : AppCompatActivity() {
         intentChecker("info", "AccountInformation", R.id.fl_container, Fg_setting_account_info(), "Account Information")
         intentChecker("security", "AccountSecurity", R.id.fl_container, Fg_account_security(), "Privacy protection")
         intentChecker("address", "AddressBook", R.id.fl_container, Fg_address_book(), "My Address")
-        intentChecker("message", "Messages", R.id.fl_container, Fg_home_profile_setting_messages(), "Messages Settings")
+        intentChecker("message", "Messages", R.id.fl_container,
+            Fg_home_profile_setting_messages(), "Messages Settings")
         intentChecker("policies", "Policies", R.id.fl_container, Fg_setting_policies(), "Policies")
         intentChecker("help", "Help", R.id.fl_container, Fg_setting_help(), "Help")
         intentChecker("feedback", "FeedBack", R.id.fl_container, Fg_setting_feedback(), "Feedback")
@@ -98,7 +100,7 @@ class Act_child_settings : AppCompatActivity() {
 
     }
 
-    private fun intentChecker(key : String, value : String, frameLayout : Int, fragment : androidx.fragment.app.Fragment, text : String){
+    private fun intentChecker(key : String, value : String, frameLayout : Int, fragment : Fragment, text : String){
 
         if (intent.getStringExtra(key).equals(value)){
 

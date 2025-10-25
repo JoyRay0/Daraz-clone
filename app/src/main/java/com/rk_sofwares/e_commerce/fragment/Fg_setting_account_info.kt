@@ -3,14 +3,12 @@ package com.rk_sofwares.e_commerce.fragment
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
@@ -18,7 +16,6 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import com.ebay.ejmask.core.EJMaskInitializer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.rk_sofwares.e_commerce.Other.IntentHelper

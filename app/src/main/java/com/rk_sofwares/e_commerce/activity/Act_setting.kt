@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.rk_sofwares.e_commerce.Other.EdgeToEdge
 import com.rk_sofwares.e_commerce.Other.IntentHelper
 import com.rk_sofwares.e_commerce.Other.StorageHelper
@@ -35,6 +32,10 @@ class Act_setting : AppCompatActivity() {
     private lateinit var rl_message : RelativeLayout
     private lateinit var rl_country : RelativeLayout
     private lateinit var rl_language : RelativeLayout
+
+    private lateinit var tv_onOff : AppCompatTextView
+    private lateinit var tv_countryName : AppCompatTextView
+    private lateinit var tv_languageName : AppCompatTextView
 
     //other
     private lateinit var edge_to_edge : EdgeToEdge
@@ -63,6 +64,9 @@ class Act_setting : AppCompatActivity() {
         rl_message = findViewById(R.id.rl_message)
         rl_country = findViewById(R.id.rl_country)
         rl_language = findViewById(R.id.rl_language)
+        tv_onOff = findViewById(R.id.tv_onOff)
+        tv_countryName = findViewById(R.id.tv_countryName)
+        tv_languageName = findViewById(R.id.tv_languageName)
 
         //identity period---------------------------------------------------------
 
@@ -70,13 +74,15 @@ class Act_setting : AppCompatActivity() {
         edge_to_edge.statusBarColor("#FFFFFF", true)
         edge_to_edge.setToolBar(rl_toolbar)
         storage = StorageHelper(this, "settings")
+        storage = StorageHelper(this, "setting_message")
+
 
         logOut()
         iv_back.setOnClickListener {
 
             startActivity(Intent(this, Act_home::class.java))
             finishAffinity()
-            
+
         }
         sendDataWithIntent()
 
@@ -126,46 +132,53 @@ class Act_setting : AppCompatActivity() {
         tv_accountInfo.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "info", accountInfo)
-
+            finishAffinity()
         }
 
         tv_accountSecurity.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "security", accountSecurity)
-
+            finishAffinity()
         }
 
         tv_addressBook.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "address", addressBook)
-
+            finishAffinity()
         }
 
         rl_message.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "message", messages)
-
+            finishAffinity()
         }
 
         tv_policies.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "policies", policies)
-
+            finishAffinity()
         }
 
         tv_help.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "help", help)
-
+            finishAffinity()
         }
 
         tv_feedback.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, "feedback", feedBack)
-
+            finishAffinity()
         }
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        val data = storage.getData("all_message")
+
+        if (data == null) tv_onOff.text = "On" else tv_onOff.text = data
     }
 
 }// public class==================================================================
