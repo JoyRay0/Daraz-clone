@@ -3,6 +3,7 @@ package com.rk_sofwares.e_commerce.Other
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.activity.OnBackPressedCallback
 
 object IntentHelper{
 
@@ -12,6 +13,13 @@ object IntentHelper{
         intent.putExtra(key, data)
         context.startActivity(intent)
 
+
+    }
+
+    fun intent(act: Activity, sendClass: Class<*>){
+
+        act.startActivity(Intent(act, sendClass))
+        act.finishAffinity()
 
     }
 

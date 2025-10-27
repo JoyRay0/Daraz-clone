@@ -65,8 +65,6 @@ class Fg_home_profile_setting_messages : Fragment() {
         setSwitchData(sc_sms, "sms", "smsOn", "smsOff")
         setSwitchData(sc_whatsapp, "whatsapp", "whatsappOn", "whatsappOff")
 
-        allMessages()
-
         return view
     }// on create==================================================================
 
@@ -78,6 +76,8 @@ class Fg_home_profile_setting_messages : Fragment() {
 
             storage.deleteData(cacheKey)
             storage.setData(cacheKey, data)
+
+            allMessages()
 
         }
 
@@ -105,14 +105,14 @@ class Fg_home_profile_setting_messages : Fragment() {
 
     private fun allMessages(){
 
-        if ((!sc_promo.isChecked) && (!sc_order.isChecked) && (!sc_act.isChecked) && (!sc_seller.isChecked) &&
-            (!sc_chat.isChecked) && (!sc_email.isChecked) && (!sc_sms.isChecked) && (!sc_whatsapp.isChecked)){
+        if ((sc_promo.isChecked) || (sc_order.isChecked) || (sc_act.isChecked) || (sc_seller.isChecked) ||
+            (sc_chat.isChecked) || (sc_email.isChecked) || (sc_sms.isChecked) || (sc_whatsapp.isChecked)){
 
-            storage.setData("all_message", "Off")
+            storage.setData("all_message", "On")
 
         }else{
 
-            storage.setData("all_message", "On")
+            storage.setData("all_message", "Off")
         }
 
     }
