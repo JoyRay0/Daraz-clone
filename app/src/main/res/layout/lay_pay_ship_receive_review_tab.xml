@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:layout_scrollEffect="none"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/rl_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:textSize="17sp"
+                android:textColor="#FF5722"
+                android:layout_margin="7dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_all_underLine"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#FF5722"
+                android:layout_below="@id/tv_all"
+                android:layout_alignStart="@id/tv_all"
+                android:layout_alignEnd="@id/tv_all"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Pay"
+                android:textSize="17sp"
+                android:textColor="#000"
+                android:layout_margin="7dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_pay_underLine"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#FF5722"
+                android:layout_below="@id/tv_pay"
+                android:layout_alignStart="@id/tv_pay"
+                android:layout_alignEnd="@id/tv_pay"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_ship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Ship"
+                android:textSize="17sp"
+                android:textColor="#000"
+                android:layout_margin="7dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ship_underLine"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#FF5722"
+                android:layout_below="@id/tv_ship"
+                android:layout_alignStart="@id/tv_ship"
+                android:layout_alignEnd="@id/tv_ship"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Receive"
+                android:textSize="17sp"
+                android:textColor="#000"
+                android:layout_margin="7dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_receive_underLine"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#FF5722"
+                android:layout_gravity="center"
+                android:layout_below="@id/tv_receive"
+                android:layout_alignStart="@id/tv_receive"
+                android:layout_alignEnd="@id/tv_receive"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Review"
+                android:textSize="17sp"
+                android:textColor="#000"
+                android:layout_margin="7dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_review_underLine"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#FF5722"
+                android:layout_below="@id/tv_review"
+                android:layout_alignStart="@id/tv_review"
+                android:layout_alignEnd="@id/tv_review"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</HorizontalScrollView>

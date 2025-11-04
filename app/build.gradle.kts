@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rk_sofwares.e_commerce"
+    namespace = "com.rk_softwares.e_commerce"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.rk_sofwares.e_commerce"
+        applicationId = "com.rk_softwares.e_commerce"
         minSdk = 25
         targetSdk = 36
         versionCode = 1
@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.gif)
     implementation("com.ebay.ejmask:ejmask-core:2.0.0")
+    implementation(libs.textwithsubtext)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
@@ -76,5 +77,6 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
 }
 
