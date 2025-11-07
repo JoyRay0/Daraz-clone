@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="3dp"
+    android:layout_margin="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_filter_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter orders"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:fontFamily="@font/roboto"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:background="?attr/actionBarItemBackground"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_by_time_created"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By time created"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:fontFamily="@font/roboto"
+            android:textStyle="normal"
+            android:layout_below="@id/tv_filter_order"
+           android:layout_marginStart="12dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tv_by_time_created"
+            android:weightSum="3"
+            android:layout_margin="7dp"
+            >
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last1month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:button="@android:color/transparent"
+                android:text="Last 1 month"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:fontFamily="@font/roboto"
+                android:textColor="#7D7575"
+                android:layout_margin="10dp"
+                android:padding="7dp"
+                android:layout_weight="1"
+                android:background="@drawable/sh_last_month_unchecked"
+                />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last3month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:button="@android:color/transparent"
+                android:text="Last 3 month"
+                android:textSize="12sp"
+                android:textColor="#7D7575"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="7dp"
+                android:layout_weight="1"
+                android:background="@drawable/sh_last_month_unchecked"
+
+                />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last6month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:button="@android:color/transparent"
+                android:text="Last 6 month"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:textColor="#7D7575"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="7dp"
+                android:layout_weight="1"
+                android:background="@drawable/sh_last_month_unchecked"
+                />
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_month"
+            >
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_start_date"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:button="@android:color/transparent"
+                android:text="Start date"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="#7D7575"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:layout_margin="10dp"
+                android:layout_gravity="start"
+                />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="#7D7575" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_end_date"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:button="@android:color/transparent"
+                android:text="End date"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:textStyle="normal"
+                android:textColor="#7D7575"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:layout_margin="10dp"
+                android:layout_gravity="end"
+                />
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="30dp"
+            >
+
+           <com.google.android.material.button.MaterialButton
+               android:id="@+id/btn_reset"
+               android:layout_width="100dp"
+               android:layout_height="wrap_content"
+               android:text="Reset"
+               android:textSize="14sp"
+               android:textColor="#000"
+               android:textStyle="bold"
+               android:fontFamily="@font/roboto"
+               app:cornerRadius="12dp"
+               android:layout_margin="10dp"
+               android:backgroundTint="#EFEBEB"
+               android:layout_weight="1"
+               />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_confirm"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Confirm"
+                android:textSize="14sp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto"
+                app:cornerRadius="12dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FF5722"
+                />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

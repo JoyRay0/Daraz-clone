@@ -40,6 +40,12 @@ android {
     buildFeatures {
         compose = true
     }
+
+    composeOptions {
+
+        kotlinCompilerExtensionVersion = "1.6.0"
+
+    }
 }
 
 dependencies {
@@ -77,6 +83,12 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Compose dependencies
+    implementation("androidx.compose.ui:ui:1.9.4")
+    implementation("androidx.compose.material:material:1.9.4")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.9.4")
+    implementation("androidx.activity:activity-compose:1.8.2")
 
 }
 

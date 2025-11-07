@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="All"
                 android:textSize="17sp"
-                android:textColor="#FF5722"
+                android:textColor="#000"
                 android:layout_margin="7dp"
                 />
 
@@ -43,6 +43,7 @@
                 android:layout_below="@id/tv_all"
                 android:layout_alignStart="@id/tv_all"
                 android:layout_alignEnd="@id/tv_all"
+                android:visibility="gone"
                 />
 
         </RelativeLayout>

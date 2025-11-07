@@ -10,7 +10,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.R
-import com.rk_softwares.e_commerce.activity.Act_setting
 import com.rk_softwares.e_commerce.fragment.Fg_add_mobile_number
 import com.rk_softwares.e_commerce.fragment.Fg_change_email
 import com.rk_softwares.e_commerce.fragment.Fg_change_password
@@ -52,7 +51,7 @@ class Act_change_email_password_number : AppCompatActivity() {
         edge_to_edge = EdgeToEdge(this)
         edge_to_edge.setToolBar(fl_toolbar)
         edge_to_edge.setBottomNav(fl_container)
-        edge_to_edge.statusBarColor("#FFFFFF", true)
+        edge_to_edge.setStatusBarColor("#FFFFFF", true)
 
 
         iv_back.setOnClickListener {

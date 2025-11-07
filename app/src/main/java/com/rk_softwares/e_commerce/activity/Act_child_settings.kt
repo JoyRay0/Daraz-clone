@@ -12,7 +12,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.R
-import com.rk_softwares.e_commerce.activity.Act_setting
 import com.rk_softwares.e_commerce.fragment.Fg_account_security
 import com.rk_softwares.e_commerce.fragment.Fg_address_book
 import com.rk_softwares.e_commerce.fragment.Fg_home_profile_setting_messages
@@ -60,7 +59,7 @@ class Act_child_settings : AppCompatActivity() {
         //identity period---------------------------------------------------
 
         edgeToEdge = EdgeToEdge(this)
-        edgeToEdge.statusBarColor("#FFFFFF", true)
+        edgeToEdge.setStatusBarColor("#FFFFFF", true)
         edgeToEdge.setToolBar(fl_toolbar)
         edgeToEdge.setBottomNav(fl_container)
 

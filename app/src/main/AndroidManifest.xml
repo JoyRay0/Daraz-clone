@@ -24,10 +24,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_my_order"
+            android:name=".Compose.SearchBar"
+            android:exported="false"
+            android:label="@string/title_activity_search_bar"
+            android:theme="@style/Theme.E_commerce" />
+        <activity
+            android:name=".activity.Act_my_order"
             android:exported="false" />
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_change_email_password_number"
+            android:name=".activity.Act_change_email_password_number"
             android:exported="false" />
         <activity
             android:name=".test"
@@ -35,16 +40,16 @@
             android:label="@string/title_activity_test"
             android:theme="@style/Theme.E_commerce" />
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_child_settings"
+            android:name=".activity.Act_child_settings"
             android:exported="false" />
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_setting"
+            android:name=".activity.Act_setting"
             android:exported="false" />
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_c_o_a_p"
+            android:name=".activity.Act_c_o_a_p"
             android:exported="false" />
         <activity
-            android:name="com.rk_softwares.e_commerce.activity.Act_home"
+            android:name=".activity.Act_home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

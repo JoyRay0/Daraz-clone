@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.activity.FullyDrawnReporter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.graphics.toColorInt
+import androidx.fragment.app.Fragment
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.Other.FragmentHelper
 import com.rk_softwares.e_commerce.R
@@ -50,9 +52,11 @@ class Act_home : AppCompatActivity() {
 
     //others
     private lateinit var edge_to_edge : EdgeToEdge
-    private lateinit var helper : FragmentHelper
 
-
+    //init
+    val selectedColor = "#FF5722".toColorInt()
+    val unselectedColor = "#988080".toColorInt()
+    val cartBadge = "1"
 
     //XML id's------------------------------------------------------------
 
@@ -89,167 +93,271 @@ class Act_home : AppCompatActivity() {
 
         //identity period---------------------------------------------------
 
-        val fg = supportFragmentManager
-        fg.beginTransaction().replace(R.id.fl_container, Fg_home_home()).commit()
-
-        bottom_nav()
-
-        helper = FragmentHelper(this)
-
-        verifyIntent()
+        getIntentData()
 
         edge_to_edge.setBottomNav(fl_bottom_navigation)
-
-
 
     }//on create===========================================================
 
     //bottom navigation -------------------------------------------------------
-    private fun bottom_nav(){
+    private fun getIntentData(){
 
-        val selectedColor = "#FF5722".toColorInt()
-        val unselectedColor = "#988080".toColorInt()
-        val itemBadge = "1"
+        val i = intent.getStringExtra("item") ?: "none"
 
-        edge_to_edge.statusBarColor("#FFFFFF", true)
+        when(i){
 
-        iv_home.setImageResource(R.drawable.ic_home_fill)
-        tv_home.setTextColor(selectedColor)
-        tv_badge1.text = itemBadge
-        tv_badge1.visibility = View.INVISIBLE
+            "Fg_message" -> selected(
+                iv_message,
+                tv_message,
+                tv_badge2,
+                Fg_home_messages(),
+                R.drawable.ic_chat_fill,
+                iv_home,
+                iv_cart,
+                iv_account,
+                tv_home,
+                tv_cart,
+                tv_account,
+                R.drawable.ic_home_outline,
+                R.drawable.ic_cart_outline,
+                R.drawable.ic_account_outline,
+                tv_badge1,
+                tv_badge3,
+                tv_badge4
+                )
 
+            "Fg_cart" -> selected(
+                iv_cart,
+                tv_cart,
+                tv_badge3,
+                Fg_home_cart(),
+                R.drawable.ic_cart_fill,
+                iv_home,
+                iv_message,
+                iv_account,
+                tv_home,
+                tv_message,
+                tv_account,
+                R.drawable.ic_home_outline,
+                R.drawable.ic_chat_outline,
+                R.drawable.ic_account_outline,
+                tv_badge1,
+                tv_badge2,
+                tv_badge4
+            )
 
-        iv_message.setImageResource(R.drawable.ic_chat_outline)
-        tv_message.setTextColor(unselectedColor)
-        tv_badge2.text = itemBadge
-        tv_badge2.visibility = View.VISIBLE
+            "Fg_account" -> selected(
+                iv_account,
+                tv_account,
+                tv_badge4,
+                Fg_home_profile(),
+                R.drawable.ic_account_fill,
+                iv_home,
+                iv_cart,
+                iv_message,
+                tv_home,
+                tv_cart,
+                tv_message,
+                R.drawable.ic_home_outline,
+                R.drawable.ic_cart_outline,
+                R.drawable.ic_chat_outline,
+                tv_badge1,
+                tv_badge2,
+                tv_badge3
+            )
 
-        iv_cart.setImageResource(R.drawable.ic_cart_outline)
-        tv_cart.setTextColor(unselectedColor)
-        tv_badge3.text = itemBadge
-        tv_badge3.visibility = View.VISIBLE
-
-        iv_account.setImageResource(R.drawable.ic_account_outline)
-        tv_account.setTextColor(unselectedColor)
-        tv_badge4.text = itemBadge
-        tv_badge4.visibility = View.VISIBLE
-
-
-        ll_home.setOnClickListener {
-
-            val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home_home()).commit()
-
-            edge_to_edge.statusBarColor("#FFFFFF", true)
-
-            iv_home.setImageResource(R.drawable.ic_home_fill)
-            tv_home.setTextColor(selectedColor)
-            tv_badge1.visibility = View.INVISIBLE
-
-            iv_message.setImageResource(R.drawable.ic_chat_outline)
-            tv_message.setTextColor(unselectedColor)
-            tv_badge2.visibility = View.VISIBLE
-
-            iv_cart.setImageResource(R.drawable.ic_cart_outline)
-            tv_cart.setTextColor(unselectedColor)
-            tv_badge3.visibility = View.VISIBLE
-
-            iv_account.setImageResource(R.drawable.ic_account_outline)
-            tv_account.setTextColor(unselectedColor)
-            tv_badge4.visibility = View.VISIBLE
-
-
+            else -> selected(
+                iv_home,
+                tv_home,
+                tv_badge1,
+                Fg_home_home(),
+                R.drawable.ic_home_fill,
+                iv_message,
+                iv_cart,
+                iv_account,
+                tv_message,
+                tv_cart,
+                tv_account,
+                R.drawable.ic_chat_outline,
+                R.drawable.ic_cart_outline,
+                R.drawable.ic_account_outline,
+                tv_badge2,
+                tv_badge3,
+                tv_badge4
+            )
         }
 
-        ll_cart.setOnClickListener {
+        navClicked(
+            ll_home,
+            iv_home,
+            tv_home,
+            tv_badge1,
+            Fg_home_home(),
+            R.drawable.ic_home_fill,
+            iv_message,
+            iv_cart,
+            iv_account,
+            tv_message,
+            tv_cart,
+            tv_account,
+            R.drawable.ic_chat_outline,
+            R.drawable.ic_cart_outline,
+            R.drawable.ic_account_outline,
+            tv_badge2,
+            tv_badge3,
+            tv_badge4)
 
-            iv_cart.setImageResource(R.drawable.ic_cart_fill)
-            tv_cart.setTextColor(selectedColor)
-            tv_badge3.visibility = View.INVISIBLE
+        navClicked(
+            ll_message,
+            iv_message,
+            tv_message,
+            tv_badge2,
+            Fg_home_messages(),
+            R.drawable.ic_chat_fill,
+            iv_home,
+            iv_cart,
+            iv_account,
+            tv_home,
+            tv_cart,
+            tv_account,
+            R.drawable.ic_home_outline,
+            R.drawable.ic_cart_outline,
+            R.drawable.ic_account_outline,
+            tv_badge1,
+            tv_badge3,
+            tv_badge4)
 
+        navClicked(
+            ll_cart,
+            iv_cart,
+            tv_cart,
+            tv_badge3,
+            Fg_home_cart(),
+            R.drawable.ic_cart_fill,
+            iv_home,
+            iv_message,
+            iv_account,
+            tv_home,
+            tv_message,
+            tv_account,
+            R.drawable.ic_home_outline,
+            R.drawable.ic_chat_outline,
+            R.drawable.ic_account_outline,
+            tv_badge1,
+            tv_badge2,
+            tv_badge4)
 
-            iv_home.setImageResource(R.drawable.ic_home_outline)
-            tv_home.setTextColor(unselectedColor)
+        navClicked(
+            ll_account,
+            iv_account,
+            tv_account,
+            tv_badge4,
+            Fg_home_profile(),
+            R.drawable.ic_account_fill,
+            iv_home,
+            iv_cart,
+            iv_message,
+            tv_home,
+            tv_cart,
+            tv_message,
+            R.drawable.ic_home_outline,
+            R.drawable.ic_cart_outline,
+            R.drawable.ic_chat_outline,
+            tv_badge1,
+            tv_badge2,
+            tv_badge3)
 
-            iv_message.setImageResource(R.drawable.ic_chat_outline)
-            tv_message.setTextColor(unselectedColor)
-            tv_badge2.visibility = View.VISIBLE
+    }
 
-            iv_account.setImageResource(R.drawable.ic_account_outline)
-            tv_account.setTextColor(unselectedColor)
-            tv_badge4.visibility = View.VISIBLE
+    private fun unSelected(iv : AppCompatImageView, tv : AppCompatTextView, drawable : Int, badge : AppCompatTextView?){
 
-            val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home_cart()).commit()
+        iv.setImageResource(drawable)
+        tv.setTextColor(unselectedColor)
+        badge?.visibility = View.INVISIBLE
 
-            edge_to_edge.statusBarColor("#FFFFFF", true)
+    }
 
-        }
+    private fun selected(
+        selIv : AppCompatImageView,
+        selTv : AppCompatTextView,
+        selBadge : AppCompatTextView,
+        fragment : Fragment,
+        selDrawable : Int,
+        unSelectedImage1 : AppCompatImageView,
+        unSelectedImage2 : AppCompatImageView,
+        unSelectedImage3 : AppCompatImageView,
+        unSelectedText1 : AppCompatTextView,
+        unSelectedText2 : AppCompatTextView,
+        unSelectedText3 : AppCompatTextView,
+        unSelDrawable1 : Int,
+        unSelDrawable2 : Int,
+        unSelDrawable3 : Int,
+        unSelBadge1 : AppCompatTextView?,
+        unSelBadge2 : AppCompatTextView?,
+        unSelBadge3 : AppCompatTextView?
+    ){
 
-        ll_message.setOnClickListener {
+        selIv.setImageResource(selDrawable)
+        selTv.setTextColor(selectedColor);
+        selBadge.visibility = View.INVISIBLE
 
-            iv_message.setImageResource(R.drawable.ic_chat_fill)
-            tv_message.setTextColor(selectedColor)
-            tv_badge2.visibility = View.INVISIBLE
+        supportFragmentManager.beginTransaction().replace(R.id.fl_container, fragment).commit()
 
+        edge_to_edge.setStatusBarColor("#FFFFFF", true)
 
+        unSelected(unSelectedImage1, unSelectedText1, unSelDrawable1, unSelBadge1)
+        unSelected(unSelectedImage2, unSelectedText2, unSelDrawable2, unSelBadge2)
+        unSelected(unSelectedImage3, unSelectedText3, unSelDrawable3, unSelBadge3)
 
-            iv_home.setImageResource(R.drawable.ic_home_outline)
-            tv_home.setTextColor(unselectedColor)
+    }
 
-            iv_cart.setImageResource(R.drawable.ic_cart_outline)
-            tv_cart.setTextColor(unselectedColor)
-            tv_badge3.visibility = View.VISIBLE
+    private fun navClicked(
+        ll : LinearLayout,
+        selIv : AppCompatImageView,
+        selTv : AppCompatTextView,
+        selBadge : AppCompatTextView,
+        fragment : Fragment,
+        selDrawable : Int,
+        unSelectedImage1 : AppCompatImageView,
+        unSelectedImage2 : AppCompatImageView,
+        unSelectedImage3 : AppCompatImageView,
+        unSelectedText1 : AppCompatTextView,
+        unSelectedText2 : AppCompatTextView,
+        unSelectedText3 : AppCompatTextView,
+        unSelDrawable1 : Int,
+        unSelDrawable2 : Int,
+        unSelDrawable3 : Int,
+        unSelBadge1 : AppCompatTextView?,
+        unSelBadge2 : AppCompatTextView?,
+        unSelBadge3 : AppCompatTextView?
+    ){
 
-            iv_account.setImageResource(R.drawable.ic_account_outline)
-            tv_account.setTextColor(unselectedColor)
-            tv_badge4.visibility = View.VISIBLE
+        ll.setOnClickListener {
 
-            val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home_messages()).commit()
+            selected(
+                selIv,
+                selTv,
+                selBadge,
+                fragment,
+                selDrawable,
+                unSelectedImage1,
+                unSelectedImage2,
+                unSelectedImage3,
+                unSelectedText1,
+                unSelectedText2,
+                unSelectedText3,
+                unSelDrawable1,
+                unSelDrawable2,
+                unSelDrawable3,
+                unSelBadge1,
+                unSelBadge2,
+                unSelBadge3
+            )
 
-            edge_to_edge.statusBarColor("#FFFFFF", true)
-
-        }
-
-        ll_account.setOnClickListener {
-
-            iv_account.setImageResource(R.drawable.ic_account_fill)
-            tv_account.setTextColor(selectedColor);
-            tv_badge4.visibility = View.INVISIBLE
-
-
-            iv_home.setImageResource(R.drawable.ic_home_outline)
-            tv_home.setTextColor(unselectedColor)
-
-            iv_message.setImageResource(R.drawable.ic_chat_outline)
-            tv_message.setTextColor(unselectedColor)
-            tv_badge2.visibility = View.VISIBLE
-
-            iv_cart.setImageResource(R.drawable.ic_cart_outline)
-            tv_cart.setTextColor(unselectedColor)
-            tv_badge3.visibility = View.VISIBLE
-
-            val fg = supportFragmentManager
-            fg.beginTransaction().replace(R.id.fl_container, Fg_home_profile()).commit()
-
-            edge_to_edge.statusBarColor("#FFFFFF", true)
         }
 
     }
+
     //bottom navigation -------------------------------------------------------
-
-    //checking intents----------------------------------------------------
-    private fun verifyIntent(){
-
-        CoroutineScope(Dispatchers.Main).launch {
-
-            helper.setFragment( intent.getStringExtra("p_message").toString() , R.id.fl_container, fl_bottom_navigation)
-
-            delay(100)
-
-        }
-
-    }
 
 }//public class===========================================================

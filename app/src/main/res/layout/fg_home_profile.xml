@@ -21,7 +21,9 @@
 
     </FrameLayout>
 
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/fl_toolbar"
@@ -82,13 +84,8 @@
                 android:layout_margin="5dp"
                 />
 
-
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 </RelativeLayout>

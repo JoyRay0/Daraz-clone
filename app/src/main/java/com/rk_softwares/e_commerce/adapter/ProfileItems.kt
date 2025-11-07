@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_home
 import com.squareup.picasso.Picasso
@@ -48,10 +49,7 @@ class ProfileItems() : RecyclerView.Adapter<ProfileItems.profileItemHolder>() {
 
             if (click_item == "message"){
 
-
-                val intent = Intent(context, Act_home::class.java)
-                intent.putExtra("p_message", "Fg_messages")
-                context.startActivity(intent)
+                IntentHelper.setDataIntent(context, Act_home::class.java, "item", "Fg_message")
 
             }
 

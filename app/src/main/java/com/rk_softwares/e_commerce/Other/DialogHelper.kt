@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import androidx.core.graphics.drawable.toDrawable
-import com.rk_softwares.e_commerce.R
 
 class DialogHelper(
 
@@ -15,7 +14,7 @@ class DialogHelper(
 
 ) {
 
-    fun bottomDialog(layout : Int) : Dialog{
+    fun customBottomDialog(layout : Int) : Dialog{
 
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

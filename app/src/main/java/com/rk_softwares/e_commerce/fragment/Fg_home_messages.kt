@@ -89,6 +89,7 @@ class Fg_home_messages : Fragment() {
 
         edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
+        //edge_to_edge.setBottomNav(rv_messages)
 
         mAdapter = Messages(requireActivity(), m_list)
         rv_messages.adapter = mAdapter
@@ -108,8 +109,6 @@ class Fg_home_messages : Fragment() {
         }
 
         messageServer.message(rv_messages, m_list, mAdapter, tv_act_dot, tv_pro_dot, actCount, proCount)
-
-
 
 
         return view
@@ -158,7 +157,6 @@ class Fg_home_messages : Fragment() {
             startActivity(intent)
 
         }
-
 
 
     }

@@ -13,9 +13,20 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/fl_tabItem"
+            android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <include layout="@layout/lay_my_order_tool_bar"/>
+
+        </FrameLayout>
+        
+        <FrameLayout
+            android:id="@+id/fl_tabItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fl_toolbar"
+            >
 
             <include layout="@layout/lay_pay_ship_receive_review_tab"/>
 
@@ -27,14 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/fl_tabItem"
             />
-
-        <com.rk_sofwares.textwithsubtext.TextWithSubText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            />
-
-
     </RelativeLayout>
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -72,6 +73,7 @@ class Fg_home_profile : Fragment() {
     private var i_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var i_map : HashMap<String, String>
 
+    private lateinit var nsv : NestedScrollView
     //others
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var gif_loader : GIFLoader
@@ -116,10 +118,13 @@ class Fg_home_profile : Fragment() {
         //items
         rv_items = view.findViewById(R.id.rv_items)
 
+        nsv = view.findViewById(R.id.nsv)
+
         //identity period-----------------------------------------------------
 
         edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
+        //edge_to_edge.setBottomNav(nsv)
 
         gif_loader = GIFLoader(requireActivity())
         profileServer = ProfileServer(requireActivity())
@@ -134,9 +139,6 @@ class Fg_home_profile : Fragment() {
         items.notifyDataSetChanged()
 
        // permission = PermissionHelper(requireActivity())
-        cv_profile_image.setOnClickListener {
-
-        }
         iv_setting.setOnClickListener {
 
             startActivity(Intent(requireActivity(), Act_setting::class.java))
@@ -148,7 +150,28 @@ class Fg_home_profile : Fragment() {
 
         }
 
+        myOrders()
+
         return view
     }// on create======================================================
+
+    private fun myOrders(){
+
+        clickedMyOrders(ll_to_pay, "Fg_pay")
+        clickedMyOrders(ll_to_ship, "Fg_ship")
+        clickedMyOrders(ll_to_receive, "Fg_receive")
+        clickedMyOrders(ll_to_review, "Fg_review")
+
+    }
+
+    private fun clickedMyOrders(ll : LinearLayout, value : String){
+
+        ll.setOnClickListener {
+
+            IntentHelper.setDataIntent(requireActivity(), Act_my_order::class.java, "tab", value)
+
+        }
+
+    }
 
 }// public class========================================================

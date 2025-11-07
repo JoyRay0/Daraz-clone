@@ -1,18 +1,12 @@
 package com.rk_softwares.e_commerce.activity
 
-import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.RelativeLayout
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
-import androidx.core.graphics.drawable.toDrawable
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.radiobutton.MaterialRadioButton
@@ -86,7 +80,7 @@ class Act_setting : AppCompatActivity() {
         //identity period---------------------------------------------------------
 
         edge_to_edge = EdgeToEdge(this)
-        edge_to_edge.statusBarColor("#FFFFFF", true)
+        edge_to_edge.setStatusBarColor("#FFFFFF", true)
         edge_to_edge.setToolBar(rl_toolbar)
         storage = StorageHelper(this, "settings")
         storage = StorageHelper(this, "setting_message")
@@ -105,7 +99,8 @@ class Act_setting : AppCompatActivity() {
         logOut()
         iv_back.setOnClickListener {
 
-            IntentHelper.intent(this, Act_home::class.java)
+            //IntentHelper.intent(this, Act_home::class.java)
+            IntentHelper.setDataIntent(this, Act_home::class.java, "item", "Fg_account")
 
         }
         sendDataWithIntent()
@@ -188,7 +183,7 @@ class Act_setting : AppCompatActivity() {
     //country dialog---------------------------------------------------------------------------------
     private fun countryDialog(){
 
-        val dialog = dialogHelper.bottomDialog(R.layout.lay_change_country)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_change_country)
 
         val rl_bangladesh = dialog.findViewById<RelativeLayout>(R.id.rl_bangladesh)
         val rl_sri_lanka = dialog.findViewById<RelativeLayout>(R.id.rl_sri_lanka)
@@ -304,7 +299,7 @@ class Act_setting : AppCompatActivity() {
     //language dialog---------------------------------------------------------------------
     private fun languageDialog(){
 
-        val dialog = dialogHelper.bottomDialog(R.layout.lay_languages)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_languages)
 
         val rb_english = dialog.findViewById<MaterialRadioButton>(R.id.rb_english)
         val rb_bangla = dialog.findViewById<MaterialRadioButton>(R.id.rb_bangla)

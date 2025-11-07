@@ -1,14 +1,10 @@
 package com.rk_softwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
@@ -22,7 +18,6 @@ import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_change_email_password_number
-import androidx.core.graphics.drawable.toDrawable
 import com.rk_softwares.e_commerce.Other.DialogHelper
 
 class Fg_setting_account_info : Fragment() {
@@ -217,41 +212,38 @@ class Fg_setting_account_info : Fragment() {
         val gender = storageHelper.getData("gender")
         val birthday = storageHelper.getData("birthday")
 
-
-        if (!name.isNullOrEmpty()) tv_name.text = name else tv_name.text = "Guest"
-
-        if (!number.isNullOrEmpty()) tv_mobile_number.text = "*****" else tv_mobile_number.text = "Not Set"
-
-        if (!email.isNullOrEmpty()) tv_change_email.text = email else tv_change_email.text = "Not Set"
-
-        if (!gender.isNullOrEmpty()) tv_gender.text = gender else tv_gender.text = "Not Set"
-
-        if (!birthday.isNullOrEmpty()) tv_birthday.text = birthday else tv_birthday.text = "Not Set"
+        tv_name.text = if (name.isNullOrEmpty()) "Guest" else name
+        tv_mobile_number.text = if (number.isNullOrEmpty()) "Not Set" else number
+        tv_change_email.text = if (email.isNullOrEmpty()) "Not Set" else email
+        tv_birthday.text = if (birthday.isNullOrEmpty()) "Not Set" else birthday
+        tv_gender.text = if (gender.isNullOrEmpty()) "Not Set" else gender
 
     }
 
     //mask email-----------------------------------------------------------------------------
     private fun maskEmail(email : String): String {
 
+        if (email.isNullOrEmpty()) return "Not Set"
 
         val index = email.indexOf("@")
+        if (index == -1) return "Not Set"
 
-        if (index > 2){
+          return if (index > 2){
 
-           return email.substring(0, 2) + "******" + email.substring(index)
+              email.substring(0, 2) + "******" + email.substring(index)
 
-        }else{
+            }else{
 
-            return "******" + email.substring(index)
+                "******" + email.substring(index)
 
-        }
+            }
 
     }
 
     //gender dialog----------------------------------------------------------
     private fun genderDialog(){
 
-        val dialog = dialogHelper.bottomDialog(R.layout.lay_gender_dialog)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_gender_dialog)
 
         val rb_female = dialog.findViewById<AppCompatRadioButton>(R.id.rb_female)
         val rb_male = dialog.findViewById<AppCompatRadioButton>(R.id.rb_male)
@@ -328,7 +320,7 @@ class Fg_setting_account_info : Fragment() {
     //birthday dialog--------------------------------------------------------------
     private fun birthdayDialog(){
 
-        val dialog = dialogHelper.bottomDialog(R.layout.lay_change_birthday)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_change_birthday)
 
         val ed_day = dialog.findViewById<AppCompatEditText>(R.id.ed_day)
         val ed_month = dialog.findViewById<AppCompatEditText>(R.id.ed_month)

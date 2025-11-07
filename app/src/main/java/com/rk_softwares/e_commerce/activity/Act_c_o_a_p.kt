@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
+import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.R
-import com.rk_softwares.e_commerce.activity.Act_home
 import com.rk_softwares.e_commerce.fragment.Fg_home_messages_activities_child
 import com.rk_softwares.e_commerce.fragment.Fg_home_messages_chats_child
 import com.rk_softwares.e_commerce.fragment.Fg_home_messages_order_child
@@ -53,13 +53,13 @@ class Act_c_o_a_p : AppCompatActivity() {
         edge_to_edge = EdgeToEdge(this)
         edge_to_edge.setEdgeToEdge()
         edge_to_edge.setToolBar(fl_toolbar)
-        edge_to_edge.statusBarColor("#FFFFFF", true)
+        edge_to_edge.setStatusBarColor("#FFFFFF", true)
         edge_to_edge.setBottomNav(fl_container)
 
         //back button--------------------------------------------------
         iv_back.setOnClickListener {
 
-            startActivity(Intent(this, Act_home::class.java))
+            IntentHelper.intent(this, Act_home::class.java)
 
         }
 
@@ -75,8 +75,7 @@ class Act_c_o_a_p : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, true){
 
-            startActivity(Intent(this@Act_c_o_a_p, Act_home::class.java))
-            finishAffinity()
+            IntentHelper.intent(this@Act_c_o_a_p, Act_home::class.java)
 
         }
 
