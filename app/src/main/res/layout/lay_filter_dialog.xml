@@ -53,68 +53,7 @@
            android:layout_marginStart="12dp"
             />
 
-        <LinearLayout
-            android:id="@+id/ll_month"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/tv_by_time_created"
-            android:weightSum="3"
-            android:layout_margin="7dp"
-            >
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rb_last1month"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:button="@android:color/transparent"
-                android:text="Last 1 month"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:fontFamily="@font/roboto"
-                android:textColor="#7D7575"
-                android:layout_margin="10dp"
-                android:padding="7dp"
-                android:layout_weight="1"
-                android:background="@drawable/sh_last_month_unchecked"
-                />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rb_last3month"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:button="@android:color/transparent"
-                android:text="Last 3 month"
-                android:textSize="12sp"
-                android:textColor="#7D7575"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:padding="7dp"
-                android:layout_weight="1"
-                android:background="@drawable/sh_last_month_unchecked"
-
-                />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rb_last6month"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:button="@android:color/transparent"
-                android:text="Last 6 month"
-                android:fontFamily="@font/roboto"
-                android:textSize="12sp"
-                android:textColor="#7D7575"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:padding="7dp"
-                android:layout_weight="1"
-                android:background="@drawable/sh_last_month_unchecked"
-                />
-
-        </LinearLayout>
-
-
+        <!--
         <FrameLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
@@ -160,12 +99,88 @@
                 />
 
         </FrameLayout>
+        -->
 
+        <GridLayout
+            android:id="@+id/ll_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_by_time_created"
+            android:layout_margin="5dp"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="2">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last1month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:button="@android:color/transparent"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Last 1 month"
+                android:textColor="#7D7575"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last3month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:button="@android:color/transparent"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Last 3 month"
+                android:textColor="#7D7575"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last6month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:button="@android:color/transparent"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Last 6 month"
+                android:textColor="#7D7575"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_last12month"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/sh_last_month_unchecked"
+                android:button="@android:color/transparent"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Last 12 month"
+                android:textColor="#7D7575"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                />
+
+        </GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll"
+            android:layout_below="@id/ll_month"
             android:orientation="horizontal"
             android:weightSum="2"
             android:layout_marginTop="30dp"

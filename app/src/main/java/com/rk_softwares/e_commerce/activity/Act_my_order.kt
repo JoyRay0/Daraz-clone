@@ -125,6 +125,12 @@ class Act_my_order : AppCompatActivity() {
 
         }
 
+        iv_search.setOnClickListener {
+
+            IntentHelper.intent(this, Act_search::class.java)
+
+        }
+
 
     }//on create===============================================================
 
@@ -214,26 +220,34 @@ class Act_my_order : AppCompatActivity() {
         val rb_last1month = dialog.findViewById<MaterialRadioButton>(R.id.rb_last1month)
         val rb_last3month = dialog.findViewById<MaterialRadioButton>(R.id.rb_last3month)
         val rb_last6month = dialog.findViewById<MaterialRadioButton>(R.id.rb_last6month)
-        val rb_start_date = dialog.findViewById<MaterialRadioButton>(R.id.rb_start_date)
-        val rb_end_date = dialog.findViewById<MaterialRadioButton>(R.id.rb_end_date)
+        val rb_last12month = dialog.findViewById<MaterialRadioButton>(R.id.rb_last12month)
         val btn_reset = dialog.findViewById<MaterialButton>(R.id.btn_reset)
         val btn_confirm = dialog.findViewById<MaterialButton>(R.id.btn_confirm)
 
         val selectedBackground = ContextCompat.getDrawable(this,R.drawable.sh_last_month_checked)
-        val unSelectedBackground = getDrawable(R.drawable.sh_last_month_unchecked)
+        val unSelectedBackground = ContextCompat.getDrawable(this,R.drawable.sh_last_month_unchecked)
 
         btn_confirm.isEnabled = false
         btn_confirm.alpha = 0.5f
 
-        radioChecked(rb_last1month, rb_last3month, rb_last6month, "last 1 month", selectedBackground, unSelectedBackground, btn_confirm)
-        radioChecked(rb_last3month, rb_last1month, rb_last6month, "last 3 month", selectedBackground, unSelectedBackground, btn_confirm)
-        radioChecked(rb_last6month, rb_last3month, rb_last1month, "last 6 month", selectedBackground, unSelectedBackground, btn_confirm)
+        radioChecked(rb_last1month, rb_last3month, rb_last6month, rb_last12month, "last 1 month", selectedBackground, unSelectedBackground, btn_confirm)
+        radioChecked(rb_last3month, rb_last1month, rb_last6month, rb_last12month, "last 3 month", selectedBackground, unSelectedBackground, btn_confirm)
+        radioChecked(rb_last6month, rb_last3month, rb_last1month, rb_last12month, "last 6 month", selectedBackground, unSelectedBackground, btn_confirm)
+        radioChecked(rb_last12month, rb_last3month, rb_last1month, rb_last6month, "last 12 month", selectedBackground, unSelectedBackground, btn_confirm)
 
 
         btn_reset.setOnClickListener {
 
             lastMonth = ""
-            radioUnChecked(rb_last1month, rb_last3month, rb_last6month, rb_start_date, rb_end_date, unSelectedBackground)
+
+            val unchecked = arrayOf(rb_last1month, rb_last3month, rb_last6month)
+
+            unchecked.forEach {
+
+                it.isChecked = false
+                it.background = unSelectedBackground
+
+            }
 
             btn_confirm.isEnabled = false
             btn_confirm.alpha = 0.5f
@@ -266,9 +280,9 @@ class Act_my_order : AppCompatActivity() {
 
     }
 
-    private fun radioChecked(rb : MaterialRadioButton, rb2 : MaterialRadioButton, rb3 : MaterialRadioButton, month : String, selected : Drawable?, unSelected : Drawable?, btn : MaterialButton){
+    private fun radioChecked(rb : MaterialRadioButton, rb2 : MaterialRadioButton, rb3 : MaterialRadioButton, rb4 : MaterialRadioButton, month : String, selected : Drawable?, unSelected : Drawable?, btn : MaterialButton){
 
-        val unChecked = arrayOf(rb2, rb3)
+        val unChecked = arrayOf(rb2, rb3, rb4)
 
         rb.setOnCheckedChangeListener { _, isChecked ->
 
@@ -290,19 +304,5 @@ class Act_my_order : AppCompatActivity() {
         }
 
     }
-
-    private fun radioUnChecked(rb1 : MaterialRadioButton, rb2 : MaterialRadioButton, rb3 : MaterialRadioButton, rb4 : MaterialRadioButton, rb5 : MaterialRadioButton, unSelected : Drawable?){
-
-        val unchecked = arrayOf(rb1, rb2, rb3, rb4, rb5)
-
-        unchecked.forEach {
-
-            it.isChecked = false
-            it.background = unSelected
-
-        }
-
-    }
-
 
 }//class=======================================================================

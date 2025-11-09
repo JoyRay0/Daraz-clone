@@ -24,6 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
+            android:name=".activity.Act_search"
+            android:exported="false" />
+        <activity
             android:name=".Compose.SearchBar"
             android:exported="false"
             android:label="@string/title_activity_search_bar"
