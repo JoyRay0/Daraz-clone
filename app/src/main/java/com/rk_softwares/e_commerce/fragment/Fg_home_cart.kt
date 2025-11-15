@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.rk_softwares.e_commerce.model.ProductModel
@@ -21,6 +22,7 @@ import com.rk_softwares.e_commerce.server.CartServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -78,9 +80,17 @@ class Fg_home_cart : Fragment() {
 
 
 
-        p_list.clear()
-        cartServer.suggestedItem(rv_suggestion_item, p_list, pAdapter)
+        lifecycleScope.launch(Dispatchers.IO){
 
+            cartServer.suggestedItem(rv_suggestion_item, p_list, pAdapter)
+
+            withContext( Dispatchers.Main){
+
+                p_list.clear()
+
+            }
+
+        }
 
         return view
     }//on create===============================================================

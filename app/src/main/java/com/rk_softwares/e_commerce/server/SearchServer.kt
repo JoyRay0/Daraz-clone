@@ -1,13 +1,14 @@
 package com.rk_softwares.e_commerce.server
 
 import android.app.Activity
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.rk_softwares.e_commerce.Other.DomainHelper
+import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.adapter.Product
 import com.rk_softwares.e_commerce.model.ProductModel
+import com.rk_softwares.e_commerce.model.SearchModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,28 +19,27 @@ import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
 import java.lang.Exception
+import java.net.URLEncoder
 
-class CartServer(
-
+class SearchServer(
     private var activity: Activity
-
 ) {
 
-    fun suggestedItem(rv : RecyclerView, list : ArrayList<HashMap<String, Any>>, adapter : Product){
+    fun searchProduct(query : String, rv : RecyclerView, list : ArrayList<HashMap<String, Any>>, productAdapter : Product){
 
         val client = OkHttpClient()
 
         val gson = Gson()
 
         val request = Request.Builder()
-            .url(DomainHelper.getProductLink())
+            .url(DomainHelper.getSearchLink() + URLEncoder.encode(query, "UTF-8"))
             .build()
 
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
 
-                CoroutineScope(Dispatchers.Main).launch {
+                activity.runOnUiThread {
 
                     rv.visibility = View.GONE
 
@@ -51,19 +51,17 @@ class CartServer(
 
                 if (response.isSuccessful){
 
-                    val data = response.body.string() ?: return
+                    val data = response.body.string()
 
                     try {
 
-                        val product = gson.fromJson(data, ProductModel::class.java)
-
-                        Log.d("cart", data)
+                        val search = gson.fromJson(data, SearchModel::class.java)
 
                         list.clear()
 
-                        if (product.status == "Success"){
+                        if (search.status == "Success"){
 
-                            for (item in product.data){
+                            for (item in search.data){
 
                                 val p_map : HashMap<String, Any> = HashMap()
                                 p_map["short_image"] = item.thumbnail ?: ""
@@ -76,12 +74,16 @@ class CartServer(
 
                             }
 
-                            CoroutineScope(Dispatchers.Main).launch {
+                            activity.runOnUiThread {
 
                                 rv.visibility = View.VISIBLE
-                                adapter.notifyDataSetChanged()
+                                productAdapter.notifyDataSetChanged()
 
                             }
+
+                        }else{
+
+                            ShortMessageHelper.toast(activity, search.message)
 
                         }
 

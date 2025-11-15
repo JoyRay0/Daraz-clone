@@ -1,14 +1,15 @@
 package com.rk_softwares.e_commerce.model
 
-data class ProductModel(
+data class SearchModel(
 
     val status : String,
-    val page : Int,
-    val data : List<Product>
+    val message : String,
+    val itemCount : Int,
+    val data : List<Data>
 
 )
 
-data class Product(
+data class Data(
 
      val title : String?,
      val description : String?,
@@ -21,26 +22,27 @@ data class Product(
      val brand : String?,
      val sku : String?,
      val weight : Int?,
-     val dimensions : DataDimension?,
+     val dimensions : SearchDimensions?,
      val warrantyInformation : String?,
      val shippingInformation : String?,
      val availabilityStatus : String?,
-     val reviews : List<DataReviews>?,
+     val reviews : List<SearchReview>?,
      val returnPolicy : String?,
      val minimumOrderQuantity : Int?,
-     val meta : DataMeta?,
+     val meta : SearchMeta?,
      val images : List<String>?,
      val thumbnail : String?
-)
 
-data class DataDimension(
+    )
+
+data class SearchDimensions(
 
      val width : Double?,
      val height : Double?,
      val depth : Double?
 )
 
-data class DataReviews(
+data class SearchReview(
 
      val rating : Int?,
      val comment : String?,
@@ -49,7 +51,7 @@ data class DataReviews(
      val reviewerEmail : String?
 )
 
-data class DataMeta(
+data class SearchMeta(
 
      val createdAt : String?,
      val updatedAt : String?,

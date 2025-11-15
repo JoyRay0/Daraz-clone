@@ -8,13 +8,26 @@ object InputSanitizerHelper {
 
     fun isValidString(input : String) : String{
 
-        return if (normalString.containsMatchIn(input))  "" else  input.replace(Regex("\\s+"), " ").trim()
+        return if (normalString.containsMatchIn(input)) {
+            ""
+        } else if (input == "null"){
+            ""
+        } else  {
+            input.replace(Regex("\\s+"), " ").trim()
+        }
 
     }
 
     fun isValidEmail(input : String) : String{
 
-        return if (emailString.containsMatchIn(input))  "" else  input.replace(Regex("\\s+"), " ").trim()
+        return if (emailString.containsMatchIn(input)) {
+            ""
+        } else if (input == "null"){
+            ""
+        }
+        else {
+            input.replace(Regex("\\s+"), " ").trim()
+        }
 
     }
 

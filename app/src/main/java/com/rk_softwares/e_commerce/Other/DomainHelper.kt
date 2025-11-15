@@ -4,7 +4,11 @@ import android.content.Context
 
 object DomainHelper {
 
-    private var  domain : String = "https://rksoftwares.fun/All_app/Daraz_clone/Api/All_Images.php?resource="
+    private var  domain : String = "https://rksoftwares.fun/All_app/Daraz_clone/Api/"
+
+    private var all_image : String = "All_Images.php?resource="
+    private var search : String = "search.php?query="
+    private var suggestion : String = "products.php?page="
 
     private var itemLink : String = "item"
     private var couponLink : String = "other_images"
@@ -14,59 +18,65 @@ object DomainHelper {
     private var messageLink : String = "messages"
     private var viewpagerLink : String = "viewpager"
     private var profileLink : String = "profile_item_images"
-    private var productLink : String = "https://dummyjson.com/products"
+
 
     fun getItemLink(): String{
 
-        return domain+itemLink
+        return domain+all_image+itemLink
 
     }
 
     fun getCouponLink(): String{
 
-        return domain+couponLink
+        return domain+all_image+couponLink
 
     }
 
     fun getFlashSaleLink(): String{
 
-        return domain+flashSaleLink
+        return domain+all_image+flashSaleLink
 
     }
 
     fun getGifLink(): String{
 
-        return domain+gifLink
+        return domain+all_image+gifLink
 
     }
 
     fun getMessagesLink(): String{
 
-        return domain+messageLink
+        return domain+all_image+messageLink
 
     }
 
     fun getViewpagerLink(): String{
 
-        return domain+viewpagerLink
+        return domain+all_image+viewpagerLink
 
     }
 
     fun getProfileItemLink(): String{
 
-        return domain+profileLink
+        return domain+all_image+profileLink
 
     }
 
     fun getProductLink(): String{
 
-        return productLink
+        return domain+suggestion
+
+    }
+
+    fun getSearchLink() : String{
+
+        return domain+search
 
     }
 
     fun getCategoryLink(): String{
 
-        return domain+categoryLink
+        return domain+all_image+categoryLink
 
     }
 

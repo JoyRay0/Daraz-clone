@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class SearchHistory(
 
@@ -51,6 +52,8 @@ class SearchHistory(
 
             }
 
+
+
         }catch (e : Exception){
 
             e.printStackTrace()
@@ -85,9 +88,13 @@ class SearchHistory(
 
             e.printStackTrace()
 
+        }finally {
+
+            cursor?.close()
+
         }
 
-        cursor?.close()
+        Log.e("data", list.toString())
 
         return list
 
@@ -100,6 +107,38 @@ class SearchHistory(
         db.execSQL("DELETE FROM $TABLE_NAME")
 
     }
+
+    fun checkDuplicateData(text: String) : Boolean{
+
+        val db = dbOpen()
+
+        var cursor : Cursor? = null
+
+        var exists = false
+
+        try {
+
+            cursor = db.rawQuery("SELECT history_data FROM $TABLE_NAME WHERE history_data = ?", arrayOf(text))
+
+            while (cursor.moveToFirst()){
+
+                exists = true
+            }
+
+        }catch (e : Exception){
+
+            e.printStackTrace()
+
+        }finally {
+
+            cursor?.close()
+
+        }
+
+        return exists
+    }
+
+
 
     fun closeDB(){
 
