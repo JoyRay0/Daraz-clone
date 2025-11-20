@@ -10,151 +10,156 @@
     android:background="#37F3EBEB"
     >
 
-    <FrameLayout
-        android:id="@+id/fl_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        >
-        <include layout="@layout/lay_home_toolbar"/>
-
-    </FrameLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv_scroll"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fl_toolbar"
+        android:orientation="vertical"
         >
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+
             >
-            <!-- item images -->
-            <FrameLayout
-                android:id="@+id/fl_item_image_loading"
+            <include layout="@layout/lay_home_toolbar"/>
+
+        </FrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:orientation="vertical"
                 >
+                <!-- item images -->
+                <FrameLayout
+                    android:id="@+id/fl_item_image_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    >
 
-                <include layout="@layout/lay_item_images_loading"/>
+                    <include layout="@layout/lay_item_images_loading"/>
 
-            </FrameLayout>
+                </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="gone"
-                />
-            <!-- coupon -->
-            <FrameLayout
-                android:id="@+id/fl_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:visibility="visible"
-                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:visibility="gone"
+                    />
+                <!-- coupon -->
+                <FrameLayout
+                    android:id="@+id/fl_coupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:visibility="visible"
+                    >
 
-                <include layout="@layout/lay_new_user_coupon"/>
+                    <include layout="@layout/lay_new_user_coupon"/>
 
-            </FrameLayout>
+                </FrameLayout>
 
-            <!-- viewpager -->
-            <FrameLayout
-                android:id="@+id/fl_vp_image_loading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                >
+                <!-- viewpager -->
+                <FrameLayout
+                    android:id="@+id/fl_vp_image_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    >
 
-                <include layout="@layout/lay_vp_image_loading"/>
+                    <include layout="@layout/lay_vp_image_loading"/>
 
-            </FrameLayout>
+                </FrameLayout>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_image"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:visibility="gone"
-                />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:visibility="gone"
+                    />
 
-            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                android:id="@+id/dotsIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:dotsColor="#E6D1D1"
-                app:dotsSize="10dp"
-                app:dotsSpacing="5dp"
-                app:dotsStrokeColor="#10D3EB"
-                android:layout_marginTop="-30dp"
-                android:visibility="gone"
-                />
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/dotsIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:dotsColor="#E6D1D1"
+                    app:dotsSize="10dp"
+                    app:dotsSpacing="5dp"
+                    app:dotsStrokeColor="#10D3EB"
+                    android:layout_marginTop="-30dp"
+                    android:visibility="gone"
+                    />
 
-            <!-- flash sale -->
-            <FrameLayout
-                android:id="@+id/fl_flash_sale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginTop="15dp"
-                >
+                <!-- flash sale -->
+                <FrameLayout
+                    android:id="@+id/fl_flash_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="15dp"
+                    >
 
-                <include layout="@layout/lay_flash_sale_img"/>
+                    <include layout="@layout/lay_flash_sale_img"/>
 
-            </FrameLayout>
+                </FrameLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#A9D1B8B8"
-                android:layout_marginTop="8dp"
-                />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#A9D1B8B8"
+                    android:layout_marginTop="8dp"
+                    />
 
-            <!-- categories -->
-            <FrameLayout
-                android:id="@+id/fl_categories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="15dp"
-                >
+                <!-- categories -->
+                <FrameLayout
+                    android:id="@+id/fl_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="15dp"
+                    >
 
-                <include layout="@layout/lay_categories_images"/>
+                    <include layout="@layout/lay_categories_images"/>
 
-            </FrameLayout>
-
-
-            <!-- tab layout -->
-            <FrameLayout
-                android:id="@+id/fl_tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp"
-                >
-
-                <include layout="@layout/lay_tablayout"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_ch_tab_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                </FrameLayout>
 
 
-        </LinearLayout>
+                <!-- tab layout -->
+                <FrameLayout
+                    android:id="@+id/fl_tablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
+                    >
 
-    </androidx.core.widget.NestedScrollView>
+                    <include layout="@layout/lay_tablayout"/>
 
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_ch_tab_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>

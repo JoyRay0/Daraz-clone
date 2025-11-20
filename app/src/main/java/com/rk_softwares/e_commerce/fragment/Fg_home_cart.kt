@@ -82,7 +82,7 @@ class Fg_home_cart : Fragment() {
 
         lifecycleScope.launch(Dispatchers.IO){
 
-            cartServer.suggestedItem(rv_suggestion_item, p_list, pAdapter)
+            //cartServer.suggestedItem(rv_suggestion_item, p_list, pAdapter)
 
             withContext( Dispatchers.Main){
 

@@ -27,21 +27,12 @@
             android:name=".activity.Act_search"
             android:exported="false" />
         <activity
-            android:name=".Compose.SearchBar"
-            android:exported="false"
-            android:label="@string/title_activity_search_bar"
-            android:theme="@style/Theme.E_commerce" />
-        <activity
             android:name=".activity.Act_my_order"
             android:exported="false" />
         <activity
             android:name=".activity.Act_change_email_password_number"
             android:exported="false" />
-        <activity
-            android:name=".test"
-            android:exported="false"
-            android:label="@string/title_activity_test"
-            android:theme="@style/Theme.E_commerce" />
+
         <activity
             android:name=".activity.Act_child_settings"
             android:exported="false" />

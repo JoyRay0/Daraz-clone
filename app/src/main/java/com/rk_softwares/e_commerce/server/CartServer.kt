@@ -25,14 +25,20 @@ class CartServer(
 
 ) {
 
-    fun suggestedItem(rv : RecyclerView, list : ArrayList<HashMap<String, Any>>, adapter : Product){
+    fun suggestedItem(
+        rv: RecyclerView,
+        list: ArrayList<HashMap<String, Any>>,
+        adapter: Product,
+        page: Int,
+        onComplete : (() -> Unit)? = null
+    ){
 
         val client = OkHttpClient()
 
         val gson = Gson()
 
         val request = Request.Builder()
-            .url(DomainHelper.getProductLink())
+            .url(DomainHelper.getProductLink()+page)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -59,8 +65,6 @@ class CartServer(
 
                         Log.d("cart", data)
 
-                        list.clear()
-
                         if (product.status == "Success"){
 
                             for (item in product.data){
@@ -80,6 +84,7 @@ class CartServer(
 
                                 rv.visibility = View.VISIBLE
                                 adapter.notifyDataSetChanged()
+                                onComplete?.invoke()
 
                             }
 

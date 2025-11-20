@@ -408,5 +408,4 @@ class HomeServer(
 
     }
 
-    fun productImage(){}
 }

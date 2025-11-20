@@ -6,26 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.rk_softwares.e_commerce.model.ProductModel
 import com.rk_softwares.e_commerce.Other.Cache
-import com.rk_softwares.e_commerce.Other.DomainHelper
+import com.rk_softwares.e_commerce.Other.LazyLoading
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.Product
 import com.rk_softwares.e_commerce.server.CartServer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import okio.IOException
-import java.lang.Exception
 
 
 class Fg_tab_item_for_upu : Fragment() {
@@ -39,6 +25,7 @@ class Fg_tab_item_for_upu : Fragment() {
     //other
     private lateinit var cache : Cache
     private lateinit var cartServer: CartServer
+    private lateinit var lazy : LazyLoading
 
     // XML id's------------------------------------------------------------------------
 
@@ -58,11 +45,22 @@ class Fg_tab_item_for_upu : Fragment() {
         cache = Cache(requireActivity(), "for_you")
         cartServer = CartServer(requireActivity())
 
-        lifecycleScope.launch {
+        lazy = LazyLoading(rv_for_you){ page  ->
 
-            cartServer.suggestedItem(rv_for_you, p_list, pAdapter)
-            delay(2000)
+            cartServer.suggestedItem(rv_for_you, p_list, pAdapter, page) {
 
+                lazy.finishLoading()
+
+
+            }
+
+            Log.d("item", page.toString())
+
+        }
+        lazy.lazyScroll()
+
+        cartServer.suggestedItem(rv_for_you, p_list, pAdapter, 1) {
+            lazy.finishLoading()
         }
 
         return view

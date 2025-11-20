@@ -83,6 +83,7 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation("com.github.markomilos:paginate:1.0.0")
 
     // Compose dependencies
     implementation("androidx.compose.ui:ui:1.9.4")
