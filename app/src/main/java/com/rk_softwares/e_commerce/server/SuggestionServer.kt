@@ -24,8 +24,8 @@ class SuggestionServer(
 
 ) {
 
-   private var filterList : ArrayList<String> = ArrayList()
-   private lateinit var adapter : ArrayAdapter<String>
+    private var filterList : ArrayList<String> = ArrayList()
+    private lateinit var adapter : ArrayAdapter<String>
 
     fun searchSuggestionFromServer(query : CharSequence){
 
@@ -91,7 +91,6 @@ class SuggestionServer(
 
                                     actSearch.dismissDropDown()
                                     filterList.clear()
-                                    adapter.clear()
 
                                 }
 

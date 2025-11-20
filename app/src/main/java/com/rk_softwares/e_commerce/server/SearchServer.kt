@@ -2,6 +2,7 @@ package com.rk_softwares.e_commerce.server
 
 import android.app.Activity
 import android.view.View
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.rk_softwares.e_commerce.Other.DomainHelper
@@ -77,6 +78,8 @@ class SearchServer(
                             activity.runOnUiThread {
 
                                 rv.visibility = View.VISIBLE
+
+
                                 productAdapter.notifyDataSetChanged()
 
                             }

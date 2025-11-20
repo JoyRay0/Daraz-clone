@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -25,13 +24,9 @@ import com.rk_softwares.e_commerce.adapter.HistoryAdapter
 import com.rk_softwares.e_commerce.Other.ItemClick
 import com.rk_softwares.e_commerce.adapter.Product
 import com.rk_softwares.e_commerce.database.SearchHistory
-import com.rk_softwares.e_commerce.server.CartServer
 import com.rk_softwares.e_commerce.server.SearchServer
 import com.rk_softwares.e_commerce.server.SuggestionServer
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -50,6 +45,7 @@ class Act_search : AppCompatActivity() {
     //search history
     private lateinit var tv_clear_history : AppCompatTextView
     private lateinit var rv_history : RecyclerView
+    private lateinit var fl_history : FrameLayout
 
     //recommend
     private lateinit var tv_hide_recommend : AppCompatTextView
@@ -68,7 +64,7 @@ class Act_search : AppCompatActivity() {
     private lateinit var history: SearchHistory
     private lateinit var historyAdapter : HistoryAdapter
     private lateinit var suggestion : SuggestionServer
-    private lateinit var productServer : SearchServer
+    private lateinit var searchServer : SearchServer
     private lateinit var productAdapter : Product
 
 
@@ -86,6 +82,7 @@ class Act_search : AppCompatActivity() {
 
         tv_clear_history = findViewById(R.id.tv_clear_history)
         rv_history = findViewById(R.id.rv_history)
+        fl_history = findViewById(R.id.fl_history)
 
         tv_hide_recommend = findViewById(R.id.tv_hide_recommend)
         rv_recommend = findViewById(R.id.rv_recommend)
@@ -101,12 +98,13 @@ class Act_search : AppCompatActivity() {
         edge_to_edge.setBottomNav(rv_product)
 
         history = SearchHistory(this)
+
         suggestion = SuggestionServer(this, act_search)
 
         productAdapter = Product(this, productList)
         rv_product.adapter = productAdapter
 
-        productServer = SearchServer(this)
+        searchServer = SearchServer(this)
 
 
         historyAdapter = HistoryAdapter(this, list, object : ItemClick.onItemClickedListener{
@@ -123,8 +121,9 @@ class Act_search : AppCompatActivity() {
 
         })
         rv_history.adapter = historyAdapter
-        act_search.requestFocus()
 
+
+        act_search.requestFocus()
 
 
         iv_back.setOnClickListener {
@@ -234,7 +233,7 @@ class Act_search : AppCompatActivity() {
                    searchJob?.cancel()
                    searchJob = lifecycleScope.launch {
 
-                       delay(500)
+                       delay(1000)
                        suggestion.searchSuggestionFromServer(text)
 
                    }
@@ -296,6 +295,7 @@ class Act_search : AppCompatActivity() {
         if (!text.isNullOrEmpty()) {
 
             ShortMessageHelper.toast(applicationContext, text.trim())
+            fl_history.visibility = View.GONE
 
             if (searchText == "null" || searchText.isEmpty()){
 
@@ -303,7 +303,7 @@ class Act_search : AppCompatActivity() {
 
             }else{
 
-                productServer.searchProduct(text, rv_product, productList, productAdapter)
+                searchServer.searchProduct(text, rv_product, productList, productAdapter)
 
                 lifecycleScope.launch(Dispatchers.IO){
 
