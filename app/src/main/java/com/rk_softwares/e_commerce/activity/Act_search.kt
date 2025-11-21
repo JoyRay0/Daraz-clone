@@ -23,7 +23,9 @@ import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.HistoryAdapter
 import com.rk_softwares.e_commerce.Other.ItemClick
 import com.rk_softwares.e_commerce.adapter.Product
+import com.rk_softwares.e_commerce.adapter.RecommendAdapter
 import com.rk_softwares.e_commerce.database.SearchHistory
+import com.rk_softwares.e_commerce.server.RecommendServer
 import com.rk_softwares.e_commerce.server.SearchServer
 import com.rk_softwares.e_commerce.server.SuggestionServer
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +53,8 @@ class Act_search : AppCompatActivity() {
     private lateinit var tv_hide_recommend : AppCompatTextView
     private lateinit var rv_recommend : RecyclerView
 
+    private lateinit var fl_recommend : FrameLayout
+
     private lateinit var rv_product : RecyclerView
 
     //init
@@ -59,6 +63,8 @@ class Act_search : AppCompatActivity() {
     private var productList : ArrayList<HashMap<String, Any>> = ArrayList()
     private var searchJob : Job? = null
 
+    private var recommendList : ArrayList<String> = ArrayList()
+
     //other
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var history: SearchHistory
@@ -66,6 +72,9 @@ class Act_search : AppCompatActivity() {
     private lateinit var suggestion : SuggestionServer
     private lateinit var searchServer : SearchServer
     private lateinit var productAdapter : Product
+    private lateinit var recommendServer: RecommendServer
+
+    private lateinit var recommendAdapter: RecommendAdapter
 
 
     //XML id's---------------------------------------------------------------
@@ -89,6 +98,8 @@ class Act_search : AppCompatActivity() {
 
         rv_product = findViewById(R.id.rv_product)
 
+        fl_recommend = findViewById(R.id.fl_recommend)
+
         //identity period-------------------------------------------------------
 
         edge_to_edge = EdgeToEdge(this)
@@ -97,31 +108,7 @@ class Act_search : AppCompatActivity() {
         edge_to_edge.setToolBar(fl_toolbar)
         edge_to_edge.setBottomNav(rv_product)
 
-        history = SearchHistory(this)
-
-        suggestion = SuggestionServer(this, act_search)
-
-        productAdapter = Product(this, productList)
-        rv_product.adapter = productAdapter
-
-        searchServer = SearchServer(this)
-
-
-        historyAdapter = HistoryAdapter(this, list, object : ItemClick.onItemClickedListener{
-
-            override fun onItemClick(text: String?) {
-
-                act_search.setText(text)
-
-                searchData(text.toString())
-
-                performSearch(text)
-
-            }
-
-        })
-        rv_history.adapter = historyAdapter
-
+        allServerAndAdapter()
 
         act_search.requestFocus()
 
@@ -224,6 +211,8 @@ class Act_search : AppCompatActivity() {
 
                    btn_search.isEnabled = false
                    btn_search.alpha = 0.5f
+                   fl_history.visibility = View.VISIBLE
+                   fl_recommend.visibility = View.VISIBLE
 
                }else{
 
@@ -295,7 +284,6 @@ class Act_search : AppCompatActivity() {
         if (!text.isNullOrEmpty()) {
 
             ShortMessageHelper.toast(applicationContext, text.trim())
-            fl_history.visibility = View.GONE
 
             if (searchText == "null" || searchText.isEmpty()){
 
@@ -303,13 +291,13 @@ class Act_search : AppCompatActivity() {
 
             }else{
 
-                searchServer.searchProduct(text, rv_product, productList, productAdapter)
+                searchServer.searchProduct(text, rv_product, productList, productAdapter, fl_history, fl_recommend)
 
                 lifecycleScope.launch(Dispatchers.IO){
 
-                    if (!(history.checkDuplicateData(text))){
+                    if (!(history.checkDuplicateData(text, "history_data"))){
 
-                        history.insert(text)
+                        history.queryTextInsert(text)
 
                     }
 
@@ -325,6 +313,59 @@ class Act_search : AppCompatActivity() {
             }
 
         }else ShortMessageHelper.toast(applicationContext, "Invalid Keyword")
+
+    }
+
+    private fun allServerAndAdapter(){
+
+        history = SearchHistory(this)
+
+        suggestion = SuggestionServer(this, act_search)
+
+        productAdapter = Product(this, productList)
+        rv_product.adapter = productAdapter
+
+        searchServer = SearchServer(this)
+
+        recommendServer = RecommendServer(this)
+        recommendAdapter = RecommendAdapter(this, recommendList, object : ItemClick.onItemClickedListener{
+            override fun onItemClick(text: String?) {
+
+                act_search.setText(text)
+
+                searchData(text.toString())
+
+                performSearch(text)
+
+            }
+
+        })
+
+        rv_recommend.adapter = recommendAdapter
+
+
+        historyAdapter = HistoryAdapter(this, list, object : ItemClick.onItemClickedListener{
+
+            override fun onItemClick(text: String?) {
+
+                act_search.setText(text)
+
+                searchData(text.toString())
+
+                performSearch(text)
+
+            }
+        })
+        rv_history.adapter = historyAdapter
+
+        lifecycleScope.launch(Dispatchers.IO){
+
+            var category = history.getLastCategoryData().orEmpty().trim()
+
+            recommendServer.searchRecommend(category,recommendList, recommendAdapter, rv_recommend)
+
+        }
+
 
     }
 

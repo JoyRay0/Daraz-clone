@@ -6,12 +6,13 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import androidx.room.util.query
 
 class SearchHistory(
 
     context: Context
 
-) : SQLiteOpenHelper(context, "search_history.db", null, 1){
+) : SQLiteOpenHelper(context, "search_history.db", null, 5){
 
     private val TABLE_NAME = "History"
     private lateinit var db : SQLiteDatabase
@@ -19,7 +20,7 @@ class SearchHistory(
 
     override fun onCreate(db: SQLiteDatabase?) {
 
-        val create_sql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, history_data TEXT)"
+        val create_sql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, history_data TEXT, category_data TEXT)"
 
         db?.execSQL(create_sql)
 
@@ -34,7 +35,7 @@ class SearchHistory(
 
     }
 
-    fun insert(text : String){
+    fun queryTextInsert(text : String){
 
         val db = dbOpen(true)
 
@@ -42,20 +43,37 @@ class SearchHistory(
 
         try {
 
-            if (!text.isEmpty()){
+            if (text.isNotEmpty()){
 
                 cv.put("history_data", text)
 
-            }else{
-
-                cv.putNull("history_data")
-
             }
-
-
 
         }catch (e : Exception){
 
+            e.printStackTrace()
+        }
+
+        db.insert(TABLE_NAME, null, cv)
+
+
+    }
+
+    fun categoryDataInsert(categoryText : String){
+
+        val db = dbOpen(true)
+
+        val cv = ContentValues()
+
+        try {
+
+            if (categoryText.isNotEmpty()){
+
+                cv.put("category_data", categoryText)
+
+            }
+
+        }catch (e : Exception){
             e.printStackTrace()
         }
 
@@ -74,7 +92,7 @@ class SearchHistory(
 
         try {
 
-            cursor = db.rawQuery("SELECT history_data FROM $TABLE_NAME", null)
+            cursor = db.rawQuery("SELECT history_data FROM $TABLE_NAME WHERE history_data IS NOT NULL AND history_data != '' ", null)
 
             while (cursor.moveToNext()){
 
@@ -100,6 +118,35 @@ class SearchHistory(
 
     }
 
+    fun getLastCategoryData() : String?{
+
+        val db = dbOpen()
+
+        var cursor : Cursor? = null
+
+        return try {
+
+            cursor = db.rawQuery("SELECT category_data FROM $TABLE_NAME WHERE category_data IS NOT NULL AND category_data != '' ORDER BY id DESC LIMIT 1", null)
+
+            if (cursor.moveToFirst()){
+
+                cursor.getString(cursor.getColumnIndexOrThrow("category_data"))
+
+            }else null
+
+        }catch (e : Exception){
+
+            e.printStackTrace()
+            null
+
+        }finally {
+
+            cursor?.close()
+
+        }
+
+    }
+
     fun deleteAll(){
 
         val db = dbOpen(true)
@@ -108,7 +155,9 @@ class SearchHistory(
 
     }
 
-    fun checkDuplicateData(text: String) : Boolean{
+    fun checkDuplicateData(queryText: String, columName : String) : Boolean{
+
+        if (queryText.isEmpty()) return false
 
         val db = dbOpen()
 
@@ -118,9 +167,10 @@ class SearchHistory(
 
         try {
 
-            cursor = db.rawQuery("SELECT history_data FROM $TABLE_NAME WHERE history_data = ?", arrayOf(text))
+            cursor = db.rawQuery("SELECT $columName FROM $TABLE_NAME WHERE $columName = ?", arrayOf(queryText))
 
-            while (cursor.moveToFirst()){
+
+            if (cursor.moveToFirst()){
 
                 exists = true
             }

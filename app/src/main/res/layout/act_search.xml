@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fl_history"
-            android:visibility="gone"
+            android:visibility="visible"
             >
 
             <include layout="@layout/lay_recommend_item"/>

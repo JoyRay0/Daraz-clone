@@ -1,6 +1,7 @@
 package com.rk_softwares.e_commerce.server
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.google.gson.Gson
 import com.rk_softwares.e_commerce.Other.DomainHelper
 import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.adapter.Product
+import com.rk_softwares.e_commerce.database.SearchHistory
 import com.rk_softwares.e_commerce.model.ProductModel
 import com.rk_softwares.e_commerce.model.SearchModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,9 +28,11 @@ class SearchServer(
     private var activity: Activity
 ) {
 
-    fun searchProduct(query : String, rv : RecyclerView, list : ArrayList<HashMap<String, Any>>, productAdapter : Product){
+    fun searchProduct(query : String, rv : RecyclerView, list : ArrayList<HashMap<String, Any>>, productAdapter : Product, flh : FrameLayout, flr : FrameLayout){
 
         val client = OkHttpClient()
+
+        val categoryHistory = SearchHistory(activity)
 
         val gson = Gson()
 
@@ -43,6 +47,8 @@ class SearchServer(
                 activity.runOnUiThread {
 
                     rv.visibility = View.GONE
+                    flh.visibility = View.VISIBLE
+                    flr.visibility = View.VISIBLE
 
                 }
 
@@ -73,11 +79,21 @@ class SearchServer(
                                 p_map["in_stock"] = item.availabilityStatus ?: ""
                                 list.add(p_map)
 
+
+                                if (!categoryHistory.checkDuplicateData( item.category ?: "", "category_data")) {
+
+                                    categoryHistory.categoryDataInsert(item.category ?: "")
+
+
+                                }
+
                             }
 
                             activity.runOnUiThread {
 
                                 rv.visibility = View.VISIBLE
+                                flh.visibility = View.GONE
+                                flr.visibility = View.GONE
 
 
                                 productAdapter.notifyDataSetChanged()

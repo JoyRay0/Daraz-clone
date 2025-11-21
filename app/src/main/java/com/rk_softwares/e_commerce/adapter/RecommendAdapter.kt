@@ -14,7 +14,7 @@ import com.rk_softwares.e_commerce.Other.ItemClick
 class RecommendAdapter(
 
     private var context: Context,
-    private var list : ArrayList<HashMap<String, String>>,
+    private var list : ArrayList<String>,
     private var listener : ItemClick.onItemClickedListener
 
 ) : RecyclerView.Adapter<RecommendAdapter.holder>() {
@@ -29,7 +29,7 @@ class RecommendAdapter(
     override fun onBindViewHolder(holder: RecommendAdapter.holder, position: Int) {
 
         val item = list[position]
-        val text = item["history_category"]
+        val text = item
 
         holder.text.text = text
 
