@@ -17,7 +17,7 @@
         android:layout_alignParentEnd="true"
         >
 
-        <include layout="@layout/lay_profile_toolbar"/>
+        <include layout="@layout/lay_toolbar_profile"/>
 
     </FrameLayout>
 

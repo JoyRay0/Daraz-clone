@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
 
             >
-            <include layout="@layout/lay_home_toolbar"/>
+            <include layout="@layout/lay_toolbar_home"/>
 
         </FrameLayout>
 
@@ -46,7 +46,7 @@
                     android:visibility="visible"
                     >
 
-                    <include layout="@layout/lay_item_images_loading"/>
+                    <include layout="@layout/lay_loading_item_images"/>
 
                 </FrameLayout>
 
@@ -78,7 +78,7 @@
                     android:visibility="visible"
                     >
 
-                    <include layout="@layout/lay_vp_image_loading"/>
+                    <include layout="@layout/lay_loading_vp_image"/>
 
                 </FrameLayout>
 

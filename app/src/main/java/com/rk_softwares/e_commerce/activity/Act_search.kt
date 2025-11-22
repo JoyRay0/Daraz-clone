@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatButton
@@ -112,6 +113,11 @@ class Act_search : AppCompatActivity() {
 
         act_search.requestFocus()
 
+        onBackPressedDispatcher.addCallback(this, true){
+
+            IntentHelper.intent(this@Act_search, Act_home::class.java)
+
+        }
 
         iv_back.setOnClickListener {
 
@@ -142,23 +148,21 @@ class Act_search : AppCompatActivity() {
 
         val openEyeDrawable = ContextCompat.getDrawable(this, R.drawable.ic_open_eye)
         val closeEyeDrawable = ContextCompat.getDrawable(this, R.drawable.ic_close_eye)
-        tv_hide_recommend.text = "Hide"
-        tv_hide_recommend.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, closeEyeDrawable, null)
-        tv_hide_recommend.tag = "close"
+        tv_hide_recommend.tag = "open"
 
         tv_hide_recommend.setOnClickListener {
 
             if (tv_hide_recommend.tag == "open"){
 
-                tv_hide_recommend.text = "Hide"
-                tv_hide_recommend.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, closeEyeDrawable, null)
+                tv_hide_recommend.text = "Show"
+                tv_hide_recommend.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, openEyeDrawable, null)
                 rv_recommend.visibility = View.GONE
                 tv_hide_recommend.tag = "close"
 
             }else{
 
-                tv_hide_recommend.text = "Show"
-                tv_hide_recommend.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, openEyeDrawable, null)
+                tv_hide_recommend.text = "Hide"
+                tv_hide_recommend.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, closeEyeDrawable, null)
                 rv_recommend.visibility = View.VISIBLE
                 tv_hide_recommend.tag = "open"
 

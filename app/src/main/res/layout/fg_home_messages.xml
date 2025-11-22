@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             >
 
-            <include layout="@layout/lay_messages_toolbar"/>
+            <include layout="@layout/lay_toolbar_messages"/>
         </FrameLayout>
 
         <FrameLayout

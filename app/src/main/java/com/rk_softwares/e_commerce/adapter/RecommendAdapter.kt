@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import com.rk_softwares.e_commerce.R
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.rk_softwares.e_commerce.Other.ItemClick
 
@@ -21,7 +20,7 @@ class RecommendAdapter(
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): holder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_history_adapter, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_history, parent, false)
 
         return holder(view)
     }

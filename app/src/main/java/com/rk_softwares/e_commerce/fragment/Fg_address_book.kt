@@ -76,7 +76,7 @@ class Fg_address_book : Fragment() {
 
         val dialog = Dialog(requireActivity())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.lay_add_address_dialog)
+        dialog.setContentView(R.layout.lay_dialog_add_address)
 
         dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog.window?.setGravity(Gravity.BOTTOM)

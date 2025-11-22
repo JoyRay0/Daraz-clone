@@ -29,8 +29,10 @@ import com.rk_softwares.e_commerce.model.ViewpagerModel
 import com.rk_softwares.e_commerce.Other.Cache
 import com.rk_softwares.e_commerce.Other.DomainHelper
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
+import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.Other.PermissionHelper
 import com.rk_softwares.e_commerce.R
+import com.rk_softwares.e_commerce.activity.Act_product_full_info
 import com.rk_softwares.e_commerce.adapter.Categories
 import com.rk_softwares.e_commerce.adapter.ItemAdapter
 import com.rk_softwares.e_commerce.adapter.ViewpagerAdapter
@@ -244,6 +246,12 @@ class Fg_home_home : Fragment() {
 
         val edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
+
+        iv_coupon_img.setOnClickListener {
+
+            IntentHelper.intent(requireActivity(), Act_product_full_info::class.java)
+
+        }
 
 
         return view

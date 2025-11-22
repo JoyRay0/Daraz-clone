@@ -148,7 +148,7 @@ class Fg_setting_account_info : Fragment() {
     private fun nameDialog(){
 
         val dialog = BottomSheetDialog(requireActivity())
-        val view = LayoutInflater.from(requireActivity()).inflate(R.layout.lay_setting_acoount_info_change_name_bottom_dialog, null)
+        val view = LayoutInflater.from(requireActivity()).inflate(R.layout.lay_dialog_change_name_bottom, null)
 
         view.layoutParams?.apply {
 
@@ -243,7 +243,7 @@ class Fg_setting_account_info : Fragment() {
     //gender dialog----------------------------------------------------------
     private fun genderDialog(){
 
-        val dialog = dialogHelper.customBottomDialog(R.layout.lay_gender_dialog)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_dialog_gender)
 
         val rb_female = dialog.findViewById<AppCompatRadioButton>(R.id.rb_female)
         val rb_male = dialog.findViewById<AppCompatRadioButton>(R.id.rb_male)
@@ -320,7 +320,7 @@ class Fg_setting_account_info : Fragment() {
     //birthday dialog--------------------------------------------------------------
     private fun birthdayDialog(){
 
-        val dialog = dialogHelper.customBottomDialog(R.layout.lay_change_birthday)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_dialog_change_birthday)
 
         val ed_day = dialog.findViewById<AppCompatEditText>(R.id.ed_day)
         val ed_month = dialog.findViewById<AppCompatEditText>(R.id.ed_month)

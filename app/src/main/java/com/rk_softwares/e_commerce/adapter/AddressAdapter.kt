@@ -29,7 +29,7 @@ class AddressAdapter() : RecyclerView.Adapter<AddressAdapter.holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): holder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_address, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_address, parent, false)
 
         return holder(view)
     }

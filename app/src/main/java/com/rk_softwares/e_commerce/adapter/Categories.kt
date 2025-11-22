@@ -26,7 +26,7 @@ class Categories() : RecyclerView.Adapter<Categories.catHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): catHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_child_categories_design, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_child_categories_design, parent, false)
 
         return catHolder(view)
     }

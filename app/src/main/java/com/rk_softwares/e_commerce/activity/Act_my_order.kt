@@ -2,25 +2,20 @@ package com.rk_softwares.e_commerce.activity
 
 import android.os.Bundle
 import android.view.View
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.support.v4.os.IResultReceiver
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.rk_softwares.e_commerce.Other.DialogHelper
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
-import com.rk_softwares.e_commerce.Other.FragmentHelper
 import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.R
@@ -214,7 +209,7 @@ class Act_my_order : AppCompatActivity() {
     // filter-------------------------------------------------------------------------
     private fun filterDialog(){
 
-        val dialog = bottomDialog.customBottomDialog(R.layout.lay_filter_dialog)
+        val dialog = bottomDialog.customBottomDialog(R.layout.lay_dialog_filter)
 
         val iv_close = dialog.findViewById<AppCompatImageView>(R.id.iv_close)
         val rb_last1month = dialog.findViewById<MaterialRadioButton>(R.id.rb_last1month)

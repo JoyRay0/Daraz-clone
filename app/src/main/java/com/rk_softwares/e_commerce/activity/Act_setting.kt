@@ -183,7 +183,7 @@ class Act_setting : AppCompatActivity() {
     //country dialog---------------------------------------------------------------------------------
     private fun countryDialog(){
 
-        val dialog = dialogHelper.customBottomDialog(R.layout.lay_change_country)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_dialog_change_country)
 
         val rl_bangladesh = dialog.findViewById<RelativeLayout>(R.id.rl_bangladesh)
         val rl_sri_lanka = dialog.findViewById<RelativeLayout>(R.id.rl_sri_lanka)
@@ -299,7 +299,7 @@ class Act_setting : AppCompatActivity() {
     //language dialog---------------------------------------------------------------------
     private fun languageDialog(){
 
-        val dialog = dialogHelper.customBottomDialog(R.layout.lay_languages)
+        val dialog = dialogHelper.customBottomDialog(R.layout.lay_dialog_languages)
 
         val rb_english = dialog.findViewById<MaterialRadioButton>(R.id.rb_english)
         val rb_bangla = dialog.findViewById<MaterialRadioButton>(R.id.rb_bangla)

@@ -6,30 +6,37 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Act_child_settings">
+    tools:context=".activity.Act_product_full_info">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <!-- toolbar -->
+        android:layout_height="match_parent">
+
+
         <FrameLayout
             android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            >
 
-            <include layout="@layout/lay_toolbar_c_o_a_p"/>
+            <include layout="@layout/lay_toolbar_product_full_info"/>
+
 
         </FrameLayout>
 
-        <!-- toolbar -->
         <FrameLayout
-            android:id="@+id/fl_container"
+            android:id="@+id/fl_bottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
+
+            <include layout="@layout/lay_bottom_product_full_info"/>
+
+        </FrameLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -17,7 +17,7 @@
         android:layout_alignParentEnd="true"
         >
 
-        <include layout="@layout/lay_cart_toolbar"/>
+        <include layout="@layout/lay_toolbar_cart"/>
 
     </FrameLayout>
 

@@ -38,7 +38,7 @@ class Messages() : RecyclerView.Adapter<Messages.mHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): mHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_messages, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_messages, parent, false)
 
         return mHolder(view)
 

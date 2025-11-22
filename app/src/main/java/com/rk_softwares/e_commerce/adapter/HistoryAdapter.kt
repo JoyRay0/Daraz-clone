@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,7 @@ class HistoryAdapter() : RecyclerView.Adapter<HistoryAdapter.holder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): holder {
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_history_adapter, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_history, parent, false)
 
         return holder(view)
     }
