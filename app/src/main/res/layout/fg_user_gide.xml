@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.Fg_user_gide">
+
+   <androidx.viewpager2.widget.ViewPager2
+       android:id="@+id/vp_into"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="50dp"
+       />
+
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dotsColor="#00BCD4"
+        app:dotsSize="12dp"
+        app:selectedDotColor="#FF5722"
+        android:layout_below="@id/vp_into"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textSize="15sp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
+            app:backgroundTint="#EF4813"
+            app:cornerRadius="12dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="end"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#E8E6E6"
+            android:layout_margin="5dp"
+            android:layout_gravity="start"
+            />
+
+    </FrameLayout>
+
+</RelativeLayout>

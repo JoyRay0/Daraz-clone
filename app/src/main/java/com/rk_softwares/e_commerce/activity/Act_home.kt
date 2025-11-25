@@ -12,11 +12,13 @@ import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.Other.FragmentHelper
+import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.fragment.Fg_home_cart
 import com.rk_softwares.e_commerce.fragment.Fg_home_home
 import com.rk_softwares.e_commerce.fragment.Fg_home_messages
 import com.rk_softwares.e_commerce.fragment.Fg_home_profile
+import com.rk_softwares.e_commerce.fragment.Fg_user_gide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -50,8 +52,11 @@ class Act_home : AppCompatActivity() {
     private lateinit var fl_bottom_navigation : FrameLayout
     private lateinit var fl_container : FrameLayout
 
+    private lateinit var fl_intro: FrameLayout
+
     //others
     private lateinit var edge_to_edge : EdgeToEdge
+    private lateinit var stroHelper : StorageHelper
 
     //init
     val selectedColor = "#FF5722".toColorInt()
@@ -90,12 +95,13 @@ class Act_home : AppCompatActivity() {
 
         fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
         fl_container = findViewById(R.id.fl_container);
+        fl_intro = findViewById(R.id.fl_intro)
 
         //identity period---------------------------------------------------
 
-        getIntentData()
+        stroHelper = StorageHelper(this, "introduction")
 
-        edge_to_edge.setBottomNav(fl_bottom_navigation)
+        introduction()
 
     }//on create===========================================================
 
@@ -359,5 +365,35 @@ class Act_home : AppCompatActivity() {
     }
 
     //bottom navigation -------------------------------------------------------
+
+     fun introduction(){
+
+        val data =  stroHelper.getData("intro") ?: ""
+
+        if (data.isEmpty()){
+
+            fl_container.visibility = View.GONE
+            fl_bottom_navigation.visibility = View.GONE
+
+            fl_intro.visibility = View.VISIBLE
+
+            supportFragmentManager.beginTransaction().replace(R.id.fl_intro, Fg_user_gide()).commit()
+
+            edge_to_edge.setBottomNav(fl_intro)
+
+            //stroHelper.setData("intro", "showed")
+
+        }else{
+
+            fl_intro.visibility = View.GONE
+            fl_container.visibility = View.VISIBLE
+            fl_bottom_navigation.visibility = View.VISIBLE
+            edge_to_edge.setBottomNav(fl_bottom_navigation)
+
+            getIntentData()
+
+        }
+
+    }
 
 }//public class===========================================================

@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
 
+        <!-- toolbar -->
         <FrameLayout
             android:id="@+id/fl_toolbar"
             android:layout_width="match_parent"
@@ -25,6 +26,21 @@
 
         </FrameLayout>
 
+
+        <!-- viewpager -->
+        <FrameLayout
+            android:id="@+id/fl_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fl_toolbar"
+
+            >
+
+            <include layout="@layout/lay_viewpager_product_image"/>
+
+        </FrameLayout>
+
+        <!-- bottom bar -->
         <FrameLayout
             android:id="@+id/fl_bottom"
             android:layout_width="match_parent"
