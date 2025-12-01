@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
+import com.rk_softwares.e_commerce.ComposeUi.Question
 import com.rk_softwares.e_commerce.ComposeUi.rating_reviews
 import com.rk_softwares.e_commerce.Other.DialogHelper
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
@@ -197,9 +198,17 @@ class Act_product_full_info : AppCompatActivity() {
 
                 })
 
+                Question(questionCount = 2, viewAllClick = {
+
+                    ShortMessageHelper.toast(this@Act_product_full_info, "All Questions")
+
+                }, askQues = {
+
+                    ShortMessageHelper.toast(this@Act_product_full_info, "Ask Your Question")
+
+                })
+
             }
-
-
 
         }
 
