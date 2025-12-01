@@ -32,4 +32,23 @@ class DialogHelper(
 
     }
 
+    fun customTopEndDialog(layout: Int) : Dialog{
+
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(layout)
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialog.window?.setGravity(Gravity.TOP)
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        return dialog
+
+    }
+
 }

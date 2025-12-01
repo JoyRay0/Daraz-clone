@@ -12,6 +12,8 @@ import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.Other.FragmentHelper
+import com.rk_softwares.e_commerce.Other.ItemClick
+import com.rk_softwares.e_commerce.Other.KeyHelper
 import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.fragment.Fg_home_cart
@@ -58,6 +60,7 @@ class Act_home : AppCompatActivity() {
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var stroHelper : StorageHelper
 
+
     //init
     val selectedColor = "#FF5722".toColorInt()
     val unselectedColor = "#988080".toColorInt()
@@ -69,10 +72,19 @@ class Act_home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_home)
 
-        edge_to_edge = EdgeToEdge(this)
-        edge_to_edge.setEdgeToEdge()
+        init()
 
-        //identity period---------------------------------------------------
+        introduction()
+
+    }//on create===========================================================
+
+    private fun init(){
+
+
+        fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
+        fl_container = findViewById(R.id.fl_container);
+        fl_intro = findViewById(R.id.fl_intro)
+
         //bottom na
         ll_home = findViewById(R.id.ll_home);
         ll_cart = findViewById(R.id.ll_cart);
@@ -93,22 +105,17 @@ class Act_home : AppCompatActivity() {
         tv_badge3 = findViewById(R.id.tv_badge3);
         tv_badge4 = findViewById(R.id.tv_badge4);
 
-        fl_bottom_navigation = findViewById(R.id.fl_bottom_navigation);
-        fl_container = findViewById(R.id.fl_container);
-        fl_intro = findViewById(R.id.fl_intro)
-
-        //identity period---------------------------------------------------
+        edge_to_edge = EdgeToEdge(this)
+        edge_to_edge.setEdgeToEdge()
 
         stroHelper = StorageHelper(this, "introduction")
 
-        introduction()
-
-    }//on create===========================================================
+    }
 
     //bottom navigation -------------------------------------------------------
     private fun getIntentData(){
 
-        val i = intent.getStringExtra("item") ?: "none"
+        val i = intent.getStringExtra(KeyHelper.getHomeInfo()) ?: "none"
 
         when(i){
 

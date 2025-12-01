@@ -7,32 +7,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.Fg_home_profile">
 
-    <!-- toolbar -->
-    <FrameLayout
-        android:id="@+id/fl_toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        >
+        android:layout_height="match_parent">
 
-        <include layout="@layout/lay_toolbar_profile"/>
+        <!-- toolbar -->
+        <FrameLayout
+            android:id="@+id/fl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            >
 
-    </FrameLayout>
+            <include layout="@layout/lay_toolbar_profile"/>
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/fl_toolbar"
-        >
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_below="@id/fl_toolbar"
             >
 
             <!-- count item -->
@@ -86,6 +83,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -72,8 +72,6 @@ class Fg_home_profile : Fragment() {
     private lateinit var rv_items : RecyclerView
     private var i_list : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var i_map : HashMap<String, String>
-
-    private lateinit var nsv : NestedScrollView
     //others
     private lateinit var edge_to_edge : EdgeToEdge
     private lateinit var gif_loader : GIFLoader
@@ -88,7 +86,16 @@ class Fg_home_profile : Fragment() {
 
         val view = inflater.inflate(R.layout.fg_home_profile, container, false)
 
-        //identity period-----------------------------------------------------
+        init(view)
+
+        buttons()
+
+        myOrders()
+
+        return view
+    }// on create======================================================
+
+    private fun init(view: View){
 
         //toolbar
         fl_toolbar = view.findViewById(R.id.fl_toolbar)
@@ -118,13 +125,11 @@ class Fg_home_profile : Fragment() {
         //items
         rv_items = view.findViewById(R.id.rv_items)
 
-        nsv = view.findViewById(R.id.nsv)
-
-        //identity period-----------------------------------------------------
+        //nsv = view.findViewById(R.id.nsv)
 
         edge_to_edge = EdgeToEdge(requireActivity())
         edge_to_edge.setToolBar(fl_toolbar)
-        //edge_to_edge.setBottomNav(nsv)
+
 
         gif_loader = GIFLoader(requireActivity())
         profileServer = ProfileServer(requireActivity())
@@ -138,7 +143,10 @@ class Fg_home_profile : Fragment() {
         profileServer.items(rv_items, i_list)
         items.notifyDataSetChanged()
 
-       // permission = PermissionHelper(requireActivity())
+    }
+
+    private fun buttons(){
+
         iv_setting.setOnClickListener {
 
             startActivity(Intent(requireActivity(), Act_setting::class.java))
@@ -150,10 +158,7 @@ class Fg_home_profile : Fragment() {
 
         }
 
-        myOrders()
-
-        return view
-    }// on create======================================================
+    }
 
     private fun myOrders(){
 

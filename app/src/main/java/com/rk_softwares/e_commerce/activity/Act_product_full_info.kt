@@ -1,16 +1,28 @@
 package com.rk_softwares.e_commerce.activity
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.activity.enableEdgeToEdge
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.card.MaterialCardView
+import com.rk_softwares.e_commerce.ComposeUi.rating_reviews
+import com.rk_softwares.e_commerce.Other.DialogHelper
+import com.rk_softwares.e_commerce.Other.EdgeToEdge
+import com.rk_softwares.e_commerce.Other.IntentHelper
+import com.rk_softwares.e_commerce.Other.KeyHelper
+import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.ProductImageAdapter
+import com.rk_softwares.e_commerce.ComposeUi.vouchers
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 class Act_product_full_info : AppCompatActivity() {
@@ -18,8 +30,17 @@ class Act_product_full_info : AppCompatActivity() {
     //XML id's----------------------------------------------------------------
 
     //toolbar
+    private lateinit var iv_back : AppCompatImageView
+    private lateinit var cd_search : MaterialCardView
+    private lateinit var iv_share : AppCompatImageView
+    private lateinit var iv_cart : AppCompatImageView
+    private lateinit var iv_menu : AppCompatImageView
+
+    private lateinit var fl_toolbar : FrameLayout
+
 
     //bottom bar
+    private lateinit var fl_bottom : FrameLayout
 
 
     //image
@@ -31,9 +52,20 @@ class Act_product_full_info : AppCompatActivity() {
     private var mainImageList : ArrayList<HashMap<String, String>> = ArrayList()
     private lateinit var h : HashMap<String, String>
 
+    private lateinit var cv_voucher : ComposeView
+
 
     //other
     private lateinit var productImageAdapter: ProductImageAdapter
+    private lateinit var dialogHelper : DialogHelper
+    private lateinit var edge_to_edge : EdgeToEdge
+
+    //init
+    private var fgName = ""
+    private var classData : Class<*>? = null
+    private var list : ArrayList<String> = ArrayList()
+    private var rList : ArrayList<HashMap<String, Any>> = ArrayList()
+
 
     //XML id's----------------------------------------------------------------
 
@@ -41,22 +73,137 @@ class Act_product_full_info : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_product_full_info)
 
-        //identity period-----------------------------------------------------
+        init()
 
+        test()
+
+        buttons()
+
+
+    }// on create=============================================================
+
+    private fun init(){
+
+        //toolbar
+        iv_back = findViewById(R.id.iv_back)
+        cd_search = findViewById(R.id.cd_search)
+        iv_share = findViewById(R.id.iv_share)
+        iv_cart = findViewById(R.id.iv_cart)
+        iv_menu = findViewById(R.id.iv_menu)
+        fl_toolbar = findViewById(R.id.fl_toolbar)
+
+        //bottom
+        fl_bottom = findViewById(R.id.fl_bottom)
+
+        //vp image
         vp_product_image = findViewById(R.id.vp_product_image)
         dotsIndicator = findViewById(R.id.dotsIndicator)
 
-        //identity period-----------------------------------------------------
+        cv_voucher = findViewById(R.id.cv_voucher)
+
 
         productImageAdapter = ProductImageAdapter(this, mainImageList)
         vp_product_image.adapter = productImageAdapter
         dotsIndicator.attachTo(vp_product_image)
         vp_product_image.currentItem = 1
 
-        test()
+        dialogHelper = DialogHelper(this)
+
+        edge_to_edge = EdgeToEdge(this)
+        edge_to_edge.setEdgeToEdge()
+        edge_to_edge.setBottomNav(fl_bottom)
+        edge_to_edge.setToolBar(fl_toolbar)
+        edge_to_edge.setStatusBarColor("#FFFFFF", true)
+
+    }
+
+    private fun buttons(){
+
+        val back = intent.getStringExtra(KeyHelper.getFullInfoBack())
+
+        onBackPressedDispatcher.addCallback(this, true){
+
+            when{
+
+                 back == "Fg_home" -> IntentHelper.setDataIntent(this@Act_product_full_info,
+                    Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_home")
+
+            }
+
+        }
+
+        iv_back.setOnClickListener {
+
+            when{
+
+                 back == "Fg_home" -> IntentHelper.setDataIntent(this,
+                    Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_home")
+
+            }
+
+        }
+
+        iv_cart.setOnClickListener {
+
+            IntentHelper.setDataIntent(this,
+                Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_cart")
+
+        }
+
+        cd_search.setOnClickListener {
+
+            IntentHelper.intent(this, Act_search::class.java)
+
+        }
+
+        iv_menu.setOnClickListener {
+
+            popUpMenu()
+
+        }
+
+        iv_share.setOnClickListener {
+
+            val packageName = getPackageName()
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, packageName)
+            startActivity(Intent.createChooser(intent, "Share via"))
+
+        }
+
+        list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.iF1vjDVZtP53C_uUNZjz3AHaFW%3Fpid%3DApi&f=1&ipt=9284869913a54b27ea65f0c382ae35ece41c7ff800d27eb368b8c32d6ab75f34&ipo=images")
+        list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images")
+
+        rList.add(hashMapOf("name" to "Joy Ray", "comment" to "Highly impressed!", "rating" to 5))
+        rList.add(hashMapOf("name" to "Rada krishna", "comment" to "Rade Rade", "rating" to 2))
+        rList.add(hashMapOf("name" to "Krishna", "comment" to "Hare Krishna", "rating" to 3))
+
+        cv_voucher.setContent {
+
+            Column {
+
+                vouchers(list =  list ,onClick = {
+
+                    ShortMessageHelper.toast(this@Act_product_full_info, "Compose Worked")
+
+                })
 
 
-    }// on create=============================================================
+                rating_reviews(totalReviewCount = "3".toInt(), totalStar = 2.7, list = rList,onClick = {
+
+                    ShortMessageHelper.toast(this@Act_product_full_info, "Box Worked")
+
+                })
+
+            }
+
+
+
+        }
+
+    }
 
     private fun test(){
 
@@ -94,5 +241,63 @@ class Act_product_full_info : AppCompatActivity() {
         mainImageList.add(h)
 
     }
+
+    private fun popUpMenu(){
+
+        val view = LayoutInflater.from(this).inflate(R.layout.lay_dialog_full_info, null)
+
+        val popUpWindow = PopupWindow(
+            view,
+            0,
+            0,
+            true
+        )
+        popUpWindow.width = 320
+        popUpWindow.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        popUpWindow.elevation = 20f
+
+        //val marginX = (70 * resources.displayMetrics.density).toInt()
+        //val marginY = (10 * resources.displayMetrics.density).toInt()
+
+
+        popUpWindow.showAsDropDown(iv_menu,  70, 20)
+
+        val tv_home = view.findViewById<AppCompatTextView>(R.id.tv_home)
+        val tv_messages = view.findViewById<AppCompatTextView>(R.id.tv_messages)
+        val tv_account = view.findViewById<AppCompatTextView>(R.id.tv_account)
+        val tv_help = view.findViewById<AppCompatTextView>(R.id.tv_help)
+
+        tv_home.setOnClickListener {
+
+            IntentHelper.intent(this, Act_home::class.java)
+            popUpWindow.dismiss()
+
+        }
+
+        tv_messages.setOnClickListener {
+
+            IntentHelper.setDataIntent(this, Act_home::class.java, KeyHelper.getHomeInfo(),"Fg_message")
+            popUpWindow.dismiss()
+
+        }
+
+        tv_account.setOnClickListener {
+
+            IntentHelper.setDataIntent(this, Act_home::class.java, KeyHelper.getHomeInfo(),"Fg_account")
+            popUpWindow.dismiss()
+
+        }
+
+        tv_help.setOnClickListener {
+
+            ShortMessageHelper.toast(this, "working")
+            popUpWindow.dismiss()
+        }
+
+
+
+    }
+
 }//class======================================================================
 

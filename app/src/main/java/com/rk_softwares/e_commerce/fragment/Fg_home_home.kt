@@ -1,6 +1,7 @@
 package com.rk_softwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,6 +31,8 @@ import com.rk_softwares.e_commerce.Other.Cache
 import com.rk_softwares.e_commerce.Other.DomainHelper
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.Other.IntentHelper
+import com.rk_softwares.e_commerce.Other.ItemClick
+import com.rk_softwares.e_commerce.Other.KeyHelper
 import com.rk_softwares.e_commerce.Other.PermissionHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_product_full_info
@@ -142,6 +145,8 @@ class Fg_home_home : Fragment() {
     //other
     private lateinit var permission : PermissionHelper
     private lateinit var homeServer: HomeServer
+    private lateinit var classListener : ItemClick.ClassListener
+    private lateinit var edge_to_edge : EdgeToEdge
 
 
     //XML id's--------------------------------------------------------------
@@ -151,7 +156,21 @@ class Fg_home_home : Fragment() {
 
         val view = inflater.inflate(R.layout.fg_home_home, container, false)
 
-        //identity period----------------------------------------------------
+        init(view)
+
+        changeSearchBarText()   //changing search bar text after 10 seconds
+
+        viewpager_infinite_loop()
+
+        dataFromCache()
+        child_fragment()
+
+        buttons()
+
+        return view
+    }//on create=================================================================
+
+    private fun init(view : View){
 
         nsv_scroll = view.findViewById(R.id.nsv_scroll);
 
@@ -220,8 +239,8 @@ class Fg_home_home : Fragment() {
         tv_must_buy = view.findViewById(R.id.tv_must_buy)
         fl_tablayout = view.findViewById(R.id.fl_tablayout)
 
-        //identity period----------------------------------------------------
-
+        edge_to_edge = EdgeToEdge(requireActivity())
+        edge_to_edge.setToolBar(fl_toolbar)
 
         itemAdapter = ItemAdapter(requireContext(), item_list)
         rv_item.adapter = itemAdapter
@@ -237,25 +256,19 @@ class Fg_home_home : Fragment() {
 
         homeServer = HomeServer(requireActivity())
 
-        changeSearchBarText()   //changing search bar text after 10 seconds
 
-        viewpager_infinite_loop()
+    }
 
-        dataFromCache()
-        child_fragment()
-
-        val edge_to_edge = EdgeToEdge(requireActivity())
-        edge_to_edge.setToolBar(fl_toolbar)
+    private fun buttons(){
 
         iv_coupon_img.setOnClickListener {
 
-            IntentHelper.intent(requireActivity(), Act_product_full_info::class.java)
+            IntentHelper.setDataIntent(requireActivity(), Act_product_full_info::class.java,
+                KeyHelper.getFullInfoBack(), "Fg_home")
 
         }
 
-
-        return view
-    }//on create=================================================================
+    }
 
     //chaining search bar text--------------------------------------------------
     private fun changeSearchBarText(){
@@ -892,5 +905,6 @@ class Fg_home_home : Fragment() {
         }
 
     }
+
 
 }//public class=============================================================

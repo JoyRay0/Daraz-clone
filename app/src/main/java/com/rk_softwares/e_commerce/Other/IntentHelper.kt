@@ -6,7 +6,7 @@ import android.content.Intent
 
 object IntentHelper{
 
-    fun setDataIntent(act: Context, sendClass : Class<*>, key : String, data : String){
+    fun setDataIntent(act: Context, sendClass : Class<*>?, key : String, data : String){
 
         val intent = Intent(act, sendClass)
         intent.putExtra(key, data)

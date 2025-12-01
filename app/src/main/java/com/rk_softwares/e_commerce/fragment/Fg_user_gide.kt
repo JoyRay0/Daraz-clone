@@ -31,7 +31,6 @@ class Fg_user_gide : Fragment() {
 
     private lateinit var introAdapter : IntroAdapter
     private lateinit var storageHelper: StorageHelper
-    private lateinit var listener: ItemClick.DataListener
 
     //init
     private var buttonText = "Next"

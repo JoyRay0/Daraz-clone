@@ -17,6 +17,7 @@
         android:layout_margin="10dp"
         android:layout_alignParentStart="true"
         android:tooltipText="Back"
+        android:background="?attr/actionBarItemBackground"
         />
 
     <com.google.android.material.card.MaterialCardView
@@ -65,7 +66,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:tooltipText="Share product"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/actionBarItemBackground"
         />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -73,15 +74,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cart"
-        android:layout_toStartOf="@id/iv_threeDot"
+        android:layout_toStartOf="@id/iv_menu"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:tooltipText="Go to Cart"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/actionBarItemBackground"
         />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_threeDot"
+        android:id="@+id/iv_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_threedot"
@@ -89,7 +90,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:tooltipText="Menu"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/actionBarItemBackground"
         />
 
 </RelativeLayout>
