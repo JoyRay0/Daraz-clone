@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
@@ -174,41 +175,51 @@ class Act_product_full_info : AppCompatActivity() {
 
         }
 
+        val image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images"
+
         list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.iF1vjDVZtP53C_uUNZjz3AHaFW%3Fpid%3DApi&f=1&ipt=9284869913a54b27ea65f0c382ae35ece41c7ff800d27eb368b8c32d6ab75f34&ipo=images")
         list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images")
 
-        rList.add(hashMapOf("name" to "Joy Ray", "comment" to "Highly impressed!", "rating" to 5))
-        rList.add(hashMapOf("name" to "Rada krishna", "comment" to "Rade Rade", "rating" to 2))
-        rList.add(hashMapOf("name" to "Krishna", "comment" to "Hare Krishna", "rating" to 3))
+        val test = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+
+        rList.add(hashMapOf("name" to "Joy Ray", "comment" to "Ver Very nice product", "rating" to 5, "image" to image))
+        rList.add(hashMapOf("name" to "Rada krishna", "comment" to "Rade Rade", "rating" to 2, "image" to image))
+        rList.add(hashMapOf("name" to "Krishna", "comment" to "Hare Krishna", "rating" to 3, "image" to image))
 
         cv_voucher.setContent {
 
-            Column {
+            MaterialTheme {
 
-                vouchers(list =  list ,onClick = {
+                Column {
 
-                    ShortMessageHelper.toast(this@Act_product_full_info, "Compose Worked")
+                    vouchers(list =  list ,onClick = {
 
-                })
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Compose Worked")
+
+                    })
 
 
-                rating_reviews(totalReviewCount = "3".toInt(), totalStar = 2.7, list = rList,onClick = {
+                    rating_reviews(totalReviewCount = "3".toInt(), totalStar = 2.7, list = rList,onClick = {
 
-                    ShortMessageHelper.toast(this@Act_product_full_info, "Box Worked")
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Box Worked")
 
-                })
+                    })
 
-                Question(questionCount = 2, viewAllClick = {
+                    Question(questionCount = 2, viewAllClick = {
 
-                    ShortMessageHelper.toast(this@Act_product_full_info, "All Questions")
+                        ShortMessageHelper.toast(this@Act_product_full_info, "All Questions")
 
-                }, askQues = {
+                    }, askQues = {
 
-                    ShortMessageHelper.toast(this@Act_product_full_info, "Ask Your Question")
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Ask Your Question")
 
-                })
+                    })
+
+                }
 
             }
+
+
 
         }
 

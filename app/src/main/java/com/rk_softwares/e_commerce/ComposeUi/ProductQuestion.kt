@@ -146,7 +146,7 @@ fun Question(questionCount : Int = 0, viewAllClick : () -> Unit = {}, askQues : 
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clickable{askQues()}
-                .padding(7.dp)
+                .padding(start = 7.dp, end = 7.dp, top = 12.dp, bottom = 7.dp)
         ) {
 
             Icon(
