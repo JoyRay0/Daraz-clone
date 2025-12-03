@@ -29,8 +29,7 @@ class CartServer(
         rv: RecyclerView,
         list: ArrayList<HashMap<String, Any>>,
         adapter: Product,
-        page: Int,
-        onComplete : (() -> Unit)? = null
+        page : Int = 1
     ){
 
         val client = OkHttpClient()
@@ -84,7 +83,6 @@ class CartServer(
 
                                 rv.visibility = View.VISIBLE
                                 adapter.notifyDataSetChanged()
-                                onComplete?.invoke()
 
                             }
 

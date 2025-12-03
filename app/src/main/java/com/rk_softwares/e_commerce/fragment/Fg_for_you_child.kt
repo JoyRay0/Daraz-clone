@@ -45,23 +45,7 @@ class Fg_tab_item_for_upu : Fragment() {
         cache = Cache(requireActivity(), "for_you")
         cartServer = CartServer(requireActivity())
 
-        lazy = LazyLoading(rv_for_you){ page  ->
-
-            cartServer.suggestedItem(rv_for_you, p_list, pAdapter, page) {
-
-                lazy.finishLoading()
-
-
-            }
-
-            Log.d("item", page.toString())
-
-        }
-        lazy.lazyScroll()
-
-        cartServer.suggestedItem(rv_for_you, p_list, pAdapter, 1) {
-            lazy.finishLoading()
-        }
+        cartServer.suggestedItem(rv_for_you, p_list, pAdapter)
 
         return view
     }//on create====================================================

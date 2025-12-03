@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -38,6 +39,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -174,7 +177,7 @@ fun rating_reviews(
             )
 
             Text("With images/videos",
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
                 color = Color(0xFFE27350),
                 modifier = Modifier
@@ -185,7 +188,7 @@ fun rating_reviews(
             )
 
             Text("(",
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = Color(0xFFE27350),
                 modifier = Modifier
                     .wrapContentSize()
@@ -194,7 +197,7 @@ fun rating_reviews(
             )
 
             Text(totalReviewCount.toString(),
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = Color(0xFFE27350),
                 modifier = Modifier
                     .wrapContentSize()
@@ -202,7 +205,7 @@ fun rating_reviews(
             )
 
             Text(")",
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = Color(0xFFE27350),
                 modifier = Modifier
                     .wrapContentSize()
@@ -220,6 +223,7 @@ fun rating_reviews(
             val comment = item["comment"] as? String ?: ""
             val rating = item["rating"] as? Int ?: 0
             val image = item["image"] as? String ?: ""
+            val imageCount = if (image.isNotEmpty()) image.split(",").size else 0
 
             Box(
 
@@ -227,7 +231,7 @@ fun rating_reviews(
 
             ) {
 
-                Comments(name = name, comment = comment ,tStar = rating, image = image)
+                Comments(name = name, comment = comment, imageCount = imageCount ,tStar = rating, image = image)
 
             }
 
@@ -283,13 +287,13 @@ fun TotalStarCount(rating : Double = 0.0, rModifier: Modifier = Modifier, iModif
 
 @Preview(showBackground = true)
 @Composable
-fun Comments(name : String = "Demo", comment : String = "Hello World", image : String = "", tStar : Int = 0){
+fun Comments(name : String = "Demo", comment : String = "Hello World", image : String = "", imageCount : Int = 0 ,tStar : Int = 0){
 
     Box(
 
         modifier = Modifier.fillMaxWidth()
             .background(color = Color(0x83F1EDED), shape = RoundedCornerShape(14.dp))
-            .padding(7.dp)
+            .padding(start = 10.dp)
 
     ) {
 
@@ -303,8 +307,10 @@ fun Comments(name : String = "Demo", comment : String = "Hello World", image : S
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color(0xFF927878),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 14.dp)
+                    .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 5.dp)
                     .wrapContentWidth()
                     .width(100.dp)
             )
@@ -313,6 +319,8 @@ fun Comments(name : String = "Demo", comment : String = "Hello World", image : S
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF000000),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .wrapContentSize()
                     .padding(5.dp)
@@ -339,8 +347,8 @@ fun Comments(name : String = "Demo", comment : String = "Hello World", image : S
             modifier = Modifier
                 .wrapContentSize()
                 .padding(7.dp)
-                .height(70.dp)
-                .width(70.dp)
+                .height(60.dp)
+                .width(60.dp)
                 .clip(shape = RoundedCornerShape(12.dp))
                 .align(Alignment.CenterEnd)
                 .background(color = Color(0xFFFFFFFF)),
@@ -354,6 +362,42 @@ fun Comments(name : String = "Demo", comment : String = "Hello World", image : S
                 modifier = Modifier.fillMaxSize()
 
             )
+
+            Row(
+
+                modifier = Modifier
+                    .alpha(if (imageCount > 1) 1f else 0f)
+                    .width(20.dp)
+                    .height(20.dp)
+                    .clip(shape = CircleShape)
+                    .background(color = Color(0x8A978585))
+                    .align(Alignment.BottomEnd)
+
+                ,
+                
+            ) {
+
+                Text("+",
+                    fontSize = 10.sp,
+                    color = Color(0xD35A4646),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 2.dp)
+                )
+
+                Text(imageCount.toString(),
+                    fontSize = 10.sp,
+                    color = Color(0xD35A4646),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+
+                )
+
+            }
+
+
 
         }//box
 
