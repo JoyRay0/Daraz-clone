@@ -218,9 +218,13 @@ class Act_product_full_info : AppCompatActivity() {
 
                     val store = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.A_ZnEOdcx2Qm-YsGKIpGAQHaE8%3Fpid%3DApi&f=1&ipt=239285e12e1010f79951f9ee93f1bfa9b56881c5f3012ddaf5246b56b04b5150&ipo=images"
 
-                    Store(storeName = "Rada Krishna", image = store, btnClick = {
+                    Store(storeName = "Rada Krishna", image = store, visitStoreClick = {
 
                         ShortMessageHelper.toast(this@Act_product_full_info, "welcome to my store")
+
+                    }, followClick = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Following")
 
                     })
 
