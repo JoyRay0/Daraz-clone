@@ -26,9 +26,9 @@ class CartServer(
 ) {
 
     fun suggestedItem(
-        rv: RecyclerView,
-        list: ArrayList<HashMap<String, Any>>,
-        adapter: Product,
+        rv: RecyclerView? = null,
+        list: ArrayList<HashMap<String, Any>> = arrayListOf(),
+        adapter: Product? = null,
         page : Int = 1
     ){
 
@@ -46,7 +46,7 @@ class CartServer(
 
                 CoroutineScope(Dispatchers.Main).launch {
 
-                    rv.visibility = View.GONE
+                    rv?.visibility = View.GONE
 
                 }
 
@@ -75,14 +75,16 @@ class CartServer(
                                 p_map["discount"] = item.discountPercentage ?: ""
                                 p_map["rating"] = item.rating ?: ""
                                 p_map["in_stock"] = item.availabilityStatus ?: ""
+                                p_map["reviews"] = item.reviews ?: ""
+                                p_map["stock"] = item.stock ?: ""
                                 list.add(p_map)
 
                             }
 
                             CoroutineScope(Dispatchers.Main).launch {
 
-                                rv.visibility = View.VISIBLE
-                                adapter.notifyDataSetChanged()
+                                rv?.visibility = View.VISIBLE
+                                adapter?.notifyDataSetChanged()
 
                             }
 

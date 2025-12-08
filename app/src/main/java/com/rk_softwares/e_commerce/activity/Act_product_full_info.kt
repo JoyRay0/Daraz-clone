@@ -13,8 +13,10 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
+import com.rk_softwares.e_commerce.ComposeUi.MoreItem
 import com.rk_softwares.e_commerce.ComposeUi.Question
 import com.rk_softwares.e_commerce.ComposeUi.Store
 import com.rk_softwares.e_commerce.ComposeUi.rating_reviews
@@ -26,6 +28,8 @@ import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.ProductImageAdapter
 import com.rk_softwares.e_commerce.ComposeUi.vouchers
+import com.rk_softwares.e_commerce.adapter.Product
+import com.rk_softwares.e_commerce.server.CartServer
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 class Act_product_full_info : AppCompatActivity() {
@@ -46,7 +50,7 @@ class Act_product_full_info : AppCompatActivity() {
     private lateinit var fl_bottom : FrameLayout
 
 
-    //image
+    //body
 
     private lateinit var fl_image : FrameLayout
     private lateinit var vp_product_image : ViewPager2
@@ -57,17 +61,26 @@ class Act_product_full_info : AppCompatActivity() {
 
     private lateinit var cv_voucher : ComposeView
 
+    private lateinit var rv_other_product : RecyclerView
+
 
     //other
     private lateinit var productImageAdapter: ProductImageAdapter
     private lateinit var dialogHelper : DialogHelper
     private lateinit var edge_to_edge : EdgeToEdge
 
+    private lateinit var cartServer: CartServer
+
+    private lateinit var productAdapter : Product
+
     //init
     private var fgName = ""
     private var classData : Class<*>? = null
     private var list : ArrayList<String> = ArrayList()
     private var rList : ArrayList<HashMap<String, Any>> = ArrayList()
+    private var plist : ArrayList<HashMap<String, Any>> = ArrayList()
+
+    private var otherProductList : ArrayList<HashMap<String, Any>> = ArrayList()
 
 
     //XML id's----------------------------------------------------------------
@@ -104,6 +117,7 @@ class Act_product_full_info : AppCompatActivity() {
 
         cv_voucher = findViewById(R.id.cv_voucher)
 
+        rv_other_product = findViewById(R.id.rv_other_product)
 
         productImageAdapter = ProductImageAdapter(this, mainImageList)
         vp_product_image.adapter = productImageAdapter
@@ -117,6 +131,13 @@ class Act_product_full_info : AppCompatActivity() {
         edge_to_edge.setBottomNav(fl_bottom)
         edge_to_edge.setToolBar(fl_toolbar)
         edge_to_edge.setStatusBarColor("#FFFFFF", true)
+
+        cartServer = CartServer(this)
+        cartServer.suggestedItem(rv = null, list = plist, adapter = null, page = 3)
+
+        productAdapter = Product(this, otherProductList)
+        rv_other_product.adapter = productAdapter
+        cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
 
     }
 
@@ -227,6 +248,12 @@ class Act_product_full_info : AppCompatActivity() {
                         ShortMessageHelper.toast(this@Act_product_full_info, "Following")
 
                     })
+
+                    MoreItem(goToStoreClick = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "go to Store")
+
+                    }, plist)
 
                 }
 

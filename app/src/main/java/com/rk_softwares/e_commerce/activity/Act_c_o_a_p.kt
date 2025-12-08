@@ -46,8 +46,6 @@ class Act_c_o_a_p : AppCompatActivity() {
         toolbar_title = findViewById(R.id.toolbar_title)
         iv_setting = findViewById(R.id.iv_setting)
 
-
-
         //identity period-----------------------------------------------
 
         edge_to_edge = EdgeToEdge(this)

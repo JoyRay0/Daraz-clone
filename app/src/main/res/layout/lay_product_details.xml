@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product details"
+        android:textSize="17sp"
+        android:textColor="#8e8999"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:layout_margin="7dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Specifications"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="7dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brand"
+            android:textSize="12sp"
+            android:textColor="#5e5c66"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="7dp"
+            />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Highlights"
+        android:textSize="13sp"
+        android:textColor="#000"
+        android:fontFamily="@font/roboto"
+        android:textFontWeight="600"
+        android:layout_margin="7dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_highlights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="- Demo"
+        android:textSize="10sp"
+        android:layout_margin="7dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_see_more"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="See more"
+        android:textSize="12sp"
+        android:textColor="#36454F"
+        android:fontFamily="@font/roboto"
+        android:textFontWeight="600"
+        android:drawableEnd="@drawable/ic_down"
+        app:backgroundTint="#ADD8E6"
+        android:layout_gravity="center"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="12sp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_margin="7dp"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

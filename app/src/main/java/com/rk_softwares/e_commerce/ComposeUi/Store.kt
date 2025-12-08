@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -83,9 +84,10 @@ fun Store(storeName : String = "Rada Krishna", image : String = "", visitStoreCl
                         .width(100.dp)
                     )
 
+                var fText by remember { mutableStateOf("Follow") }
                 
 
-                Text(text = "Follow",
+                Text(text = fText,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFF000000),
@@ -98,6 +100,8 @@ fun Store(storeName : String = "Rada Krishna", image : String = "", visitStoreCl
                             indication = null
                         ){
                             followClick()
+
+                            if(fText == "Follow") fText = "Following" else fText = "Follow"
 
                         }
                 )
@@ -132,7 +136,7 @@ fun Store(storeName : String = "Rada Krishna", image : String = "", visitStoreCl
                modifier = Modifier
                    .fillMaxWidth()
                    .padding(top = 7.dp, bottom = 7.dp)
-                   .background(color = Color(0x19ECB5B5), shape = RoundedCornerShape(7.dp))
+                   .background(color = Color(0x11ECB5B5), shape = RoundedCornerShape(7.dp))
                    .align(Alignment.Center)
 
            ){

@@ -45,7 +45,6 @@
                     android:id="@+id/fl_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fl_toolbar"
 
                     >
 
@@ -59,7 +58,6 @@
                     android:id="@+id/fl_product_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fl_image"
                     >
 
                     <include layout="@layout/lay_price_full_info"/>
@@ -70,6 +68,39 @@
                     android:id="@+id/cv_voucher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    />
+
+                <FrameLayout
+                    android:id="@+id/fl_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    >
+
+                    <include layout="@layout/lay_product_details"
+
+
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Just For You"
+                    android:textSize="14sp"
+                    android:textColor="#5e5c66"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_other_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:spanCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="10dp"
                     />
 
             </LinearLayout>
