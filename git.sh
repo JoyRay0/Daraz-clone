@@ -1,6 +1,7 @@
 #!/bin/bash
 
-message=$1
+echo "Enter your commit message"
+read -r message
 
 if [ -z "$message" ];
 
