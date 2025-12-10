@@ -77,7 +77,7 @@
                     android:visibility="visible"
                     >
 
-                    <include layout="@layout/lay_product_details"
+                    <include layout="@layout/lay_product_details"/>
 
 
                 </FrameLayout>
@@ -90,6 +90,7 @@
                     android:textColor="#5e5c66"
                     android:textStyle="bold"
                     android:layout_gravity="center"
+                    android:layout_margin="10dp"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView

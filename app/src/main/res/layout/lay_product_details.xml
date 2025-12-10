@@ -26,6 +26,8 @@
             android:text="Specifications"
             android:textColor="#000"
             android:textSize="12sp"
+            android:fontFamily="@font/roboto"
+            android:textFontWeight="400"
             android:layout_alignParentStart="true"
             android:layout_margin="7dp"
             />
@@ -55,37 +57,59 @@
         />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_highlights"
+        android:id="@+id/tv_highlights_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="- Demo"
-        android:textSize="10sp"
-        android:layout_margin="7dp"
+        android:textSize="12sp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="7dp"
         />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_see_more"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="See more"
-        android:textSize="12sp"
-        android:textColor="#36454F"
-        android:fontFamily="@font/roboto"
-        android:textFontWeight="600"
-        android:drawableEnd="@drawable/ic_down"
-        app:backgroundTint="#ADD8E6"
-        android:layout_gravity="center"
-        />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:textColor="#000"
         android:textStyle="bold"
         android:layout_margin="7dp"
-        android:visibility="gone"
+        android:visibility="visible"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="demo description"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="7dp"
+        android:visibility="visible"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_see_more"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="See more"
+        android:textSize="12sp"
+        android:textColor="#6B5E5E"
+        android:gravity="center"
+        android:fontFamily="@font/roboto"
+        android:textFontWeight="600"
+        android:drawableEnd="@drawable/ic_down"
+        android:background="@drawable/sh_see_more_btn"
+        android:layout_gravity="center"
+        android:padding="10dp"
         />
 
 </LinearLayout>

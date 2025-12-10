@@ -3,6 +3,7 @@ package com.rk_softwares.e_commerce.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -63,6 +64,16 @@ class Act_product_full_info : AppCompatActivity() {
 
     private lateinit var rv_other_product : RecyclerView
 
+    private lateinit var tv_brand_name : AppCompatTextView
+
+    private lateinit var tv_highlights_text : AppCompatTextView
+
+    private lateinit var tv_description : AppCompatTextView
+
+    private lateinit var tv_description_text : AppCompatTextView
+
+    private lateinit var btn_see_more : AppCompatTextView
+
 
     //other
     private lateinit var productImageAdapter: ProductImageAdapter
@@ -95,8 +106,12 @@ class Act_product_full_info : AppCompatActivity() {
 
         buttons()
 
+        compose()
+
 
     }// on create=============================================================
+
+
 
     private fun init(){
 
@@ -118,6 +133,17 @@ class Act_product_full_info : AppCompatActivity() {
         cv_voucher = findViewById(R.id.cv_voucher)
 
         rv_other_product = findViewById(R.id.rv_other_product)
+
+        tv_brand_name = findViewById(R.id.tv_brand_name)
+
+        tv_highlights_text = findViewById(R.id.tv_highlights_text)
+
+        tv_description_text = findViewById(R.id.tv_description_text)
+
+        tv_description = findViewById(R.id.tv_description)
+
+        btn_see_more = findViewById(R.id.btn_see_more)
+
 
         productImageAdapter = ProductImageAdapter(this, mainImageList)
         vp_product_image.adapter = productImageAdapter
@@ -142,6 +168,9 @@ class Act_product_full_info : AppCompatActivity() {
     }
 
     private fun buttons(){
+
+        tv_description.visibility = View.GONE
+        tv_description_text.visibility = View.GONE
 
         val back = intent.getStringExtra(KeyHelper.getFullInfoBack())
 
@@ -196,6 +225,37 @@ class Act_product_full_info : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share via"))
 
         }
+
+        btn_see_more.tag = "see more"
+        btn_see_more.text = "See More"
+        tv_description.visibility = View.GONE
+        tv_description_text.visibility = View.GONE
+
+        btn_see_more.setOnClickListener {
+
+            if (btn_see_more.tag == "see more"){
+
+                btn_see_more.tag = "see less"
+                btn_see_more.text = "See Less"
+                tv_description.visibility = View.VISIBLE
+                tv_description_text.visibility = View.VISIBLE
+
+            }else{
+
+                btn_see_more.tag = "see more"
+                btn_see_more.text = "See More"
+                tv_description.visibility = View.GONE
+                tv_description_text.visibility = View.GONE
+            }
+
+
+
+        }
+
+
+    }
+
+    private fun compose() {
 
         val image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images"
 
