@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
@@ -228,6 +229,8 @@ class Act_product_full_info : AppCompatActivity() {
 
         btn_see_more.tag = "see more"
         btn_see_more.text = "See More"
+        btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0)
+
         tv_description.visibility = View.GONE
         tv_description_text.visibility = View.GONE
 
@@ -237,6 +240,8 @@ class Act_product_full_info : AppCompatActivity() {
 
                 btn_see_more.tag = "see less"
                 btn_see_more.text = "See Less"
+                btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_up, 0)
+
                 tv_description.visibility = View.VISIBLE
                 tv_description_text.visibility = View.VISIBLE
 
@@ -244,6 +249,8 @@ class Act_product_full_info : AppCompatActivity() {
 
                 btn_see_more.tag = "see more"
                 btn_see_more.text = "See More"
+                btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0)
+
                 tv_description.visibility = View.GONE
                 tv_description_text.visibility = View.GONE
             }

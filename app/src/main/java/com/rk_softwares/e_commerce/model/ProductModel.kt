@@ -10,6 +10,7 @@ data class ProductModel(
 
 data class Product(
 
+     val id : Int?,
      val title : String?,
      val description : String?,
      val category : String?,
@@ -17,7 +18,7 @@ data class Product(
      val discountPercentage : Double?,
      val rating : Double?,
      val stock : Int?,
-     val tags : List<String>?,
+     val tags : List<String>,
      val brand : String?,
      val sku : String?,
      val weight : Int?,

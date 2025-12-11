@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     >
 
-                    <include layout="@layout/lay_price_full_info"/>
+                    <include layout="@layout/lay_product_price"/>
 
                 </FrameLayout>
 

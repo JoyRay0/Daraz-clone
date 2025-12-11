@@ -235,21 +235,30 @@
         android:background="?attr/selectableItemBackground"
         >
 
+       <androidx.appcompat.widget.AppCompatTextView
+           android:id="@+id/tv_delivery"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Delivery time"
+           android:textSize="14sp"
+           android:textColor="#000"
+           android:fontFamily="@font/roboto"
+           android:textFontWeight="350"
+           android:drawablePadding="7dp"
+           android:drawableStart="@drawable/ic_delivery_box"
+           android:layout_toStartOf="@+id/iv_brand_right"
+           />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brand Name"
-            android:textSize="14sp"
+            android:text="Standard Delivery"
+            android:textSize="10sp"
             android:textColor="#625A5A"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:gravity="start|center"
-            android:drawableStart="@drawable/ic_brand"
-            android:drawablePadding="7dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_delivery"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -278,8 +287,9 @@
             android:layout_height="wrap_content"
             android:text="Best Price"
             android:textSize="14sp"
-            android:textColor="#625A5A"
+            android:textColor="#000"
             android:fontFamily="@font/roboto"
+            android:textFontWeight="350"
             android:drawableStart="@drawable/ic_ok"
             android:drawablePadding="7dp"
             android:paddingTop="5dp"
@@ -291,7 +301,7 @@
             android:id="@+id/v_divider2"
             android:layout_width="0.7dp"
             android:layout_height="15dp"
-            android:background="#625A5A"
+            android:background="#000"
             android:layout_toEndOf="@id/tv_best_price"
             android:layout_centerVertical="true"
             android:layout_marginStart="7dp"
@@ -303,9 +313,10 @@
             android:layout_height="wrap_content"
             android:text="Return Policy"
             android:textSize="14sp"
-            android:textColor="#625A5A"
+            android:textColor="#000"
             android:fontFamily="@font/roboto"
             android:paddingTop="5dp"
+            android:textFontWeight="350"
             android:paddingBottom="5dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/v_divider2"
