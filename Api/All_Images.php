@@ -1,9 +1,13 @@
 <?php
 
+require_once __DIR__ .'/JsonMessage.php';
+
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Cache-Control: public, max-age=3600");
 
+//json message class
+$jsonmessage = new JsonMessage();
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -11,12 +15,8 @@ $resource = $_GET['resource'];
 
 if ($method !== 'GET'){
 
-   die(json_encode([
+    $jsonmessage->errorMessage("failed", "Method not allowed");
 
-       'status' => 'failed',
-       'message' => 'Method not allowed'
-
-   ]));
 }
 
 //checking the res method for proper images
@@ -369,16 +369,10 @@ switch ($resource) {
         break;    
 
     default:
-        die(json_encode([
 
-            'status' => 'failed',
-            'message' => 'Resource not found'
-
-        ]));
+        $jsonmessage->errorMessage("failed", "Resource not found");
+        
 }
-echo json_encode([
 
-    'status' => 'successful',
-    'images' => $images
+$jsonmessage->successMessage("successful", "none", "images", $images);
 
-]);

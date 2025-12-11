@@ -1,18 +1,17 @@
 <?php
 
+require_once __DIR__ . '/JsonMessage.php';
+
 header('Content-Type: application/json');
+
+//json message class
+$jsonmessage = new JsonMessage();
 
 $serachItem = isset($_GET['query']) ? strtolower($_GET['query']) : "";
 
 if($serachItem === ""){
 
-    echo json_encode([
-        "status" => "Error",
-        "message" => "Empty query",
-        "data" => []
-    ]);
-
-    exit;
+    $jsonmessage->errorMessage("error", "empty search query");
 
 }else{
 

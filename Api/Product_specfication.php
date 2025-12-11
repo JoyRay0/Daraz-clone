@@ -1,25 +1,32 @@
 <?php
 
+require_once __DIR__ .'/JsonMessage.php';
+
 header("Content-Type: application/json; charset=UTF-8");
+
+// json message class
+$jsonmessage = new JsonMessage();
 
 $request = $_SERVER['REQUEST_METHOD'];
 
 if($request !== 'POST'){
 
-    emptyData("failed", "method not allowed");
+    $jsonmessage->errorMessage("failed", "method not allowed");
 
 }
 
-searchItem();
+searchItem($jsonmessage);
 
-function searchItem() {
+function searchItem($jsonmessage) {
 
-    
+    $all_products = json_decode(file_get_contents("products.json"), true);
+    $products = $all_products["products"] ?? [];
+
     $data = json_decode(file_get_contents("php://input"), true);
 
     if(empty($data)){
 
-        emptyData("error", "empty data");
+        $jsonmessage->errorMessage("error", "empty data");
 
     }
 
@@ -29,22 +36,12 @@ function searchItem() {
 
     if(empty($id) || empty($title) || empty($sku)){
 
-        emptyData("failed", "some filed are missing");
+        $jsonmessage->errorMessage("failed", "some filed are missing");
 
     }
 
 }
 
-function emptyData(string $status, string $message) {
-
-    echo json_encode([
-        "status"=> $status,
-        "message" => $message
-    ]);
-    exit;
-
-}
- 
 
 
 

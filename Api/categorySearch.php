@@ -1,18 +1,19 @@
 <?php
 
+require_once __DIR__ . '/JsonMessage.php';
+
 header('Content-Type: application/json');
+
+//json message class
+$jsonmessage = new JsonMessage();
+
 
 $serachItem = isset($_GET['category']) ? strtolower($_GET['category']) : "";
 
 if($serachItem === ""){
 
-    echo json_encode([
-        "status" => "Error",
-        "message" => "Empty category",
-        "data" => []
-    ]);
+    $jsonmessage->errorMessage("error", "empty category");
 
-    exit;
 
 }else{
 
