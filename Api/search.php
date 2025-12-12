@@ -43,13 +43,6 @@ if($serachItem === ""){
     $status = $count > 0 ? "Success" : "Failed";
     $message = $count > 0 ? "Search item found" : "Query not found";
 
-    echo json_encode([
-
-            "status" => $status,
-            "message" => $message,
-            "itemCount" => $count,
-            "data" => $data
-
-        ], JSON_PRESERVE_ZERO_FRACTION);
+    $jsonmessage->successItemMessage($status, $message, "itemCount", $count, "data", $data);
 
 }

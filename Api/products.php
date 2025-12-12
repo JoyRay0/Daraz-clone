@@ -1,6 +1,10 @@
 <?php 
 
+require_once __DIR__ . "/JsonMessage.php";
+
 header('Content-Type: application/json');
+
+$jsonmessage = new JsonMessage();
 
 $page = (!empty($_GET['page']) && (int)$_GET['page'] > 0 ) ? (int)$_GET['page']  : 1;
 $limit = 20;
@@ -16,6 +20,7 @@ $paginate = array_slice($products, $offset, $limit);
 
 $totalItem = count($products);
 $totalPage = ceil($totalItem / $limit);
+
 
 echo json_encode([
 

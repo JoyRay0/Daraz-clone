@@ -40,7 +40,33 @@ function searchItem($jsonmessage) {
 
     }
 
-}
+    //searchig in array for product
+
+    $fullItem = [];
+
+    foreach($products as $item){
+
+        if(isset($item["id"]) && isset($item["title"]) && isset($item["sku"])){
+
+
+            if($item["id"] === $id && $item["title"] === $title && $item["sku"] === $sku){
+
+                $fullItem[] = $item;
+
+                break;
+            }
+            
+        }
+    
+    }
+
+    if(!empty($fullItem)){
+
+        $jsonmessage->success("success", "item matched", "products", $fullItem);
+
+    }
+
+}//function end
 
 
 

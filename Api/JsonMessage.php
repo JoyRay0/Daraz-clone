@@ -2,7 +2,6 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
-
 class JsonMessage{
 
     public function errorMessage(string $status, string $message){
@@ -16,12 +15,25 @@ class JsonMessage{
 
     }
 
-    public function successMessage(string $status, string $message, string $itemName ,array $data){
+    public function successMessage(string $status, string $message, string $itemName, array $data){
 
         echo json_encode([
             "status"=> $status,
             "message"=> $message,
             $itemName => $data
+        ]);
+
+        exit;
+
+    }
+
+    public function successItemMessage(string $status, string $message, string $itemName, int $count, string $arrayName, array $arrayItem){
+
+        echo json_encode([
+            "status"=> $status,
+            "message"=> $message,
+            $itemName => $count,
+            $arrayName => $arrayItem
         ]);
 
         exit;
