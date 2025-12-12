@@ -19,8 +19,7 @@ searchItem($jsonmessage);
 
 function searchItem($jsonmessage) {
 
-    $all_products = json_decode(file_get_contents("products.json"), true);
-    $products = $all_products["products"] ?? [];
+    
 
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -30,7 +29,7 @@ function searchItem($jsonmessage) {
 
     }
 
-    $id = filter_var($data["id"] ?? "", FILTER_SANITIZE_NUMBER_INT);
+    $id = filter_var($data["id"] ?? 0 , FILTER_SANITIZE_NUMBER_INT);
     $title = htmlspecialchars($data["title"] ?? "", ENT_QUOTES, 'UTF-8');
     $sku = htmlspecialchars($data["sku"] ?? "", ENT_QUOTES, 'UTF-8');
 
@@ -42,14 +41,16 @@ function searchItem($jsonmessage) {
 
     //searchig in array for product
 
+    $all_products = json_decode(file_get_contents("products.json"), true);
+    $products = $all_products["products"] ?? [];
+
     $fullItem = [];
 
     foreach($products as $item){
 
         if(isset($item["id"]) && isset($item["title"]) && isset($item["sku"])){
 
-
-            if($item["id"] === $id && $item["title"] === $title && $item["sku"] === $sku){
+            if($item["id"] == $id && $item["title"] == $title && $item["sku"] == $sku){
 
                 $fullItem[] = $item;
 
@@ -62,8 +63,11 @@ function searchItem($jsonmessage) {
 
     if(!empty($fullItem)){
 
-        $jsonmessage->success("success", "item matched", "products", $fullItem);
+        $jsonmessage->successMessage("success", "item matched", "products", $fullItem);
 
+    }else{
+
+        $jsonmessage->errorMessage("failed", "empty array");
     }
 
 }//function end
