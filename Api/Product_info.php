@@ -1,11 +1,13 @@
 <?php
 
 require_once __DIR__ .'/JsonMessage.php';
+require_once __DIR__ . '/Header.php';
 
-header("Content-Type: application/json; charset=UTF-8");
-
-// json message class
+// class
 $jsonmessage = new JsonMessage();
+$allHeader = new HeadersManager();
+
+$allHeader->setAllHeaders();
 
 $request = $_SERVER['REQUEST_METHOD'];
 
@@ -55,15 +57,26 @@ function searchItem($jsonmessage) {
                 $fullItem[] = $item;
 
                 break;
+
+            }else{
+
+                $jsonmessage->errorMessage("failed", "keyword not macthed");
+                break;
+
             }
             
+        }else{
+
+            $jsonmessage->errorMessage("failed", "id, title, sku not found");
+            break;
+
         }
     
     }
 
     if(!empty($fullItem)){
 
-        $jsonmessage->successMessage("success", "item matched", "products", $fullItem);
+        $jsonmessage->successMessage("success", "product found", "products", $fullItem);
 
     }else{
 
@@ -71,9 +84,3 @@ function searchItem($jsonmessage) {
     }
 
 }//function end
-
-
-
-
-
-

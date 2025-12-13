@@ -1,10 +1,13 @@
 <?php 
 
 require_once __DIR__ . "/JsonMessage.php";
+require_once __DIR__ . '/Header.php';
 
-header('Content-Type: application/json');
-
+// class
 $jsonmessage = new JsonMessage();
+$allHeader = new HeadersManager();
+
+$allHeader->setAllHeaders();
 
 $page = (!empty($_GET['page']) && (int)$_GET['page'] > 0 ) ? (int)$_GET['page']  : 1;
 $limit = 20;

@@ -1,11 +1,13 @@
 <?php
 
 require_once __DIR__ . '/JsonMessage.php';
+require_once __DIR__ . '/Header.php';
 
-header('Content-Type: application/json');
-
-//json message class
+// class
 $jsonmessage = new JsonMessage();
+$allHeader = new HeadersManager();
+
+$allHeader->setAllHeaders();
 
 
 $serachItem = isset($_GET['category']) ? strtolower($_GET['category']) : "";

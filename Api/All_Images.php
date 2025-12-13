@@ -1,13 +1,13 @@
 <?php
 
 require_once __DIR__ .'/JsonMessage.php';
+require_once __DIR__ . '/Header.php';
 
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-header("Cache-Control: public, max-age=3600");
-
-//json message class
+// class
 $jsonmessage = new JsonMessage();
+$allHeader = new HeadersManager();
+
+$allHeader->setAllHeaders();
 
 $method = $_SERVER['REQUEST_METHOD'];
 

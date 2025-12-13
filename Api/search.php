@@ -1,11 +1,13 @@
 <?php
 
 require_once __DIR__ . '/JsonMessage.php';
+require_once __DIR__ . '/Header.php';
 
-header('Content-Type: application/json');
-
-//json message class
+// class
 $jsonmessage = new JsonMessage();
+$allHeader = new HeadersManager();
+
+$allHeader->setAllHeaders();
 
 $serachItem = isset($_GET['query']) ? strtolower($_GET['query']) : "";
 
@@ -20,7 +22,7 @@ if($serachItem === ""){
     $allProducts = json_decode(file_get_contents('products.json'), true);
     $products = $allProducts['products'] ?? [];
 
-    $data = [];
+    $data = []; //initilize array
 
     foreach($products as $item){
 
@@ -30,8 +32,17 @@ if($serachItem === ""){
 
                 $data[] = $item;
 
+            }else{
+
+                $jsonmessage->errorMessage("failed", "keyword not found");
+                break;
+
             }
 
+        }else{
+
+            $jsonmessage->errorMessage("failed", "title not found");
+            break;
         }
 
     }
