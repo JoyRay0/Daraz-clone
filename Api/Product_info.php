@@ -50,26 +50,16 @@ function searchItem($jsonmessage) {
 
     foreach($products as $item){
 
-        if(isset($item["id"]) && isset($item["title"]) && isset($item["sku"])){
+        if(!isset($item["id"]) && !isset($item["title"]) && !isset($item["sku"])){
 
-            if($item["id"] == $id && $item["title"] == $title && $item["sku"] == $sku){
+            continue;
+        }
 
-                $fullItem[] = $item;
+        if($item["id"] == $id && $item["title"] == $title && $item["sku"] == $sku){
 
-                break;
+            $fullItem[] = $item;
 
-            }else{
-
-                $jsonmessage->errorMessage("failed", "keyword not macthed");
-                break;
-
-            }
-            
-        }else{
-
-            $jsonmessage->errorMessage("failed", "id, title, sku not found");
             break;
-
         }
     
     }
@@ -80,7 +70,7 @@ function searchItem($jsonmessage) {
 
     }else{
 
-        $jsonmessage->errorMessage("failed", "empty array");
+        $jsonmessage->errorMessage("failed", "item not matched");
     }
 
 }//function end

@@ -14,7 +14,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
@@ -32,6 +31,7 @@ import com.rk_softwares.e_commerce.adapter.ProductImageAdapter
 import com.rk_softwares.e_commerce.ComposeUi.vouchers
 import com.rk_softwares.e_commerce.adapter.Product
 import com.rk_softwares.e_commerce.server.CartServer
+import com.rk_softwares.e_commerce.server.FullProductInfoServer
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 class Act_product_full_info : AppCompatActivity() {
@@ -80,18 +80,17 @@ class Act_product_full_info : AppCompatActivity() {
     private lateinit var productImageAdapter: ProductImageAdapter
     private lateinit var dialogHelper : DialogHelper
     private lateinit var edge_to_edge : EdgeToEdge
-
     private lateinit var cartServer: CartServer
-
     private lateinit var productAdapter : Product
+
+    private lateinit var fullProductInfoServer : FullProductInfoServer
 
     //init
     private var fgName = ""
     private var classData : Class<*>? = null
     private var list : ArrayList<String> = ArrayList()
     private var rList : ArrayList<HashMap<String, Any>> = ArrayList()
-    private var plist : ArrayList<HashMap<String, Any>> = ArrayList()
-
+    private var plist : MutableList<com.rk_softwares.e_commerce.model.Product> = arrayListOf()
     private var otherProductList : ArrayList<HashMap<String, Any>> = ArrayList()
 
 
@@ -160,11 +159,13 @@ class Act_product_full_info : AppCompatActivity() {
         edge_to_edge.setStatusBarColor("#FFFFFF", true)
 
         cartServer = CartServer(this)
-        cartServer.suggestedItem(rv = null, list = plist, adapter = null, page = 3)
+        //cartServer.suggestedItem(rv = null, list = plist, adapter = null, page = 3)
 
         productAdapter = Product(this, otherProductList)
         rv_other_product.adapter = productAdapter
         cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
+
+        fullProductInfoServer = FullProductInfoServer(this)
 
     }
 
@@ -320,7 +321,7 @@ class Act_product_full_info : AppCompatActivity() {
 
                         ShortMessageHelper.toast(this@Act_product_full_info, "go to Store")
 
-                    }, plist)
+                    })
 
                 }
 

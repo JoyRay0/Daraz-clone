@@ -26,23 +26,17 @@ if($serachItem === ""){
 
     foreach($products as $item){
 
-        if(isset($item["title"])){
+        if(!isset($item["title"])){
 
-            if(stripos($item["title"], $title) !==false){
+            continue;
 
-                $data[] = $item;
+        }
 
-            }else{
 
-                $jsonmessage->errorMessage("failed", "keyword not found");
-                break;
+        if(stripos($item["title"], $title) !==false){
 
-            }
+            $data[] = $item;
 
-        }else{
-
-            $jsonmessage->errorMessage("failed", "title not found");
-            break;
         }
 
     }

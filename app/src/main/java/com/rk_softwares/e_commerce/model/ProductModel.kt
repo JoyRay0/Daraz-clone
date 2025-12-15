@@ -1,60 +1,67 @@
 package com.rk_softwares.e_commerce.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ProductModel(
 
-    val status : String,
-    val page : Int,
-    val data : List<Product>
+    @SerializedName("status")
+    val status : String = "",
+
+    @SerializedName("page")
+    val page : Int = 0,
+
+    @SerializedName("data")
+    val data : List<Product> = emptyList()
 
 )
 
 data class Product(
 
-     val id : Int?,
-     val title : String?,
-     val description : String?,
-     val category : String?,
-     val price : Double?,
-     val discountPercentage : Double?,
-     val rating : Double?,
-     val stock : Int?,
-     val tags : List<String>,
-     val brand : String?,
-     val sku : String?,
-     val weight : Int?,
-     val dimensions : DataDimension?,
-     val warrantyInformation : String?,
-     val shippingInformation : String?,
-     val availabilityStatus : String?,
-     val reviews : List<DataReviews>?,
-     val returnPolicy : String?,
-     val minimumOrderQuantity : Int?,
-     val meta : DataMeta?,
-     val images : List<String>?,
-     val thumbnail : String?
+    val id : Int = 0,
+    val title : String = "",
+    val description : String = "",
+    val category : String = "",
+    val price : Double = 0.0,
+    val discountPercentage : Double = 0.0,
+    val rating : Double = 0.0,
+    val stock : Int = 0,
+    val tags : List<String> = emptyList(),
+    val brand : String = "",
+    val sku : String = "",
+    val weight : Int = 0,
+    val dimensions : DataDimension = DataDimension(),
+    val warrantyInformation : String = "",
+    val shippingInformation : String = "",
+    val availabilityStatus : String = "",
+    val reviews : List<DataReviews> = emptyList(),
+    val returnPolicy : String = "",
+    val minimumOrderQuantity : Int = 0,
+    val meta : DataMeta = DataMeta(),
+    val images : List<String> = emptyList(),
+    val thumbnail : String = ""
 )
 
 data class DataDimension(
 
-     val width : Double?,
-     val height : Double?,
-     val depth : Double?
+     val width : Double = 0.0,
+     val height : Double = 0.0,
+     val depth : Double = 0.0
 )
 
 data class DataReviews(
 
-     val rating : Int?,
-     val comment : String?,
-     val date : String?,
-     val reviewerName : String?,
-     val reviewerEmail : String?
+     val rating : Int = 0,
+     val comment : String = "",
+     val date : String = "",
+     val reviewerName : String = "",
+     val reviewerEmail : String =""
 )
 
 data class DataMeta(
 
-     val createdAt : String?,
-     val updatedAt : String?,
-     val barcode : String?,
-     val qrCode : String?
+     val createdAt : String = "",
+     val updatedAt : String = "",
+     val barcode : String = "",
+     val qrCode : String = ""
 
 )

@@ -10,6 +10,8 @@ object DomainHelper {
     private var search : String = "search.php?query="
     private var suggestion : String = "products.php?page="
 
+    private var product_info : String = "Product_info.php"
+
     private var categoryText : String = "categorySearch.php?category="
     private var itemLink : String = "item"
     private var couponLink : String = "other_images"
@@ -85,6 +87,11 @@ object DomainHelper {
 
         return domain+categoryText
 
+    }
+
+    fun getProductInfoLink() : String{
+
+        return domain+product_info
     }
 
 
