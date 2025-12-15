@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
 import com.rk_softwares.e_commerce.ComposeUi.MoreItem
+import com.rk_softwares.e_commerce.ComposeUi.ProductDetails
 import com.rk_softwares.e_commerce.ComposeUi.Question
 import com.rk_softwares.e_commerce.ComposeUi.Store
 import com.rk_softwares.e_commerce.ComposeUi.rating_reviews
@@ -323,6 +324,12 @@ class Act_product_full_info : AppCompatActivity() {
 
                     })
 
+                    ProductDetails(list = plist, btnClick = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Changing")
+
+                    })
+
                 }
 
             }
@@ -422,8 +429,6 @@ class Act_product_full_info : AppCompatActivity() {
             ShortMessageHelper.toast(this, "working")
             popUpWindow.dismiss()
         }
-
-
 
     }
 

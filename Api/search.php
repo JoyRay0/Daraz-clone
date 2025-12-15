@@ -32,7 +32,6 @@ if($serachItem === ""){
 
         }
 
-
         if(stripos($item["title"], $title) !==false){
 
             $data[] = $item;
