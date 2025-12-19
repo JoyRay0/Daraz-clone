@@ -15,12 +15,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,10 +34,10 @@ import com.rk_softwares.e_commerce.model.Product
 
 @Preview(showBackground = true)
 @Composable
-fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () -> Unit = {}){
+fun ProductDetails(brand : String = "Brand", hText : String = "N/A", description : String = "N/A"){
 
     var btnText by remember { mutableStateOf("See More") }
-    var btnIcon by remember { mutableStateOf(R.drawable.ic_down) }
+    var btnIcon by remember { mutableIntStateOf(R.drawable.ic_down) }
     var isVisible by remember { mutableStateOf(false) }
 
     Column(
@@ -69,7 +69,7 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
                     .align(Alignment.CenterStart)
                 )
 
-            Text("Brand",
+            Text(brand,
                 fontSize = 12.sp,
                 color = Color(0xFF5e5c66),
                 fontFamily = FontFamily.SansSerif,
@@ -92,7 +92,7 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
         )
 
 
-        Text("- Demo",
+        Text(hText,
             fontSize = 12.sp,
             color = Color(0xFF5B5151),
             fontFamily = FontFamily.SansSerif,
@@ -115,7 +115,7 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
                    .align(Alignment.Start)
            )
 
-           Text("- Demo description",
+           Text(description,
                fontSize = 12.sp,
                color = Color(0xFF5B5151),
                fontFamily = FontFamily.SansSerif,
@@ -130,17 +130,16 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
 
         Row(
             modifier = Modifier
-                .height(40.dp)
+                .height(35.dp)
                 .wrapContentWidth()
-                .clip(shape = RoundedCornerShape(12.dp))
-                .background(color = Color(0xFFC9E5EF))
+                .clip(shape = RoundedCornerShape(22.dp))
+                .background(color = Color(0xAEDBE4E7))
                 .align(Alignment.CenterHorizontally)
-                .padding(10.dp)
+                .padding(8.dp)
                 .clickable(
                     interactionSource = null,
                     indication = null
                 ){
-                    btnClick()
 
                     if ((btnText == "See More") && (btnIcon == R.drawable.ic_down)) isVisible = true else isVisible = false
 
@@ -154,7 +153,7 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
         ) {
 
             Text(text = btnText,
-                fontSize = 12.sp,
+                fontSize = 10.sp,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.W600,
                 color = Color(0xFF6B5E5E),
@@ -168,6 +167,8 @@ fun ProductDetails(list : MutableList<Product> = arrayListOf(), btnClick : () ->
                 tint = Color(0xFF6B5E5E),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
+
+
                 )
 
         }//box

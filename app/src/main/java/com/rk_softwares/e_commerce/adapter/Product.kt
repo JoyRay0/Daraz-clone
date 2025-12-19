@@ -1,6 +1,7 @@
 package com.rk_softwares.e_commerce.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.R
+import com.rk_softwares.e_commerce.activity.Act_product_full_info
 import com.squareup.picasso.Picasso
 
 class Product() : RecyclerView.Adapter<Product.productHolder>() {
@@ -49,7 +52,6 @@ class Product() : RecyclerView.Adapter<Product.productHolder>() {
             holder.tv_rating.text = item["rating"].toString()
             holder.tv_stock.text = item["in_stock"].toString()
 
-
         }else{
 
             Picasso.get().load(R.drawable.img_loading_daraz).into(holder.iv_item_image)
@@ -60,7 +62,21 @@ class Product() : RecyclerView.Adapter<Product.productHolder>() {
             holder.tv_rating.text = "0.0"
             holder.tv_stock.text = "out of stock"
 
+        }
 
+
+
+        holder.cv_btn.setOnClickListener {
+
+            val til = item["title"] ?: ""
+            val ids = item["id"] ?: ""
+            val skus = item["sku"] ?: ""
+
+            val intent = Intent(context, Act_product_full_info::class.java)
+            intent.putExtra("titles", til.toString())
+            intent.putExtra("ids", ids.toString())
+            intent.putExtra("skus", skus.toString())
+            context.startActivity(intent)
         }
 
     }

@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.rk_softwares.e_commerce.R
+import com.rk_softwares.e_commerce.model.Product
 import com.squareup.picasso.Picasso
 
 class ProductImageAdapter(
 
     private var context: Context,
-    private var list: ArrayList<HashMap<String, String>>
+    private var image : List<String>
 
 ) : RecyclerView.Adapter<ProductImageAdapter.Holder>() {
 
@@ -25,12 +26,11 @@ class ProductImageAdapter(
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        val mainImage = list[position]
-        val image = mainImage["image"] ?: ""
+        val mainImage = image[position]
 
         Picasso
             .get()
-            .load(image)
+            .load(mainImage)
             .placeholder(R.drawable.img_loading_daraz)
             .error(R.drawable.img_loading_daraz)
             .into(holder.iv_product_image)
@@ -39,7 +39,7 @@ class ProductImageAdapter(
 
     override fun getItemCount(): Int {
 
-        return list.size
+        return image.size
     }
 
     class Holder(view: View) : RecyclerView.ViewHolder(view){

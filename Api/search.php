@@ -45,6 +45,6 @@ if($serachItem === ""){
     $status = $count > 0 ? "Success" : "Failed";
     $message = $count > 0 ? "Search item found" : "Query not found";
 
-    $jsonmessage->successItemMessage($status, $message, "itemCount", $count, "data", $data);
+    $jsonmessage->successItemMessage($status, $message, "itemCount", $count, "products", $data);
 
 }

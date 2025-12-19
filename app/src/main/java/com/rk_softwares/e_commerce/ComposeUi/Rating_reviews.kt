@@ -1,8 +1,5 @@
 package com.rk_softwares.e_commerce.ComposeUi
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,18 +20,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.evaluateY
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -46,15 +36,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.rk_softwares.e_commerce.R
-import kotlinx.coroutines.delay
+import com.rk_softwares.e_commerce.model.DataReviews
 
 @Preview(showSystemUi = false, showBackground = true)
 @Composable
-fun rating_reviews(
-    totalReviewCount : Int = 0,
+fun RatingReviews(
     totalStar : Double = 0.0,
-    list : ArrayList<HashMap<String, Any>> = arrayListOf(),
+    list : List<DataReviews> = emptyList(),
+    image : String = "",
     onClick : () -> Unit = {}){
+
+    val totalReviewCount = list.size
 
     Column(
 
@@ -122,7 +114,10 @@ fun rating_reviews(
                     modifier = Modifier
                         .wrapContentSize()
                         .align(Alignment.CenterEnd)
-                        .clickable{onClick()},
+                        .clickable(
+                            interactionSource = null,
+                            indication = null
+                        ){onClick()},
 
                     ) {
 
@@ -219,11 +214,19 @@ fun rating_reviews(
 
         list.forEach{item ->
 
+            /*
             val name = item["name"] as? String ?: ""
             val comment = item["comment"] as? String ?: ""
             val rating = item["rating"] as? Int ?: 0
             val image = item["image"] as? String ?: ""
             val imageCount = if (image.isNotEmpty()) image.split(",").size else 0
+             */
+
+            val name = item.reviewerName
+            val comment = item.comment
+            val rating = item.rating
+            val image = image
+            val imageCount = 0
 
             Box(
 

@@ -10,8 +10,8 @@ data class ProductModel(
     @SerializedName("page")
     val page : Int = 0,
 
-    @SerializedName("data")
-    val data : List<Product> = emptyList()
+    @SerializedName("products")
+    val products : List<Product> = emptyList()
 
 )
 

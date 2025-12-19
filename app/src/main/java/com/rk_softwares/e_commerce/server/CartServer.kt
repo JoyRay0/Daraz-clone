@@ -66,10 +66,11 @@ class CartServer(
 
                         if (product.status == "Success"){
 
-                            for (item in product.data){
+                            for (item in product.products){
 
                                 val p_map : HashMap<String, Any> = HashMap()
                                 p_map["short_image"] = item.thumbnail ?: ""
+                                p_map["id"] = item.id ?: ""
                                 p_map["title"] = item.title ?: ""
                                 p_map["price"] = item.price ?: ""
                                 p_map["discount"] = item.discountPercentage ?: ""
@@ -77,6 +78,7 @@ class CartServer(
                                 p_map["in_stock"] = item.availabilityStatus ?: ""
                                 p_map["reviews"] = item.reviews ?: ""
                                 p_map["stock"] = item.stock ?: ""
+                                p_map["sku"] = item.sku ?: ""
                                 list.add(p_map)
 
                             }

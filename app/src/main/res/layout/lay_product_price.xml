@@ -48,8 +48,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_taka"
                 android:tint="#9D8D89"
                 android:layout_centerVertical="true"
@@ -76,7 +76,7 @@
                 android:layout_alignEnd="@id/tv_less_price"
                 android:layout_centerVertical="true"
                 />
-            />
+
 
         </RelativeLayout>
 
@@ -228,26 +228,24 @@
 
     <!-- product brand -->
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_delivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_delivery_box"
+        android:drawablePadding="7dp"
+        android:fontFamily="@font/roboto"
+        android:text="Delivery time"
+        android:textColor="#000"
+        android:textFontWeight="350"
+        android:textSize="14sp" />
+
     <RelativeLayout
         android:id="@+id/rl_brand_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         >
-
-       <androidx.appcompat.widget.AppCompatTextView
-           android:id="@+id/tv_delivery"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Delivery time"
-           android:textSize="14sp"
-           android:textColor="#000"
-           android:fontFamily="@font/roboto"
-           android:textFontWeight="350"
-           android:drawablePadding="7dp"
-           android:drawableStart="@drawable/ic_delivery_box"
-           android:layout_toStartOf="@+id/iv_brand_right"
-           />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

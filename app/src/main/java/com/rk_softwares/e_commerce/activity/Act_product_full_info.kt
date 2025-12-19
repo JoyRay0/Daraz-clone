@@ -2,6 +2,7 @@ package com.rk_softwares.e_commerce.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -13,15 +14,22 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
+import com.rk_softwares.e_commerce.ComposeUi.LoadingPage
 import com.rk_softwares.e_commerce.ComposeUi.MoreItem
 import com.rk_softwares.e_commerce.ComposeUi.ProductDetails
+import com.rk_softwares.e_commerce.ComposeUi.ProductPrice
 import com.rk_softwares.e_commerce.ComposeUi.Question
 import com.rk_softwares.e_commerce.ComposeUi.Store
-import com.rk_softwares.e_commerce.ComposeUi.rating_reviews
+import com.rk_softwares.e_commerce.ComposeUi.RatingReviews
 import com.rk_softwares.e_commerce.Other.DialogHelper
 import com.rk_softwares.e_commerce.Other.EdgeToEdge
 import com.rk_softwares.e_commerce.Other.IntentHelper
@@ -31,6 +39,7 @@ import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.ProductImageAdapter
 import com.rk_softwares.e_commerce.ComposeUi.vouchers
 import com.rk_softwares.e_commerce.adapter.Product
+import com.rk_softwares.e_commerce.model.DataReviews
 import com.rk_softwares.e_commerce.server.CartServer
 import com.rk_softwares.e_commerce.server.FullProductInfoServer
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -48,6 +57,8 @@ class Act_product_full_info : AppCompatActivity() {
 
     private lateinit var fl_toolbar : FrameLayout
 
+
+    private lateinit var cv_loading : ComposeView
 
     //bottom bar
     private lateinit var fl_bottom : FrameLayout
@@ -89,6 +100,7 @@ class Act_product_full_info : AppCompatActivity() {
     //init
     private var fgName = ""
     private var classData : Class<*>? = null
+
     private var list : ArrayList<String> = ArrayList()
     private var rList : ArrayList<HashMap<String, Any>> = ArrayList()
     private var plist : MutableList<com.rk_softwares.e_commerce.model.Product> = arrayListOf()
@@ -107,11 +119,8 @@ class Act_product_full_info : AppCompatActivity() {
 
         buttons()
 
-        compose()
-
 
     }// on create=============================================================
-
 
 
     private fun init(){
@@ -124,32 +133,20 @@ class Act_product_full_info : AppCompatActivity() {
         iv_menu = findViewById(R.id.iv_menu)
         fl_toolbar = findViewById(R.id.fl_toolbar)
 
+        cv_loading = findViewById(R.id.cv_loading)
+
         //bottom
         fl_bottom = findViewById(R.id.fl_bottom)
 
         //vp image
         vp_product_image = findViewById(R.id.vp_product_image)
         dotsIndicator = findViewById(R.id.dotsIndicator)
+        fl_image = findViewById(R.id.fl_image)
 
         cv_voucher = findViewById(R.id.cv_voucher)
 
         rv_other_product = findViewById(R.id.rv_other_product)
 
-        tv_brand_name = findViewById(R.id.tv_brand_name)
-
-        tv_highlights_text = findViewById(R.id.tv_highlights_text)
-
-        tv_description_text = findViewById(R.id.tv_description_text)
-
-        tv_description = findViewById(R.id.tv_description)
-
-        btn_see_more = findViewById(R.id.btn_see_more)
-
-
-        productImageAdapter = ProductImageAdapter(this, mainImageList)
-        vp_product_image.adapter = productImageAdapter
-        dotsIndicator.attachTo(vp_product_image)
-        vp_product_image.currentItem = 1
 
         dialogHelper = DialogHelper(this)
 
@@ -164,27 +161,86 @@ class Act_product_full_info : AppCompatActivity() {
 
         productAdapter = Product(this, otherProductList)
         rv_other_product.adapter = productAdapter
-        cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
+
+
+        val title = intent.getStringExtra("titles").toString()
+        val id = intent.getStringExtra("ids").toString()
+        val sku = intent.getStringExtra("skus").toString()
+
+        cv_loading.visibility = View.VISIBLE
+        cv_voucher.visibility = View.GONE
+        fl_image.visibility = View.GONE
+
+        cv_loading.setContent {
+
+            LoadingPage()
+
+        }
 
         fullProductInfoServer = FullProductInfoServer(this)
+
+        fullProductInfoServer.fullItem( title, id, sku, pageLoaded = { loaded ->
+
+            runOnUiThread {
+
+                if (loaded){
+
+                    cv_voucher.visibility = View.VISIBLE
+                    fl_image.visibility = View.VISIBLE
+
+                    cv_loading.visibility = View.GONE
+
+                }
+
+            }
+
+        } ,onResult = {it ->
+            compose(
+                it.brand,
+                it.category,
+                it.description,
+                it.rating,
+                it.reviews,
+                it.thumbnail,
+                it.price,
+                it.discountPercentage,
+                it.title,
+                it.rating,
+                it.reviews.size,
+                it.availabilityStatus,
+                it.stock
+            )
+
+            productImageAdapter = ProductImageAdapter(this, it.images)
+            vp_product_image.adapter = productImageAdapter
+            dotsIndicator.attachTo(vp_product_image)
+            vp_product_image.currentItem = 1
+
+            cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
+
+
+        })
+        
 
     }
 
     private fun buttons(){
 
-        tv_description.visibility = View.GONE
-        tv_description_text.visibility = View.GONE
-
         val back = intent.getStringExtra(KeyHelper.getFullInfoBack())
 
         onBackPressedDispatcher.addCallback(this, true){
 
+            IntentHelper.intent(this@Act_product_full_info, Act_home::class.java)
+
+            /*
             when{
 
                  back == "Fg_home" -> IntentHelper.setDataIntent(this@Act_product_full_info,
                     Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_home")
 
             }
+
+             */
 
         }
 
@@ -229,53 +285,27 @@ class Act_product_full_info : AppCompatActivity() {
 
         }
 
-        btn_see_more.tag = "see more"
-        btn_see_more.text = "See More"
-        btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0)
-
-        tv_description.visibility = View.GONE
-        tv_description_text.visibility = View.GONE
-
-        btn_see_more.setOnClickListener {
-
-            if (btn_see_more.tag == "see more"){
-
-                btn_see_more.tag = "see less"
-                btn_see_more.text = "See Less"
-                btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_up, 0)
-
-                tv_description.visibility = View.VISIBLE
-                tv_description_text.visibility = View.VISIBLE
-
-            }else{
-
-                btn_see_more.tag = "see more"
-                btn_see_more.text = "See More"
-                btn_see_more.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0)
-
-                tv_description.visibility = View.GONE
-                tv_description_text.visibility = View.GONE
-            }
-
-
-
-        }
-
 
     }
 
-    private fun compose() {
-
-        val image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images"
+    private fun compose(
+        brand : String ,
+        hText : String,
+        description : String,
+        totalStar : Double,
+        totalReview : List<DataReviews>,
+        reviewImage : String,
+        price : Double,
+        discount : Double,
+        title : String,
+        totalRating : Double,
+        starCount : Int,
+        stock : String,
+        stockCount : Int
+        ) {
 
         list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.iF1vjDVZtP53C_uUNZjz3AHaFW%3Fpid%3DApi&f=1&ipt=9284869913a54b27ea65f0c382ae35ece41c7ff800d27eb368b8c32d6ab75f34&ipo=images")
         list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%2Fid%2FOIP.aeAckh3-h_jVt3vY4Mz8SAHaFE%3Fpid%3DApi&f=1&ipt=7fad7d0cfe6617d28df020b42f839d0ce480885c0c8488aea155613bbe1f136e&ipo=images")
-
-        val test = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
-
-        rList.add(hashMapOf("name" to "Joy Ray", "comment" to "Very Very nice product", "rating" to 5, "image" to test))
-        rList.add(hashMapOf("name" to "Rada krishna", "comment" to "Rade Rade", "rating" to 2, "image" to image))
-        rList.add(hashMapOf("name" to "Krishna", "comment" to "Hare Krishna", "rating" to 3, "image" to image))
 
         cv_voucher.setContent {
 
@@ -283,20 +313,39 @@ class Act_product_full_info : AppCompatActivity() {
 
                 Column {
 
+
+                    ProductPrice(price, discount, title, totalRating, starCount, stock, stockCount, addToWishListBtn = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "added to wishlist")
+
+                    }, shareProductBtn = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Product shared")
+
+                    }, deliveryDialogBtn = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Dialog")
+
+                    }, returnDialogBtn = {
+
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Dialog")
+
+                    })
+
+
                     vouchers(list =  list ,onClick = {
 
                         ShortMessageHelper.toast(this@Act_product_full_info, "Compose Worked")
 
                     })
 
+                    RatingReviews(totalStar = totalStar, list = totalReview, image = reviewImage, onClick = {
 
-                    rating_reviews(totalReviewCount = "3".toInt(), totalStar = 2.7, list = rList,onClick = {
-
-                        ShortMessageHelper.toast(this@Act_product_full_info, "Box Worked")
+                        ShortMessageHelper.toast(this@Act_product_full_info, "Full Review")
 
                     })
 
-                    Question(questionCount = 2, viewAllClick = {
+                    Question(totalReview.size, viewAllClick = {
 
                         ShortMessageHelper.toast(this@Act_product_full_info, "All Questions")
 
@@ -324,11 +373,8 @@ class Act_product_full_info : AppCompatActivity() {
 
                     })
 
-                    ProductDetails(list = plist, btnClick = {
+                    ProductDetails(brand, hText, description)
 
-                        ShortMessageHelper.toast(this@Act_product_full_info, "Changing")
-
-                    })
 
                 }
 

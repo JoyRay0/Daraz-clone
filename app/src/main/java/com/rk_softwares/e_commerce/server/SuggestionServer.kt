@@ -58,7 +58,7 @@ class SuggestionServer(
 
                             filterList.clear()
 
-                            for (item in product.data){
+                            for (item in product.products){
 
                                 val title = item.title ?: ""
 

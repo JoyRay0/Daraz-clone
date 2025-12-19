@@ -30,7 +30,7 @@ echo json_encode([
     "status" => "Success",
     "page" => $page,
     "totel_pages" => $totalPage,
-    "data" => $paginate
+    "products" => $paginate
 
 ]);
 
