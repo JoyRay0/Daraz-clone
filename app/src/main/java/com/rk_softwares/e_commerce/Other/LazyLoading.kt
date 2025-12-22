@@ -4,7 +4,6 @@ import android.R
 import android.app.Activity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.paginate.Paginate
 
 class LazyLoading(
 

@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +37,13 @@ import com.rk_softwares.e_commerce.model.Product
 
 @Preview(showBackground = true)
 @Composable
-fun ProductDetails(brand : String = "Brand", hText : String = "N/A", description : String = "N/A"){
+fun ProductDetails(
+    brand : String = "Brand",
+    hText : String = "N/A",
+    description : String = "N/A",
+    category : String = "N/A",
+    specBtn : () -> Unit = {}
+){
 
     var btnText by remember { mutableStateOf("See More") }
     var btnIcon by remember { mutableIntStateOf(R.drawable.ic_down) }
@@ -69,7 +78,54 @@ fun ProductDetails(brand : String = "Brand", hText : String = "N/A", description
                     .align(Alignment.CenterStart)
                 )
 
-            Text(brand,
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterEnd)
+                    .padding(start = 10.dp)
+                    .clickable{
+                        specBtn()
+                    }
+            ) {
+
+                Text(brand,
+                    fontSize = 12.sp,
+                    color = Color(0xFF5e5c66),
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W400,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                )
+
+                Icon( painter = painterResource(R.drawable.ic_right),
+                    contentDescription = "",
+                    tint = Color(0xFF8D7676),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .size(20.dp)
+
+                    )
+
+            }//row
+
+        }//box
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            Text("Category",
+                fontSize = 12.sp,
+                color = Color(0xFF000000),
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.W400,
+                modifier = Modifier
+                    .padding(7.dp)
+                    .align(Alignment.CenterStart)
+            )
+
+            Text(category,
                 fontSize = 12.sp,
                 color = Color(0xFF5e5c66),
                 fontFamily = FontFamily.SansSerif,
@@ -124,6 +180,10 @@ fun ProductDetails(brand : String = "Brand", hText : String = "N/A", description
                    .padding(start = 12.dp, end = 7.dp, top = 7.dp, bottom = 7.dp)
                    .align(Alignment.Start)
                    .wrapContentWidth()
+           )
+
+           Spacer(
+               modifier = Modifier.height(10.dp)
            )
 
        }

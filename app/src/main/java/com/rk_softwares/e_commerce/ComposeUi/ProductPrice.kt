@@ -42,7 +42,7 @@ fun ProductPrice(
     stockCount : Int = 0,
     addToWishListBtn : () -> Unit = {},
     shareProductBtn : () -> Unit = {},
-    deliveryDialogBtn : () -> Unit = {},
+    deliveryDialogBtn :() -> Unit = {},
     returnDialogBtn : () -> Unit = {}
     ){
 
@@ -60,7 +60,7 @@ fun ProductPrice(
 
         ) {
 
-            Icon(painter = painterResource(R.drawable.ic_taka),
+            Icon(painter = painterResource(R.drawable.ic_dollar),
                 contentDescription = "",
                 tint = Color(0xFFFF5722),
                 modifier = Modifier

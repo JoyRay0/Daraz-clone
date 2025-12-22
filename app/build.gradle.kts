@@ -83,13 +83,13 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation("com.github.markomilos:paginate:1.0.0")
 
     // Compose dependencies
     implementation("androidx.compose.ui:ui:1.9.4")
     implementation("androidx.compose.material:material:1.9.4")
     implementation("androidx.compose.ui:ui-tooling-preview:1.9.4")
     implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
 
     implementation("io.coil-kt.coil3:coil-compose:3.3.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")

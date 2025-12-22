@@ -61,19 +61,6 @@
 
                 </FrameLayout>
 
-                <!-- product info -->
-                `
-                <FrameLayout
-                    android:id="@+id/fl_product_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    >
-
-                    <include layout="@layout/lay_product_price"/>
-
-                </FrameLayout>
-
                 <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/cv_voucher"
                     android:layout_width="match_parent"
@@ -84,12 +71,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Just For You"
+                    android:text="🎯 For You"
                     android:textSize="14sp"
                     android:textColor="#5e5c66"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
+                    tools:ignore="HardcodedText"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView

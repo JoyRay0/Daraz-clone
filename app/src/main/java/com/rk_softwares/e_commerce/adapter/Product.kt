@@ -2,16 +2,13 @@ package com.rk_softwares.e_commerce.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_product_full_info
 import com.squareup.picasso.Picasso
@@ -31,7 +28,7 @@ class Product() : RecyclerView.Adapter<Product.productHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): productHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.lay_show_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.lay_adapter_item, parent, false)
 
 
         return productHolder(view)
