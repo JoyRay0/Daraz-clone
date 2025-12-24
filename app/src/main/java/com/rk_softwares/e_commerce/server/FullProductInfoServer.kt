@@ -22,11 +22,11 @@ class FullProductInfoServer(
 ) {
 
     fun fullItem(
-        itemTitle : String,
-        id : String,
-        sku : String,
-        pageLoaded : (Boolean) -> Unit,
-        onResult : (Product) -> Unit
+        itemTitle : String = "",
+        id : String = "",
+        sku : String = "",
+        pageLoaded : (Boolean) -> Unit = {},
+        onResult : (Product) -> Unit = {}
     ) {
 
         val client = OkHttpClient()
@@ -34,64 +34,64 @@ class FullProductInfoServer(
         val gson = Gson()
 
 
-        if ((itemTitle != "null" || itemTitle.isNotEmpty()) && (id != "null" || id.isNotEmpty()) && (sku != "null" || sku.isNotEmpty())){
+        //if ((itemTitle != "null" || itemTitle.isNotEmpty()) && (id != "null" || id.isNotEmpty()) && (sku != "null" || sku.isNotEmpty())) {
 
-            val post = gson.toJson(PostModel(id = id.toInt(), title = itemTitle, sku = sku))
+        //}
 
-            val requestBody = post.toRequestBody("application/json; charset=utf-8".toMediaType())
+        val post = gson.toJson(PostModel(id = id.toInt(), title = itemTitle, sku = sku))
 
-            val request = Request.Builder()
-                .url(DomainHelper.getProductInfoLink())
-                .post(requestBody)
-                .build()
+        val requestBody = post.toRequestBody("application/json; charset=utf-8".toMediaType())
 
-            client.newCall(request).enqueue(object : Callback {
+        val request = Request.Builder()
+            .url(DomainHelper.getProductInfoLink())
+            .post(requestBody)
+            .build()
 
-                override fun onFailure(call: Call, e: IOException) {
+        client.newCall(request).enqueue(object : Callback {
 
-                    pageLoaded(false)
+            override fun onFailure(call: Call, e: IOException) {
 
-                }
+                pageLoaded(false)
 
-                override fun onResponse(call: Call, response: Response) {
+            }
 
-                    if (response.isSuccessful){
+            override fun onResponse(call: Call, response: Response) {
 
-                        val data = response.body.string() ?: return
+                if (response.isSuccessful){
 
-                        try {
+                    val data = response.body.string() ?: return
 
-                            val productModel = gson.fromJson(data, ProductModel::class.java)
+                    try {
 
-
-                            activity.runOnUiThread {
-
-                                //list.clear()
-
-                                val item = productModel.products.firstOrNull() ?: return@runOnUiThread
-
-                                onResult(item)
-
-                                pageLoaded(true)
-
-                            }
+                        val productModel = gson.fromJson(data, ProductModel::class.java)
 
 
+                        activity.runOnUiThread {
 
-                        }catch (e : Exception){
+                            //list.clear()
 
-                            e.printStackTrace()
+                            val item = productModel.products.firstOrNull() ?: return@runOnUiThread
 
+                            onResult(item)
+
+                            pageLoaded(true)
 
                         }
 
+
+
+                    }catch (e : Exception){
+
+                        e.printStackTrace()
+
+
                     }
 
-
                 }
-            })
 
-        }
+
+            }
+        })
 
 
     }

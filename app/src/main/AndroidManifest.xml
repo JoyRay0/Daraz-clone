@@ -24,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
+            android:name=".activity.MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.E_commerce" />
+        <activity
             android:name=".activity.Act_product_full_info"
             android:exported="false" />
         <activity
@@ -34,6 +39,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.Act_change_email_password_number"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Act_product_image"
             android:exported="false" />
         <activity
             android:name=".activity.Act_child_settings"

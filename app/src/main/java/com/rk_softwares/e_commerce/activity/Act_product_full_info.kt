@@ -214,7 +214,7 @@ class Act_product_full_info : AppCompatActivity() {
                 it.dimensions
             )
 
-            productImageAdapter = ProductImageAdapter(this, it.images)
+            productImageAdapter = ProductImageAdapter(this, it.images, it.sku)
             vp_product_image.adapter = productImageAdapter
             dotsIndicator.attachTo(vp_product_image)
             vp_product_image.currentItem = 1
