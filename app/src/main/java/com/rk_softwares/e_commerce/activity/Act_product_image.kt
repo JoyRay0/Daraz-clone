@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -53,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.airbnb.lottie.model.content.CircleShape
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rk_softwares.e_commerce.Other.IntentHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
@@ -72,6 +74,17 @@ class Act_product_image : ComponentActivity() {
             val list = remember { mutableStateListOf<String>() }
             var imageUrl by remember { mutableStateOf("") }
             var imageCount by remember { mutableIntStateOf(0) }
+            val systemUi = rememberSystemUiController()
+
+            systemUi.setStatusBarColor(
+                color = Color(0xFF000000),
+                darkIcons = false
+            )
+
+            systemUi.setNavigationBarColor(
+                color = Color(0xFF000000),
+                darkIcons = false
+            )
 
             /*
             fullProductInfoServer = FullProductInfoServer(this)
@@ -98,40 +111,80 @@ class Act_product_image : ComponentActivity() {
 
             E_commerceTheme {
                 Scaffold(
-                    topBar = {TopBar(
-                        imageCount = imageCount + 1,
-                        totalImageCount = list.size, close = {
+                    modifier = Modifier.fillMaxSize().background(color = Color(0xFF000000))) { innerPadding ->
 
-                        IntentHelper.intent(this, Act_product_full_info::class.java)
+                    Box(
 
-                    })},
-
-                    bottomBar = {Nav(
-                        imageClick = { index ->
-
-                            imageUrl = list[index]
-                            imageCount = index
-
-                        }, image = list)},
-                    modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                    Column(
-
-                        modifier = Modifier.fillMaxWidth().padding(innerPadding)
+                        modifier = Modifier.fillMaxSize().padding(innerPadding).background(color = Color(0xFF000000))
 
                     ) {
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Box(
+
+                            modifier = Modifier.wrapContentWidth().align(Alignment.TopEnd).padding(15.dp)
+
+                        ) {
+
+                            Row(
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .background(color = Color(0x6D595250), shape = RoundedCornerShape(15.dp))
+                                    .padding(7.dp)
+                                    .align(Alignment.TopEnd)
+                            ) {
+
+                                Text( "${imageCount + 1}",
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color(0xFFDEC8C8),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                )
+
+                                Text("/",
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color(0xFFDEC8C8),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                )
+
+                                Text(list.size.toString(),
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color(0xFFDEC8C8),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                )
+
+                            }//row
+
+                        }//box
+
+                        Nav(
+                            imageClick = { index ->
+
+                                imageUrl = list[index]
+                                imageCount = index
+
+                            }, image = list,
+                            modifier = Modifier.align(Alignment.BottomCenter)
+                        )
 
                         FullImage(
                             image = if (imageUrl.isEmpty() && list.isNotEmpty()){
 
                                 list[0]
 
-                            } else imageUrl
+                            } else imageUrl,
+
+                            modifier = Modifier.align(Alignment.TopCenter)
                         )
 
-                    }//column
+                    }//box
 
                 }//scaffold
             }
@@ -139,100 +192,33 @@ class Act_product_image : ComponentActivity() {
     }
 }//class end
 
-@Preview(showBackground = true)
-@Composable
-fun TopBar(imageCount : Int = 0, totalImageCount : Int = 0, close : () -> Unit = {}){
-
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(start = 7.dp, end = 7.dp)
-    ) {
-
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(5.dp)
-        ) {
-
-            IconButton(
-                onClick = close,
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .align(Alignment.CenterStart)
-                    .clip(shape = CircleShape)
-                    .background(color = Color(0x2C7C6969))
-                    .size(35.dp)
-
-            ) {
-
-                Icon( painter = painterResource(R.drawable.ic_close),
-                    contentDescription = "",
-                    tint = Color(0xFF000000),
-                    modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.Center)
-
-                )
-
-            }//icon button
-
-            Row(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .background(color = Color(0xFFEFE3DF), shape = RoundedCornerShape(10.dp))
-                    .padding(5.dp)
-                    .align(Alignment.CenterEnd)
-            ) {
-
-                Text(imageCount.toString(),
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0xFF6E6363),
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                    )
-
-                Text("/",
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0xFF6E6363),
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
-
-                Text(totalImageCount.toString(),
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0xFF6E6363),
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
-
-
-            }//row
-
-        }//box
-
-    }//row
-
-}//fun end
 
 @Preview(showBackground = true)
 @Composable
-fun Nav(imageClick : (Int) -> Unit = {}, image : SnapshotStateList<String> = SnapshotStateList()){
+fun Nav(imageClick : (Int) -> Unit = {}, image : SnapshotStateList<String> = SnapshotStateList(), modifier: Modifier = Modifier){
 
     var selectedImage by remember { mutableIntStateOf(0) }
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(10.dp)
+        modifier = modifier.fillMaxWidth().padding(10.dp).background(color = Color(0xFF000000))
     ) {
 
         Row(
             modifier = Modifier
                 .wrapContentWidth()
-                .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
-                .clip(shape = RoundedCornerShape(10.dp))
-                .background(color = Color(0xFFEFEBEB))
+                .shadow(
+                    elevation = 10.dp,
+                    shape = RoundedCornerShape(20.dp)
+                )
+                .clip(shape = RoundedCornerShape(20.dp))
+                .background(
+                    color = Color(0x40FFFFFF).copy(0.15f)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(0.10f),
+                    shape = RoundedCornerShape(20.dp)
+                )
                 .padding(3.dp)
                 .horizontalScroll(rememberScrollState())
                 .align(Alignment.CenterHorizontally)
@@ -243,14 +229,14 @@ fun Nav(imageClick : (Int) -> Unit = {}, image : SnapshotStateList<String> = Sna
                 Box(
 
                     modifier = Modifier
-                        .width(70.dp)
-                        .height(70.dp)
-                        .padding(5.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
+                        .width(65.dp)
+                        .height(65.dp)
+                        .padding(7.dp)
+                        .clip(shape = CircleShape)
                         .border(
-                            width = 3.dp,
-                            color = if (selectedImage == index) Color(0xFF2196F3) else Color.Transparent,
-                            shape = RoundedCornerShape(10.dp))
+                            width = 1.dp,
+                            color = if (selectedImage == index) Color(0xFFFF5722) else Color.Transparent,
+                            shape = CircleShape)
                         .clickable(
                             interactionSource = null,
                             indication = null
@@ -283,13 +269,14 @@ fun Nav(imageClick : (Int) -> Unit = {}, image : SnapshotStateList<String> = Sna
 
 @Preview(showBackground = true)
 @Composable
-fun FullImage(image : String = ""){
+fun FullImage(image : String = "", modifier: Modifier = Modifier){
 
 
     Box(
-        modifier = Modifier
-            .wrapContentWidth()
+        modifier = modifier
+            .wrapContentSize()
             .height(500.dp)
+            .background(color = Color.Transparent)
     ) {
 
         AsyncImage(model = image,

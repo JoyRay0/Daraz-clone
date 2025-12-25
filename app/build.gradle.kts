@@ -93,5 +93,8 @@ dependencies {
 
     implementation("io.coil-kt.coil3:coil-compose:3.3.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
+
 }
 
