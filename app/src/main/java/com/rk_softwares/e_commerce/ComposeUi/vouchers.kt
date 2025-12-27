@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -98,7 +99,7 @@ fun vouchers(list : ArrayList<String>? = null, onClick : () -> Unit = {}){
                         clip = false
                     )
                     .clip(RoundedCornerShape(15.dp))
-                    .height(170.dp)
+                    .aspectRatio(16f / 7f)
                     .align(Alignment.CenterHorizontally)
 
             ) {

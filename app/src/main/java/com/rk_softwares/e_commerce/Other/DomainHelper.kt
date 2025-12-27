@@ -10,7 +10,7 @@ object DomainHelper {
     private var search : String = "search.php?query="
     private var suggestion : String = "products.php?page="
 
-    private var product_info : String = "Product_info.php"
+    private var product_info : String = "Product_info.php?res="
 
     private var categoryText : String = "categorySearch.php?category="
     private var itemLink : String = "item"

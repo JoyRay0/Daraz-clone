@@ -6,6 +6,6 @@ data class PostModel (
     val sku : String?
 )
 
-data class NewModel(
-    val id : Int?
+data class SkuModel(
+    val sku : String?
 )
