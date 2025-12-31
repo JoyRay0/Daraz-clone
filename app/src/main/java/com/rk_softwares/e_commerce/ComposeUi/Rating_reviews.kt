@@ -52,8 +52,7 @@ fun RatingReviews(
 
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color(0xFFFFFFFF))
-        ,
+            .background(color = Color(0xFFFFFFFF)),
 
         verticalArrangement = Arrangement.spacedBy(5.dp)
 
@@ -213,14 +212,6 @@ fun RatingReviews(
         }//row
 
         list.forEach{item ->
-
-            /*
-            val name = item["name"] as? String ?: ""
-            val comment = item["comment"] as? String ?: ""
-            val rating = item["rating"] as? Int ?: 0
-            val image = item["image"] as? String ?: ""
-            val imageCount = if (image.isNotEmpty()) image.split(",").size else 0
-             */
 
             val name = item.reviewerName
             val comment = item.comment

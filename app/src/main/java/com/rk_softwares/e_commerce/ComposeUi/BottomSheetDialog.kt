@@ -2,6 +2,7 @@ package com.rk_softwares.e_commerce.ComposeUi
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -18,8 +20,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -348,7 +356,7 @@ fun Service(returnText : String = "Easy return"){
 
 }//fun end
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun Specification(
     bText : String = "No Brand",
@@ -599,3 +607,154 @@ fun Specification(
 
 }//fun end
 
+
+@Preview(showBackground = true)
+@Composable
+fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
+
+    var isClick by remember { mutableStateOf("All") }
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+        Box(
+            modifier = Modifier.fillMaxWidth().padding(7.dp)
+        ) {
+
+            Box(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = Color(0x57E5D9D9))
+                    .padding(7.dp)
+
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterStart)
+                        .padding(3.dp)
+                ) {
+
+                    Text(totalRatingCount.toString(),
+                        fontSize = 29.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF000000),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
+                    )
+
+                    TotalStarCount(totalRatingCount,
+                        rModifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 5.dp),
+
+                        iModifier = Modifier
+                            .size(20.dp)
+                    )
+
+                }//row
+
+                //total review count
+
+                Row(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterEnd)
+                        .padding(3.dp)
+                ) {
+
+                    Text(totalReviewCount.toString(),
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF504747),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 3.dp)
+                    )
+
+                    Text("Reviews",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF504747),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 3.dp)
+                    )
+
+                }//row
+
+            }//box
+
+        }//box
+
+
+        Row(
+            modifier = Modifier.wrapContentWidth().padding(7.dp)
+        ) {
+
+            Text("All",
+                fontSize = 15.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = if (isClick == "All") Color(0xFFFFFFFF) else Color(0xFF000000),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .background(
+                        color = if (isClick == "All") Color(0xFFFF5722) else Color.Transparent,
+                        shape = if (isClick == "All") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
+                    )
+                    .clickable{
+                        isClick = "All"
+                    }
+                    .padding(7.dp)
+                )
+
+            Text("With images/video",
+                fontSize = 15.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = if (isClick == "With images/video") Color(0xFFFFFFFF) else Color(0xFF000000),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .background(
+                        color = if (isClick == "With images/video") Color(0xFFFF5722) else Color.Transparent,
+                        shape = if (isClick == "With images/video") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
+                    )
+                    .clickable{
+                        isClick = "With images/video"
+                    }
+                    .padding(7.dp)
+            )
+
+            Text("Low rating",
+                fontSize = 15.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = if (isClick == "Low rating") Color(0xFFFFFFFF) else Color(0xFF000000),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .background(
+                        color = if (isClick == "Low rating") Color(0xFFFF5722) else Color.Transparent,
+                        shape = if (isClick == "Low rating") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
+                    )
+                    .clickable{
+                        isClick = "Low rating"
+                    }
+                    .padding(7.dp)
+            )
+
+        }//row
+
+    }//column
+
+}//fun end
