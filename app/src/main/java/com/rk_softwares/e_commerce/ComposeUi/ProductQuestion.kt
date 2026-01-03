@@ -122,7 +122,7 @@ fun Question(questionCount : Int = 0, viewAllClick : () -> Unit = {}, askQues : 
         ){
 
             Image(
-                painter = painterResource(R.drawable.ic_question),
+                painter = painterResource(R.drawable.ic_question_fill),
                 contentDescription = "",
                 modifier = Modifier
                     .size(12.dp)

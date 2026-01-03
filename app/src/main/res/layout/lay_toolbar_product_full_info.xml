@@ -85,7 +85,7 @@
         android:id="@+id/iv_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_threedot"
+        android:src="@drawable/ic_three_dot_hor"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"

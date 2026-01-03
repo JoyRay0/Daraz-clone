@@ -353,6 +353,7 @@ fun Comments(name : String = "Demo", comment : String = "Hello World", image : S
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds,
                 placeholder = painterResource(R.drawable.img_loading_daraz),
+                error = painterResource(R.drawable.img_loading_daraz),
                 modifier = Modifier.fillMaxSize()
 
             )

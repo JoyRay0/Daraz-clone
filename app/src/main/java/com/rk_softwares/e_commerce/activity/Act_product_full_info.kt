@@ -356,7 +356,8 @@ class Act_product_full_info : AppCompatActivity() {
 
                     RatingReviews(totalStar = totalStar, list = totalReview, image = reviewImage, onClick = {
 
-                        ShortMessageHelper.toast(this@Act_product_full_info, "Full Review")
+                        topText = "Review"
+                        deliveryDialog = true
 
                     })
 

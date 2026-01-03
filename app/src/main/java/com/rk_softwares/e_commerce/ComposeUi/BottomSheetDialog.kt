@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,19 +25,25 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.model.DataDimension
 import com.rk_softwares.e_commerce.model.Product
@@ -91,6 +100,7 @@ fun BottomSheetDialog(
                 "Delivery" -> Delivery(currentLocation = "Madhabdi", deliveryPrice = 20, deliveryTime = text)
                 "Service" -> Service(returnText = text)
                 "Specifications" -> Specification(bText = brandText, wText = warrantyText, weight = weightG, dimensions = dimension)
+                "Review" -> Review()
                 else -> null
 
             }
@@ -618,6 +628,7 @@ fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
         modifier = Modifier.fillMaxWidth()
     ) {
 
+        //full rating
         Box(
             modifier = Modifier.fillMaxWidth().padding(7.dp)
         ) {
@@ -696,8 +707,10 @@ fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
             }//box
 
         }//box
+        //full rating
 
 
+        //tab item
         Row(
             modifier = Modifier.wrapContentWidth().padding(7.dp)
         ) {
@@ -754,7 +767,415 @@ fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
             )
 
         }//row
+        //tab item
+
+        //genuine review
+
+        Box(
+
+            modifier = Modifier.fillMaxWidth().padding(5.dp)
+
+        ) {
+
+            Row(
+                modifier = Modifier.wrapContentWidth().align(Alignment.CenterStart)
+            ) {
+
+                Spacer(modifier = Modifier.width(2.dp))
+
+                Icon( painter = painterResource(R.drawable.ic_shield_ok),
+                    contentDescription = "",
+                    tint = Color(0xFF695656),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                        .size(14.dp)
+                )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text("Genuine Reviews",
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF695656),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+
+                    )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Icon( painter = painterResource(R.drawable.ic_question_outline),
+                    contentDescription = "",
+                    tint = Color(0xFF695656),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                        .size(14.dp)
+                )
+
+                
+            }//row
+
+            Row(
+                modifier = Modifier.wrapContentWidth().align(Alignment.CenterEnd)
+            ) {
+
+                Text("Relevance",
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF000000),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                    )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Icon( painter = painterResource(R.drawable.ic_right),
+                    contentDescription = "",
+                    tint = Color(0xFF000000),
+                    modifier = Modifier
+                        .rotate(90f)
+                        .size(15.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+
+            }//row
+
+        }//box
+
+        //genuine review
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        HorizontalDivider(
+            color = Color(0x6FB29C9C),
+            thickness = 1.dp
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        ReviewHelper()
 
     }//column
+
+}//fun end
+
+@Preview(showBackground = true)
+@Composable
+fun ReviewHelper(
+    imageUrl : String = "",
+    userName : String = "Rada krishna",
+    date : String = "1/1/2000",
+    reviewText : String = "Good Product",
+    rating : Int = 3
+    ){
+
+    var isLiked by remember { mutableStateOf(false) }
+    var likeCount by remember { mutableIntStateOf(2) }
+    var commentCount by remember { mutableIntStateOf(1) }
+
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(7.dp)
+    ) {
+        
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            Row(
+                modifier = Modifier.wrapContentWidth()
+            ) {
+
+                //image box
+                Box(
+                    modifier = Modifier
+                        .width(35.dp)
+                        .height(35.dp)
+                        .clip(shape = CircleShape)
+                        .align(Alignment.CenterVertically)
+                ) {
+
+                    AsyncImage( model = "",
+                        contentDescription = "",
+                        placeholder = painterResource(R.drawable.img_loading_daraz),
+                        error = painterResource(R.drawable.img_loading_daraz),
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+
+                    )
+
+                }// box
+
+                //image box
+
+                Spacer(modifier = Modifier.width(9.dp))
+
+                //name and date
+                
+                Column(
+                    modifier = Modifier.wrapContentWidth().align(Alignment.CenterVertically)
+                ) {
+
+                    Text(userName,
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.W500,
+                        color = Color(0xFF000000),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .width(120.dp)
+                            .align(Alignment.Start)
+                        )
+
+                    //Spacer(modifier = Modifier.height(1.dp))
+
+                    Text(date,
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF947777),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.Start)
+                    )
+
+                }//column
+
+                //name and date
+
+            }//row
+
+            TotalStarCount(rating = rating.toDouble(),
+                rModifier = Modifier
+                    .align(Alignment.CenterEnd),
+
+                iModifier = Modifier
+                    .size(18.dp)
+            )
+
+        }//box
+
+        Spacer(modifier = Modifier.height(7.dp))
+
+        Text(reviewText,
+            fontSize = 14.sp,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Normal,
+            color = Color(0xFF000000)
+            )
+
+        Spacer(modifier = Modifier.height(7.dp))
+
+        //main image
+
+        Box(
+
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+                .align(Alignment.Start)
+
+        ) {
+
+            AsyncImage( model = imageUrl,
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                placeholder = painterResource(R.drawable.img_loading_daraz),
+                error = painterResource(R.drawable.img_loading_daraz),
+                modifier = Modifier
+                    .fillMaxSize()
+
+            )
+
+        }//box
+
+        //main image
+
+        //seller replied
+
+        Spacer(modifier = Modifier.height(7.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth().padding(5.dp)
+        ) {
+            
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = Color(0x7EF5F0F0))
+                    .padding(5.dp)
+            ) {
+
+                Text("Seller Replied:",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xE4000000),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Start)
+                        .padding(3.dp)
+                    )
+
+                Text("আপনার মতামত প্রোডাক্ট এর মান উন্নয়েনে সাহায্য করবে। ধন্যবাদ",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF756A6A),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Start)
+                        .padding(3.dp)
+                )
+
+            }//column
+
+        }//box
+
+        //seller replied
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        HorizontalDivider(
+            color = Color(0x9FDEBABA),
+            thickness = 1.dp
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        //like and comment
+
+        Box(
+
+            modifier = Modifier.fillMaxWidth().padding(5.dp).align(Alignment.Start)
+
+        ) {
+
+            Row(
+                modifier = Modifier.wrapContentWidth()
+            ) {
+
+                Icon( painter = painterResource(R.drawable.ic_like),
+                    contentDescription = "",
+                    tint = Color(0xFF232121),
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(18.dp)
+                        .clickable(
+                            indication = null,
+                            interactionSource = null
+                        ){
+                            if (isLiked){
+
+                                likeCount -= 1
+                                
+                            }else{
+
+                                likeCount += 1
+
+                            }
+
+                            isLiked = !isLiked
+
+                        }
+                )
+
+                Text(likeCount.toString(),
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 7.dp)
+                        .alpha(if (likeCount > 0) 1f else 0f)
+                    )
+
+                Text("Likes",
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 2.dp)
+                        .alpha(if (likeCount > 0) 1f else 0f)
+                )
+
+                Spacer(modifier = Modifier.width(30.dp))
+
+                Icon( painter = painterResource(R.drawable.ic_comment),
+                    contentDescription = "",
+                    tint = Color(0xFF232121),
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(18.dp)
+                        .clickable(
+                            indication = null,
+                            interactionSource = null
+                        ){
+
+                            commentCount = 1
+
+                        }
+                )
+
+                Text(commentCount.toString(),
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 7.dp)
+                        .alpha(if (commentCount > 0) 1f else 0f)
+                )
+
+                Text("Comment",
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 2.dp)
+                        .alpha(if (commentCount > 0) 1f else 0f)
+                )
+
+            }//row
+
+            Icon(painter = painterResource(R.drawable.ic_three_dots_ver),
+                contentDescription = "",
+                tint = Color(0xFF232121),
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .size(18.dp)
+
+            )
+
+
+        }//box
+
+        //like and comment
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        HorizontalDivider(
+            color = Color(0x9FDEBABA),
+            thickness = 1.dp
+        )
+        
+    }//column
+
 
 }//fun end

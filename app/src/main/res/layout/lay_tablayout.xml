@@ -271,7 +271,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_like"
+                android:drawableStart="@drawable/ic_love"
                 android:drawablePadding="5dp"
                 />
 
