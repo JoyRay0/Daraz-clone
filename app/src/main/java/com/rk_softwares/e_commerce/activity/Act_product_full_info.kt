@@ -197,7 +197,6 @@ class Act_product_full_info : AppCompatActivity() {
                 it.brand,
                 it.category,
                 it.description,
-                it.rating,
                 it.reviews,
                 it.thumbnail,
                 it.price,
@@ -295,7 +294,6 @@ class Act_product_full_info : AppCompatActivity() {
         brand : String,
         category : String,
         description : String,
-        totalStar : Double,
         totalReview : List<DataReviews>,
         reviewImage : String,
         price : Double,
@@ -354,7 +352,7 @@ class Act_product_full_info : AppCompatActivity() {
 
                     })
 
-                    RatingReviews(totalStar = totalStar, list = totalReview, image = reviewImage, onClick = {
+                    RatingReviews(totalStar = totalRating, list = totalReview, image = reviewImage, onClick = {
 
                         topText = "Review"
                         deliveryDialog = true
@@ -406,6 +404,9 @@ class Act_product_full_info : AppCompatActivity() {
                     warrantyText = warranty,
                     weightG = weight,
                     dimension = dimension,
+                    imageUrl = reviewImage,
+                    totalRatingCount = totalRating,
+                    reviews = totalReview,
                     onDismiss = {
 
                     deliveryDialog = false

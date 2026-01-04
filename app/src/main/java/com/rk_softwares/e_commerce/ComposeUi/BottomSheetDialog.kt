@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.model.DataDimension
+import com.rk_softwares.e_commerce.model.DataReviews
 import com.rk_softwares.e_commerce.model.Product
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +60,9 @@ fun BottomSheetDialog(
     warrantyText : String = "No warranty",
     weightG : Int = 0,
     dimension : DataDimension = DataDimension(),
+    imageUrl: String = "",
+    totalRatingCount: Double = 0.0,
+    reviews : List<DataReviews> = emptyList(),
     onDismiss : () -> Unit = {}
 ) {
 
@@ -100,7 +104,7 @@ fun BottomSheetDialog(
                 "Delivery" -> Delivery(currentLocation = "Madhabdi", deliveryPrice = 20, deliveryTime = text)
                 "Service" -> Service(returnText = text)
                 "Specifications" -> Specification(bText = brandText, wText = warrantyText, weight = weightG, dimensions = dimension)
-                "Review" -> Review()
+                "Review" -> Review(totalRatingCount = totalRatingCount, list = reviews, imageUrl = imageUrl)
                 else -> null
 
             }
@@ -620,7 +624,11 @@ fun Specification(
 
 @Preview(showBackground = true)
 @Composable
-fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
+fun Review(
+    totalRatingCount : Double = 2.0,
+    list : List<DataReviews> = emptyList(),
+    imageUrl: String = ""
+    ){
 
     var isClick by remember { mutableStateOf("All") }
 
@@ -680,7 +688,7 @@ fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
                         .padding(3.dp)
                 ) {
 
-                    Text(totalReviewCount.toString(),
+                    Text(list.size.toString(),
                         fontSize = 12.sp,
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal,
@@ -861,7 +869,19 @@ fun Review(totalRatingCount : Double = 2.0, totalReviewCount : Int = 0){
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        ReviewHelper()
+
+        list.forEach { item ->
+
+            ReviewHelper(
+
+                imageUrl = imageUrl,
+                userName = item.reviewerName,
+                date = item.date,
+                reviewText = item.comment,
+                rating = item.rating
+            )
+
+        }
 
     }//column
 
@@ -878,7 +898,7 @@ fun ReviewHelper(
     ){
 
     var isLiked by remember { mutableStateOf(false) }
-    var likeCount by remember { mutableIntStateOf(2) }
+    var likeCount by remember { mutableIntStateOf(1) }
     var commentCount by remember { mutableIntStateOf(1) }
 
     Column(
