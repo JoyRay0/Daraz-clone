@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -646,7 +648,7 @@ fun Review(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .background(color = Color(0x57E5D9D9))
+                    .background(color = Color(0x37E5D9D9))
                     .padding(7.dp)
 
             ) {
@@ -734,7 +736,10 @@ fun Review(
                         color = if (isClick == "All") Color(0xFFFF5722) else Color.Transparent,
                         shape = if (isClick == "All") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
                     )
-                    .clickable{
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
                         isClick = "All"
                     }
                     .padding(7.dp)
@@ -751,7 +756,10 @@ fun Review(
                         color = if (isClick == "With images/video") Color(0xFFFF5722) else Color.Transparent,
                         shape = if (isClick == "With images/video") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
                     )
-                    .clickable{
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
                         isClick = "With images/video"
                     }
                     .padding(7.dp)
@@ -768,7 +776,10 @@ fun Review(
                         color = if (isClick == "Low rating") Color(0xFFFF5722) else Color.Transparent,
                         shape = if (isClick == "Low rating") RoundedCornerShape(10.dp) else RoundedCornerShape(0.dp)
                     )
-                    .clickable{
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
                         isClick = "Low rating"
                     }
                     .padding(7.dp)
@@ -869,19 +880,30 @@ fun Review(
 
         Spacer(modifier = Modifier.height(4.dp))
 
+        //review messages
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .verticalScroll(rememberScrollState(), true)
+        ) {
 
-        list.forEach { item ->
+            list.forEach { item ->
 
-            ReviewHelper(
+                ReviewHelper(
 
-                imageUrl = imageUrl,
-                userName = item.reviewerName,
-                date = item.date,
-                reviewText = item.comment,
-                rating = item.rating
-            )
+                    imageUrl = imageUrl,
+                    userName = item.reviewerName,
+                    date = item.date,
+                    reviewText = item.comment,
+                    rating = item.rating
+                )
 
-        }
+            }
+
+        }//column
+        //review messages
+
 
     }//column
 
@@ -891,6 +913,7 @@ fun Review(
 @Composable
 fun ReviewHelper(
     imageUrl : String = "",
+    userImage : String = "",
     userName : String = "Rada krishna",
     date : String = "1/1/2000",
     reviewText : String = "Good Product",
@@ -900,6 +923,7 @@ fun ReviewHelper(
     var isLiked by remember { mutableStateOf(false) }
     var likeCount by remember { mutableIntStateOf(1) }
     var commentCount by remember { mutableIntStateOf(1) }
+    val bgColor = remember(userName) { getRandomColor(userName) }
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(7.dp)
@@ -913,24 +937,48 @@ fun ReviewHelper(
                 modifier = Modifier.wrapContentWidth()
             ) {
 
+
                 //image box
                 Box(
                     modifier = Modifier
                         .width(35.dp)
                         .height(35.dp)
                         .clip(shape = CircleShape)
+                        .background(
+                            if(userImage.isEmpty()) bgColor else Color.Transparent
+                        )
                         .align(Alignment.CenterVertically)
                 ) {
 
-                    AsyncImage( model = "",
-                        contentDescription = "",
-                        placeholder = painterResource(R.drawable.img_loading_daraz),
-                        error = painterResource(R.drawable.img_loading_daraz),
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
+                    if(userImage.isNotEmpty()){
 
-                    )
+                        AsyncImage( model = "",
+                            contentDescription = "",
+                            placeholder = painterResource(R.drawable.img_loading_daraz),
+                            error = painterResource(R.drawable.img_loading_daraz),
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+
+                    }else{
+
+                        val firstChar = userName.trim().firstOrNull()?.uppercase() ?: "?"
+
+                        Text( firstChar.toString(),
+                            fontSize = 17.sp,
+                            fontFamily = FontFamily.SansSerif,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+
+                        )
+
+
+                    }
+                    
+
 
                 }// box
 
@@ -1002,6 +1050,7 @@ fun ReviewHelper(
             modifier = Modifier
                 .width(100.dp)
                 .height(100.dp)
+                .clip(shape = RoundedCornerShape(12.dp))
                 .align(Alignment.Start)
 
         ) {
@@ -1197,5 +1246,30 @@ fun ReviewHelper(
         
     }//column
 
+}//fun end
+
+//random color
+fun getRandomColor(name : String) : Color{
+
+    val colors = listOf(
+
+        Color(0xFF754EB9),
+        Color(0xFF2196F3),
+        Color(0xFF03A9F4),
+        Color(0xFF00BCD4),
+        Color(0xFF009688),
+        Color(0xFF4CAF50),
+        Color(0xFF80C72E),
+        Color(0xFFCDDC39),
+        Color(0xFFFFC107),
+        Color(0xFFFF9800),
+        Color(0xFFFF5722)
+    )
+
+    val cleanName = name.trim().lowercase()
+
+    val index = kotlin.math.abs(cleanName.hashCode()) % colors.size
+
+    return colors[index]
 
 }//fun end

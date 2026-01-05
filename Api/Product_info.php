@@ -48,10 +48,9 @@ function searchItem($data) {
     global $jsonmessage;
 
     $id = filter_var($data["id"] ?? 0 , FILTER_SANITIZE_NUMBER_INT);
-    $title = htmlspecialchars($data["title"] ?? "", ENT_QUOTES, 'UTF-8');
     $sku = htmlspecialchars($data["sku"] ?? "", ENT_QUOTES, 'UTF-8');
 
-    if(empty($id) || empty($title) || empty($sku)){
+    if(empty($id) || empty($sku)){
 
         $jsonmessage->errorMessage("failed", "some filed are missing");
 
@@ -66,12 +65,12 @@ function searchItem($data) {
 
     foreach($products as $item){
 
-        if(!isset($item["id"]) && !isset($item["title"]) && !isset($item["sku"])){
+        if(!isset($item["id"]) && !isset($item["sku"])){
 
             continue;
         }
 
-        if($item["id"] == $id && $item["title"] == $title && $item["sku"] == $sku){
+        if($item["id"] == $id && $item["sku"] == $sku){
 
             $fullItem[] = $item;
 
