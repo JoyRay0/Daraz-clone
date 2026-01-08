@@ -24,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
+            android:name=".activity.Act_wishlist"
+            android:exported="false"
+            android:label="@string/title_activity_act_wishlist"
+            android:theme="@style/Theme.E_commerce" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"

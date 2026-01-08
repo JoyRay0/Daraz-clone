@@ -38,6 +38,7 @@ import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.adapter.ProductImageAdapter
 import com.rk_softwares.e_commerce.ComposeUi.vouchers
 import com.rk_softwares.e_commerce.adapter.Product
+import com.rk_softwares.e_commerce.database.Wishlist
 import com.rk_softwares.e_commerce.model.DataDimension
 import com.rk_softwares.e_commerce.model.DataReviews
 import com.rk_softwares.e_commerce.server.CartServer
@@ -77,17 +78,6 @@ class Act_product_full_info : AppCompatActivity() {
 
     private lateinit var rv_other_product : RecyclerView
 
-    private lateinit var tv_brand_name : AppCompatTextView
-
-    private lateinit var tv_highlights_text : AppCompatTextView
-
-    private lateinit var tv_description : AppCompatTextView
-
-    private lateinit var tv_description_text : AppCompatTextView
-
-    private lateinit var btn_see_more : AppCompatTextView
-
-
     //other
     private lateinit var productImageAdapter: ProductImageAdapter
     private lateinit var dialogHelper : DialogHelper
@@ -96,6 +86,8 @@ class Act_product_full_info : AppCompatActivity() {
     private lateinit var productAdapter : Product
 
     private lateinit var fullProductInfoServer : FullProductInfoServer
+
+    private lateinit var wishlist_stg : Wishlist
 
     //init
     private var fgName = ""
@@ -160,6 +152,8 @@ class Act_product_full_info : AppCompatActivity() {
         productAdapter = Product(this, otherProductList)
         rv_other_product.adapter = productAdapter
 
+        wishlist_stg = Wishlist(this)
+
 
         val title = intent.getStringExtra("titles").toString()
         val id = intent.getStringExtra("ids").toString()
@@ -194,6 +188,8 @@ class Act_product_full_info : AppCompatActivity() {
 
         } ,onResult = {it ->
             compose(
+                it.id,
+                it.sku,
                 it.brand,
                 it.category,
                 it.description,
@@ -210,7 +206,8 @@ class Act_product_full_info : AppCompatActivity() {
                 it.returnPolicy,
                 it.warrantyInformation,
                 it.weight,
-                it.dimensions
+                it.dimensions,
+                it.thumbnail
             )
 
             productImageAdapter = ProductImageAdapter(this, it.images, it.sku)
@@ -291,6 +288,8 @@ class Act_product_full_info : AppCompatActivity() {
     }
 
     private fun compose(
+        id : Int,
+        sku : String,
         brand : String,
         category : String,
         description : String,
@@ -307,7 +306,8 @@ class Act_product_full_info : AppCompatActivity() {
         returnPolicy : String,
         warranty : String,
         weight : Int,
-        dimension: DataDimension
+        dimension: DataDimension,
+        thumbnail : String
         ) {
 
         list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.iF1vjDVZtP53C_uUNZjz3AHaFW%3Fpid%3DApi&f=1&ipt=9284869913a54b27ea65f0c382ae35ece41c7ff800d27eb368b8c32d6ab75f34&ipo=images")
@@ -325,7 +325,7 @@ class Act_product_full_info : AppCompatActivity() {
 
                     ProductPrice(price, discount, title, totalRating, starCount, stock, stockCount, addToWishListBtn = {
 
-                        ShortMessageHelper.toast(this@Act_product_full_info, "added to wishlist")
+                        wishlist_stg.insert(sku = sku, imageUrl = thumbnail, title = title, price = price, discount = discount)
 
                     }, shareProductBtn = {
 
@@ -473,6 +473,11 @@ class Act_product_full_info : AppCompatActivity() {
             popUpWindow.dismiss()
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        wishlist_stg.closeDB()
     }
 
 }//class======================================================================

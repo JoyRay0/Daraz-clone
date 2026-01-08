@@ -79,8 +79,6 @@ class FullProductInfoServer(
 
                         }
 
-
-
                     }catch (e : Exception){
 
                         e.printStackTrace()

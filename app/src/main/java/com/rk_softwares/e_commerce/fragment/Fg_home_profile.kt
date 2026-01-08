@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.rk_softwares.e_commerce.model.GIFimagesModel
@@ -137,10 +138,15 @@ class Fg_home_profile : Fragment() {
         items = ProfileItems(requireActivity(), i_list)
         rv_items.adapter = items
 
-        profileServer.gifLoader(fl_gifs, iv_gif1, tv_gif_title1, tv_gif_info1, tv_btn1, iv_gif2, tv_gif_title2, tv_gif_info2, tv_btn2)
+        lifecycleScope.launch {
 
-        i_list.clear()
-        profileServer.items(rv_items, i_list)
+            profileServer.gifLoader(fl_gifs, iv_gif1, tv_gif_title1, tv_gif_info1, tv_btn1, iv_gif2, tv_gif_title2, tv_gif_info2, tv_btn2)
+
+            i_list.clear()
+            profileServer.items(rv_items, i_list)
+
+        }
+
         items.notifyDataSetChanged()
 
     }

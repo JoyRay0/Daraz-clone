@@ -9,14 +9,14 @@ import com.rk_softwares.e_commerce.model.Product
 
 class Wishlist(
    context: Context
-) : SQLiteOpenHelper(context, "wishlist.db", null, 1) {
+) : SQLiteOpenHelper(context, "wishlist.db", null, 3) {
 
     private val TABLE_NAME = "wishlist"
     private lateinit var db: SQLiteDatabase
 
     override fun onCreate(db: SQLiteDatabase?) {
 
-        val createSql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, sku TEXT)"
+        val createSql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, imageUrl Text, sku TEXT, title TEXT, price VARCHER, discount VARCHER)"
 
         db?.execSQL(createSql)
 
@@ -32,25 +32,25 @@ class Wishlist(
 
     }
 
-    fun insert(id : Int, sku : String){
+    fun insert(sku : String, imageUrl : String, title : String, price : Double, discount : Double){
 
         val db = dbOpen(true)
 
         val cv = ContentValues()
 
-
         try {
 
-            checkNullData("product_id", id.toString(), cv)
-            checkNullData("sku", sku, cv)
+            cv.put("sku", sku)
+            cv.put("imageUrl", imageUrl)
+            cv.put("title", title)
+            cv.put("price", price)
+            cv.put("discount", discount)
 
             db.insert(TABLE_NAME, null, cv)
 
         }catch (e : Exception){
             e.printStackTrace()
         }
-
-
 
     }
 
@@ -64,17 +64,23 @@ class Wishlist(
 
         try {
 
-            cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+            cursor = db.rawQuery("SELECT * FROM $TABLE_NAME ORDER BY id DESC", null)
 
             while (cursor.moveToNext()){
 
-                val id = cursor.getInt(cursor.getColumnIndexOrThrow("product_id"))
-                val sku = cursor.getString(cursor.getColumnIndexOrThrow("sku")) ?: ""
+                val imageUrl = cursor.getString(cursor.getColumnIndexOrThrow("imageUrl"))
+                val sku = cursor.getString(cursor.getColumnIndexOrThrow("sku"))
+                val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+                val price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"))
+                val discount = cursor.getDouble(cursor.getColumnIndexOrThrow("discount"))
 
                 list.add(
                     Product(
-                        id = id,
-                        sku = sku
+                        sku = sku,
+                        thumbnail = imageUrl,
+                        title = title,
+                        price = price,
+                        discountPercentage = discount
                     )
                 )
             }
@@ -89,7 +95,6 @@ class Wishlist(
 
         }
 
-
         return list
     }
 
@@ -97,34 +102,22 @@ class Wishlist(
 
         val db = dbOpen(true)
 
-        try {
+        return try {
 
-            db.delete(TABLE_NAME, "sku = ?", arrayOf(sku))
+                db.delete(TABLE_NAME, "sku = ?", arrayOf(sku)) > 0
 
-        }catch (e : Exception){
+            }catch (e : Exception){
 
-            e.printStackTrace()
-        }
+                e.printStackTrace()
+                false
 
-        return true
+            }
+
     }
 
     fun closeDB(){
 
         if (::db.isInitialized && db.isOpen) db.close()
-
-    }
-
-    private fun checkNullData(key : String, value : String, cv : ContentValues){
-
-        if (!value.isEmpty()){
-
-            cv.put(key, value)
-
-        }else{
-
-            cv.putNull(key)
-        }
 
     }
 

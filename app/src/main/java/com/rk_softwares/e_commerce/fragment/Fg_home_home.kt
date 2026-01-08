@@ -36,6 +36,7 @@ import com.rk_softwares.e_commerce.Other.KeyHelper
 import com.rk_softwares.e_commerce.Other.PermissionHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_product_full_info
+import com.rk_softwares.e_commerce.activity.Act_wishlist
 import com.rk_softwares.e_commerce.adapter.Categories
 import com.rk_softwares.e_commerce.adapter.ItemAdapter
 import com.rk_softwares.e_commerce.adapter.ViewpagerAdapter
@@ -263,8 +264,7 @@ class Fg_home_home : Fragment() {
 
         iv_coupon_img.setOnClickListener {
 
-            IntentHelper.setDataIntent(requireActivity(), Act_product_full_info::class.java,
-                KeyHelper.getFullInfoBack(), "Fg_home")
+            IntentHelper.intent(requireActivity(), Act_wishlist::class.java)
 
         }
 
