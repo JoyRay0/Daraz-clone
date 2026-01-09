@@ -113,15 +113,9 @@ class Act_search : AppCompatActivity() {
 
         act_search.requestFocus()
 
-        onBackPressedDispatcher.addCallback(this, true){
-
-            IntentHelper.intent(this@Act_search, Act_home::class.java)
-
-        }
-
         iv_back.setOnClickListener {
 
-            IntentHelper.intent(this, Act_home::class.java)
+            finish()
 
         }
 

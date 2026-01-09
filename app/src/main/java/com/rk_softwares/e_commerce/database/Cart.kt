@@ -7,27 +7,27 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.rk_softwares.e_commerce.model.Product
 
-class Wishlist(
-   context: Context
-) : SQLiteOpenHelper(context, "wishlist.db", null, 5) {
+class Cart(
+    context: Context
+) : SQLiteOpenHelper(context, "cart.db", null, 1) {
 
-    private val TABLE_NAME = "wishlist"
+    private val TABLE_NAME = "cart"
+
     private lateinit var db: SQLiteDatabase
 
     override fun onCreate(db: SQLiteDatabase?) {
 
-        val createSql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, imageUrl Text, sku TEXT, title TEXT, price VARCHER, discount VARCHER)"
+        val create_sql = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, imageUrl Text, sku TEXT, title TEXT, price VARCHER, discount VARCHER)"
 
-        db?.execSQL(createSql)
+        db?.execSQL(create_sql)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
-        val updateSql = "DROP TABLE IF EXISTS $TABLE_NAME"
+        val update_sql = "DROP TABLE IF EXISTS $TABLE_NAME"
 
-        db?.execSQL(updateSql)
-
+        db?.execSQL(update_sql)
         onCreate(db)
 
     }
@@ -104,14 +104,14 @@ class Wishlist(
 
         return try {
 
-                db.delete(TABLE_NAME, "sku = ?", arrayOf(sku)) > 0
+            db.delete(TABLE_NAME, "sku = ?", arrayOf(sku)) > 0
 
-            }catch (e : Exception){
+        }catch (e : Exception){
 
-                e.printStackTrace()
-                false
+            e.printStackTrace()
+            false
 
-            }
+        }
 
     }
 
@@ -160,4 +160,6 @@ class Wishlist(
         return db
 
     }
+
+
 }

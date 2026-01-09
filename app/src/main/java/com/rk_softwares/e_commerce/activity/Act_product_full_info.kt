@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.card.MaterialCardView
@@ -44,6 +45,9 @@ import com.rk_softwares.e_commerce.model.DataReviews
 import com.rk_softwares.e_commerce.server.CartServer
 import com.rk_softwares.e_commerce.server.FullProductInfoServer
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Act_product_full_info : AppCompatActivity() {
 
@@ -171,11 +175,11 @@ class Act_product_full_info : AppCompatActivity() {
 
         fullProductInfoServer = FullProductInfoServer(this)
 
-        fullProductInfoServer.fullItem( title, id, sku, pageLoaded = { loaded ->
+        lifecycleScope.launch{
 
-            runOnUiThread {
+            fullProductInfoServer.fullItem( title, id, sku, pageLoaded = { loaded ->
 
-                if (loaded){
+                if (loaded) {
 
                     cv_voucher.visibility = View.VISIBLE
                     fl_image.visibility = View.VISIBLE
@@ -184,41 +188,42 @@ class Act_product_full_info : AppCompatActivity() {
 
                 }
 
-            }
-
-        } ,onResult = {it ->
-            compose(
-                it.id,
-                it.sku,
-                it.brand,
-                it.category,
-                it.description,
-                it.reviews,
-                it.thumbnail,
-                it.price,
-                it.discountPercentage,
-                it.title,
-                it.rating,
-                it.reviews.size,
-                it.availabilityStatus,
-                it.stock,
-                it.shippingInformation,
-                it.returnPolicy,
-                it.warrantyInformation,
-                it.weight,
-                it.dimensions,
-                it.thumbnail
-            )
-
-            productImageAdapter = ProductImageAdapter(this, it.images, it.sku)
-            vp_product_image.adapter = productImageAdapter
-            dotsIndicator.attachTo(vp_product_image)
-            vp_product_image.currentItem = 1
-
-            cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
+            } ,onResult = {it ->
+                compose(
+                    it.id,
+                    it.sku,
+                    it.brand,
+                    it.category,
+                    it.description,
+                    it.reviews,
+                    it.thumbnail,
+                    it.price,
+                    it.discountPercentage,
+                    it.title,
+                    it.rating,
+                    it.reviews.size,
+                    it.availabilityStatus,
+                    it.stock,
+                    it.shippingInformation,
+                    it.returnPolicy,
+                    it.warrantyInformation,
+                    it.weight,
+                    it.dimensions,
+                    it.thumbnail
+                )
 
 
-        })
+                productImageAdapter = ProductImageAdapter(this@Act_product_full_info, it.images, it.sku)
+                vp_product_image.adapter = productImageAdapter
+                dotsIndicator.attachTo(vp_product_image)
+                vp_product_image.currentItem = 1
+
+                cartServer.suggestedItem(rv_other_product, otherProductList, productAdapter, 5)
+
+            })
+
+        }//background task
+
 
 
     }
@@ -325,7 +330,29 @@ class Act_product_full_info : AppCompatActivity() {
 
                     ProductPrice(price, discount, title, totalRating, starCount, stock, stockCount, addToWishListBtn = {
 
-                        wishlist_stg.insert(sku = sku, imageUrl = thumbnail, title = title, price = price, discount = discount)
+                        lifecycleScope.launch(Dispatchers.IO){
+
+                            if(!wishlist_stg.checkDuplicateData(sku)){
+
+                                wishlist_stg.insert(sku = sku, imageUrl = thumbnail, title = title, price = price, discount = discount)
+
+                                withContext(Dispatchers.Main){
+
+                                    ShortMessageHelper.toast(this@Act_product_full_info, "Added to wishlist")
+
+                                }
+
+                            }else{
+
+                                withContext(Dispatchers.Main){
+
+                                    ShortMessageHelper.toast(this@Act_product_full_info, "Already in wishlist")
+
+                                }
+
+                            }
+
+                        }
 
                     }, shareProductBtn = {
 

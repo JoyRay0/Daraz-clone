@@ -17,7 +17,6 @@ object IntentHelper{
     fun intent(act: Activity, sendClass: Class<*>){
 
         act.startActivity(Intent(act, sendClass))
-        act.finishAffinity()
 
     }
 

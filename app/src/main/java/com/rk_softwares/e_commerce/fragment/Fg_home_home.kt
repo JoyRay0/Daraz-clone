@@ -2,6 +2,7 @@ package com.rk_softwares.e_commerce.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -264,7 +265,8 @@ class Fg_home_home : Fragment() {
 
         iv_coupon_img.setOnClickListener {
 
-            IntentHelper.intent(requireActivity(), Act_wishlist::class.java)
+            //IntentHelper.intent(requireActivity(), Act_wishlist::class.java)
+            startActivity(Intent(requireActivity(), Act_wishlist::class.java))
 
         }
 

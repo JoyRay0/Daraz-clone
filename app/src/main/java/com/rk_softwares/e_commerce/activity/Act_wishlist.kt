@@ -30,7 +30,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -54,11 +52,13 @@ import com.rk_softwares.e_commerce.Other.KeyHelper
 import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
+import com.rk_softwares.e_commerce.database.Cart
 import com.rk_softwares.e_commerce.database.Wishlist
 import com.rk_softwares.e_commerce.model.Product
 import com.rk_softwares.e_commerce.server.FullProductInfoServer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Act_wishlist : ComponentActivity() {
 
@@ -67,6 +67,8 @@ class Act_wishlist : ComponentActivity() {
     private lateinit var product : FullProductInfoServer
 
     private lateinit var wishlistDB : Wishlist
+
+    private lateinit var cartDB : Cart
 
     //=================================================
 
@@ -83,14 +85,96 @@ class Act_wishlist : ComponentActivity() {
 
             init()
 
-            list.addAll(wishlistDB.getAll())
+            lifecycleScope.launch(Dispatchers.IO){
 
-            Log.d("_lis", list.size.toString())
+                val data = wishlistDB.getAll()
 
+                withContext(Dispatchers.Main){
 
+                    list.addAll(data)
+
+                }
+
+            }
 
             E_commerceTheme {
-                FullScreen(list = list)
+                FullScreen(list = list, this@Act_wishlist, addOneItemToCart = {
+
+                    lifecycleScope.launch(Dispatchers.IO){
+
+                        if (list.isNotEmpty()){
+
+                            if (!cartDB.checkDuplicateData("")){
+
+                                /*
+                                cartDB.insert(
+                                    item.sku,
+                                    item.thumbnail,
+                                    item.title,
+                                    item.price,
+                                    item.discountPercentage
+                                )
+
+                                 */
+
+                            }
+
+                            withContext(Dispatchers.Main){
+
+
+
+                            }
+
+                        }
+
+                    }//background task
+
+                }, addAllItemToCart = {
+
+                    lifecycleScope.launch(Dispatchers.IO){
+
+                        if (list.isNotEmpty()){
+
+                            var addedCount = 0
+
+                            list.forEach { item ->
+                                
+                                if (!cartDB.checkDuplicateData(item.sku)){
+
+                                    cartDB.insert(
+                                        item.sku,
+                                        item.thumbnail,
+                                        item.title,
+                                        item.price,
+                                        item.discountPercentage
+                                    )
+
+                                    addedCount ++
+
+                                }
+                                
+                            }
+
+                            withContext(Dispatchers.Main){
+
+                                if (addedCount > 0){
+
+                                    ShortMessageHelper.toast(this@Act_wishlist, "{$addedCount} items added to cart")
+
+                                }else{
+
+                                    ShortMessageHelper.toast(this@Act_wishlist, "All items are already in cart")
+
+                                }
+
+                            }
+
+                        }
+
+                    }//background task
+
+
+                })
             }
         }
     }//on create=============================================
@@ -99,6 +183,7 @@ class Act_wishlist : ComponentActivity() {
 
         wishlistDB = Wishlist(this)
         product = FullProductInfoServer(this)
+        cartDB = Cart(this)
 
     }
 
@@ -106,6 +191,7 @@ class Act_wishlist : ComponentActivity() {
         super.onDestroy()
 
         wishlistDB.closeDB()
+        cartDB.closeDB()
 
     }
 
@@ -113,10 +199,9 @@ class Act_wishlist : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun FullScreen(list: List<Product> = emptyList()){
+fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, addOneItemToCart : () -> Unit = {}, addAllItemToCart : () -> Unit = {}){
 
     val context = LocalContext.current
-    val activity = context as? Activity
 
     Box(
 
@@ -125,13 +210,17 @@ fun FullScreen(list: List<Product> = emptyList()){
     ) {
 
         Column(
-            modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter)
+            modifier = Modifier.fillMaxWidth()
         ) {
             //top bar
 
             Toolbar(
                 boxModifier = Modifier.align(Alignment.CenterHorizontally),
-                backClick = { activity?.finish() },
+                backClick = {
+
+                    activity?.finish()
+
+                            },
                 searchClick = {
                     activity?.let {
                         IntentHelper.intent(it, Act_search::class.java)
@@ -150,60 +239,72 @@ fun FullScreen(list: List<Product> = emptyList()){
             )
 
             //top bar
-            val lazyState = rememberLazyListState()
 
-            if (list.isEmpty()){
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
 
-                Spacer(modifier = Modifier.height(60.dp))
+                val lazyState = rememberLazyListState()
 
-                Image( painter = painterResource(R.drawable.img_empty_wishlist),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .size(180.dp)
+                if (list.isEmpty()){
 
-                )
+                    Spacer(modifier = Modifier.height(60.dp))
 
-            }else{
+                    Image( painter = painterResource(R.drawable.img_empty_wishlist),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center)
+                            .size(180.dp)
 
-                LazyColumn(
-                    state = lazyState,
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(3.dp)
-                ) {
+                    )
 
-                    items(
+                }else{
 
-                        items = list,
-                        key = {it.sku}
+                    LazyColumn(
+                        state = lazyState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 40.dp),
+                        contentPadding = PaddingValues(3.dp),
 
-                    ){ it ->
+                        ) {
 
-                        val image = it.thumbnail
-                        val title = it.title
-                        val price = it.price
-                        val discount = it.discountPercentage
+                        items(
 
-                        Wishlist(
-                            imageUrl = image,
-                            title = title,
-                            price = price,
-                            discount = discount,
-                            addCart = {
+                            items = list,
+                            key = {it.sku}
 
-                                ShortMessageHelper.toast(context, "Added to cart")
-                            }
-                        )
+                        ){ it ->
+
+                            val image = it.thumbnail
+                            val title = it.title
+                            val price = it.price
+                            val discount = it.discountPercentage
+
+                            Wishlist(
+                                imageUrl = image,
+                                title = title,
+                                price = price,
+                                discount = discount,
+                                addCart = {
+
+                                    addOneItemToCart()
+
+                                }
+                            )
+
+                        }
 
                     }
 
                 }
 
-            }
+
+
+            }//box
 
         }//column
-
 
         //bottom bar
 
