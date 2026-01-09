@@ -2,10 +2,12 @@ package com.rk_softwares.e_commerce.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,8 +32,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -98,32 +103,45 @@ class Act_wishlist : ComponentActivity() {
             }
 
             E_commerceTheme {
-                FullScreen(list = list, this@Act_wishlist, addOneItemToCart = {
+                FullScreen(list = list, this@Act_wishlist, addOneItemToCart = { sku ->
 
                     lifecycleScope.launch(Dispatchers.IO){
 
                         if (list.isNotEmpty()){
 
-                            if (!cartDB.checkDuplicateData("")){
+                            if (!cartDB.checkDuplicateData(sku)){
 
-                                /*
-                                cartDB.insert(
-                                    item.sku,
-                                    item.thumbnail,
-                                    item.title,
-                                    item.price,
-                                    item.discountPercentage
-                                )
+                                val item = list.find { it.sku == sku}
 
-                                 */
+                                item?.let {
+
+                                    cartDB.insert(
+                                        item.sku,
+                                        item.thumbnail,
+                                        item.title,
+                                        item.price,
+                                        item.discountPercentage
+                                    )
+                                }
+
+                                withContext(Dispatchers.Main){
+
+                                    ShortMessageHelper.toast(this@Act_wishlist, "Added to cart")
+
+                                }
+
+                            }else{
+
+                                withContext(Dispatchers.Main){
+
+                                    ShortMessageHelper.toast(this@Act_wishlist, "Already in cart")
+
+                                }
+
 
                             }
 
-                            withContext(Dispatchers.Main){
 
-
-
-                            }
 
                         }
 
@@ -159,7 +177,7 @@ class Act_wishlist : ComponentActivity() {
 
                                 if (addedCount > 0){
 
-                                    ShortMessageHelper.toast(this@Act_wishlist, "{$addedCount} items added to cart")
+                                    ShortMessageHelper.toast(this@Act_wishlist, "$addedCount items added to cart")
 
                                 }else{
 
@@ -173,6 +191,29 @@ class Act_wishlist : ComponentActivity() {
 
                     }//background task
 
+
+                }, deleteItem = { sku ->
+
+                    lifecycleScope.launch(Dispatchers.IO){
+
+                        val deleted = wishlistDB.delete(sku)
+
+                        withContext(Dispatchers.Main){
+
+                            if (deleted){
+
+                                list.removeAll { it.sku == sku }
+                                ShortMessageHelper.toast(this@Act_wishlist, "Deleted")
+
+                            }else{
+
+                                ShortMessageHelper.toast(this@Act_wishlist, "Not deleted")
+
+                            }
+
+                        }
+
+                    }
 
                 })
             }
@@ -199,7 +240,7 @@ class Act_wishlist : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, addOneItemToCart : () -> Unit = {}, addAllItemToCart : () -> Unit = {}){
+fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, addOneItemToCart : (String) -> Unit = {}, addAllItemToCart : () -> Unit = {}, deleteItem : (String) -> Unit = {}){
 
     val context = LocalContext.current
 
@@ -283,15 +324,19 @@ fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, ad
                             val discount = it.discountPercentage
 
                             Wishlist(
+                                modifier = Modifier.animateContentSize(),
                                 imageUrl = image,
                                 title = title,
                                 price = price,
                                 discount = discount,
                                 addCart = {
 
-                                    addOneItemToCart()
+                                    addOneItemToCart(it.sku)
 
-                                }
+                                },
+                                delete = {deleteItem(it.sku)},
+
+
                             )
 
                         }
@@ -308,11 +353,7 @@ fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, ad
 
         //bottom bar
 
-        BottomNav(boxModifier = Modifier.align(Alignment.BottomCenter), addAllCartClick = {
-
-            ShortMessageHelper.toast(context, "Added all to cart")
-
-        })
+        BottomNav(boxModifier = Modifier.align(Alignment.BottomCenter), addAllCartClick = {addAllItemToCart()})
 
         //bottom bar
 
@@ -498,7 +539,17 @@ fun BottomNav(boxModifier: Modifier = Modifier, addAllCartClick : () -> Unit = {
 
 @Preview(showBackground = true)
 @Composable
-fun Wishlist(imageUrl : String = "", title : String = "Rada krishna", price : Double = 0.0, discount : Double = 0.0, addCart : () -> Unit = {}){
+fun Wishlist(
+    modifier: Modifier = Modifier,
+    imageUrl : String = "",
+    title : String = "Rada krishna",
+    price : Double = 0.0,
+    discount : Double = 0.0,
+    addCart : () -> Unit = {},
+    delete : () -> Unit = {},
+    ){
+
+    var isClicked by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -508,12 +559,19 @@ fun Wishlist(imageUrl : String = "", title : String = "Rada krishna", price : Do
     ) {
 
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(color = Color(0x81EFEAEA))
                 .padding(7.dp)
                 .align(Alignment.Center)
+                .clickable(
+                    indication = null,
+                    interactionSource = null
+                ){
+                    isClicked = false
+                }
+
         ) {
 
             //image
@@ -524,17 +582,49 @@ fun Wishlist(imageUrl : String = "", title : String = "Rada krishna", price : Do
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White)
                     .align(Alignment.Top)
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
+                        isClicked = true
+                    }
             ) {
 
-                AsyncImage(model = imageUrl,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds,
-                    placeholder = painterResource(R.drawable.img_loading_daraz),
-                    error = painterResource(R.drawable.img_loading_daraz),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .align(Alignment.Center)
-                )
+                if (isClicked){
+
+                    IconButton(
+                        onClick = delete,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color(0x75836A6A))
+                            .align(Alignment.Center)
+                    ) {
+
+                        Icon( painter = painterResource(R.drawable.ic_delete),
+                            contentDescription = "",
+                            tint = Color(0xF0383434),
+                            modifier = Modifier
+                                .align(Alignment.Center)
+
+                        )
+
+                    }
+
+                }else{
+
+                    AsyncImage(model = imageUrl,
+                        contentDescription = "",
+                        contentScale = ContentScale.FillBounds,
+                        placeholder = painterResource(R.drawable.img_loading_daraz),
+                        error = painterResource(R.drawable.img_loading_daraz),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.Center)
+                    )
+
+                }
+
+
 
             }//box
             //image
