@@ -6,4 +6,5 @@
     <string name="title_activity_search_bar">SearchBar</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_act_wishlist">Act_wishlist</string>
+    <string name="title_activity_act_chat">Act_chat</string>
 </resources>

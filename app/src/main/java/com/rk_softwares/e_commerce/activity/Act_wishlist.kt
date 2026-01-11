@@ -366,7 +366,7 @@ fun FullScreen(list: List<Product> = emptyList(), activity: Activity? = null, ad
 
 @Preview(showBackground = true)
 @Composable
-fun Toolbar(
+private fun Toolbar(
     boxModifier: Modifier = Modifier,
     backClick : () -> Unit = {},
     searchClick : () -> Unit = {},
@@ -501,7 +501,7 @@ fun Toolbar(
 
 @Preview(showBackground = true)
 @Composable
-fun BottomNav(boxModifier: Modifier = Modifier, addAllCartClick : () -> Unit = {}){
+private fun BottomNav(boxModifier: Modifier = Modifier, addAllCartClick : () -> Unit = {}){
 
     Box(
         modifier = boxModifier.fillMaxWidth().padding(10.dp)
@@ -569,7 +569,7 @@ fun Wishlist(
                     indication = null,
                     interactionSource = null
                 ){
-                    isClicked = false
+                    if (isClicked) isClicked = false else isClicked = true
                 }
 
         ) {
@@ -582,12 +582,7 @@ fun Wishlist(
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White)
                     .align(Alignment.Top)
-                    .clickable(
-                        indication = null,
-                        interactionSource = null
-                    ){
-                        isClicked = true
-                    }
+
             ) {
 
                 if (isClicked){

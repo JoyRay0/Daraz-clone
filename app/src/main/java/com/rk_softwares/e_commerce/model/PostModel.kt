@@ -9,3 +9,11 @@ data class PostModel (
 data class SkuModel(
     val sku : String?
 )
+
+data class ChatMessage(
+
+    val id : Long,
+    val message : String,
+    val isMe : Boolean
+
+)

@@ -27,6 +27,7 @@ import com.rk_softwares.e_commerce.Other.PermissionHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.Act_my_order
 import com.rk_softwares.e_commerce.activity.Act_setting
+import com.rk_softwares.e_commerce.activity.Act_wishlist
 import com.rk_softwares.e_commerce.adapter.ProfileItems
 import com.rk_softwares.e_commerce.server.ProfileServer
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +50,15 @@ class Fg_home_profile : Fragment() {
     private lateinit var cv_profile_image : CardView
     private lateinit var iv_profile_image : AppCompatImageView
     private lateinit var iv_setting : AppCompatImageView
+
+    //user item
+
+    private lateinit var cv_wishlist : CardView
+    private lateinit var cv_followed_store : CardView
+    private lateinit var cv_voucher : CardView
+    private lateinit var cv_cart : CardView
+
+    //user item
 
     //my order
     private lateinit var tv_all_order : AppCompatTextView
@@ -103,6 +113,13 @@ class Fg_home_profile : Fragment() {
         cv_profile_image = view.findViewById(R.id.cv_profile_image)
         iv_profile_image = view.findViewById(R.id.iv_profile_image)
         iv_setting = view.findViewById(R.id.iv_setting)
+
+        //user item
+        cv_wishlist = view.findViewById(R.id.cv_wishlist)
+        cv_followed_store = view.findViewById(R.id.cv_followed_store)
+        cv_voucher = view.findViewById(R.id.cv_voucher)
+        cv_cart = view.findViewById(R.id.cv_cart)
+        //user item
 
         //my order
         tv_all_order = view.findViewById(R.id.tv_all_order)
@@ -161,6 +178,12 @@ class Fg_home_profile : Fragment() {
         tv_all_order.setOnClickListener {
 
             IntentHelper.intent(requireActivity(), Act_my_order::class.java)
+
+        }
+
+        cv_wishlist.setOnClickListener {
+
+            IntentHelper.intent(requireActivity(), Act_wishlist::class.java)
 
         }
 
