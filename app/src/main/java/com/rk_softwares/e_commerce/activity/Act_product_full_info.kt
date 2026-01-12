@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.rk_softwares.e_commerce.ComposeUi.BottomSheetDialog
 import com.rk_softwares.e_commerce.ComposeUi.LoadingPage
@@ -67,6 +68,10 @@ class Act_product_full_info : AppCompatActivity() {
 
     //bottom bar
     private lateinit var fl_bottom : FrameLayout
+    private lateinit var ll_chat : LinearLayout
+    private lateinit var btn_buy_now : MaterialButton
+    private lateinit var btn_add_cart : MaterialButton
+
 
 
     //body
@@ -96,6 +101,11 @@ class Act_product_full_info : AppCompatActivity() {
     //init
     private var fgName = ""
     private var classData : Class<*>? = null
+
+    private var ChatImageUrl : String = ""
+    private var ChatTitle : String = ""
+    private var ChatPrice : String = ""
+
 
     private var list : ArrayList<String> = ArrayList()
     private var rList : ArrayList<HashMap<String, Any>> = ArrayList()
@@ -131,6 +141,10 @@ class Act_product_full_info : AppCompatActivity() {
 
         //bottom
         fl_bottom = findViewById(R.id.fl_bottom)
+        ll_chat = findViewById(R.id.ll_chat)
+        btn_buy_now = findViewById(R.id.btn_buy_now)
+        btn_add_cart = findViewById(R.id.btn_add_cart)
+
 
         //vp image
         vp_product_image = findViewById(R.id.vp_product_image)
@@ -212,6 +226,10 @@ class Act_product_full_info : AppCompatActivity() {
                     it.thumbnail
                 )
 
+                ChatImageUrl = it.thumbnail
+                ChatTitle = it.title
+                ChatPrice = it.price.toString()
+
 
                 productImageAdapter = ProductImageAdapter(this@Act_product_full_info, it.images, it.sku)
                 vp_product_image.adapter = productImageAdapter
@@ -230,34 +248,7 @@ class Act_product_full_info : AppCompatActivity() {
 
     private fun buttons(){
 
-        val back = intent.getStringExtra(KeyHelper.getFullInfoBack())
-
-        onBackPressedDispatcher.addCallback(this, true){
-
-            IntentHelper.intent(this@Act_product_full_info, Act_home::class.java)
-
-            /*
-            when{
-
-                 back == "Fg_home" -> IntentHelper.setDataIntent(this@Act_product_full_info,
-                    Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_home")
-
-            }
-
-             */
-
-        }
-
-        iv_back.setOnClickListener {
-
-            when{
-
-                 back == "Fg_home" -> IntentHelper.setDataIntent(this,
-                    Act_home::class.java, KeyHelper.getHomeInfo(), "Fg_home")
-
-            }
-
-        }
+        iv_back.setOnClickListener { finish() }
 
         iv_cart.setOnClickListener {
 
@@ -286,6 +277,16 @@ class Act_product_full_info : AppCompatActivity() {
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, packageName)
             startActivity(Intent.createChooser(intent, "Share via"))
+
+        }
+
+        ll_chat.setOnClickListener {
+
+            val intent = Intent(this, Act_chat::class.java)
+            intent.putExtra("image", ChatImageUrl)
+            intent.putExtra("title", ChatTitle)
+            intent.putExtra("price", ChatPrice)
+            startActivity(intent)
 
         }
 

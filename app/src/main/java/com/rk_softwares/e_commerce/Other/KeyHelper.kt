@@ -6,16 +6,8 @@ object KeyHelper {
     private val fullScreenInfo = "back"
     private val home = "item"
 
-    fun getFullInfoBack() : String{
+    fun getFullInfoBack() : String{ return fullScreenInfo }
 
-        return fullScreenInfo
-
-    }
-
-    fun getHomeInfo() : String{
-
-        return home
-
-    }
+    fun getHomeInfo() : String{ return home }
 
 }

@@ -1,6 +1,7 @@
 package com.rk_softwares.e_commerce.Other
 
 import android.content.Context
+import androidx.core.content.edit
 
 class StorageHelper(
 
@@ -11,8 +12,8 @@ class StorageHelper(
 
     fun setData(key : String, data : String){
 
-        var sp = context.getSharedPreferences(perf, Context.MODE_PRIVATE)
-        sp.edit().putString(key, data).apply()
+        val sp = context.getSharedPreferences(perf, Context.MODE_PRIVATE)
+        sp.edit { putString(key, data) }
 
     }
 
@@ -29,8 +30,8 @@ class StorageHelper(
 
     fun deleteData(key : String){
 
-        var sp = context.getSharedPreferences(perf, Context.MODE_PRIVATE)
-        sp.edit().remove(key).apply()
+        val sp = context.getSharedPreferences(perf, Context.MODE_PRIVATE)
+        sp.edit { remove(key) }
     }
 
 }

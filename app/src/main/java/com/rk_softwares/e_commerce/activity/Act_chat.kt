@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +13,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,25 +41,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
 import com.rk_softwares.e_commerce.model.ChatMessage
 
 class Act_chat : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 
             val systemUi = rememberSystemUiController()
             val chatList = remember { mutableStateListOf<ChatMessage>() }
+
 
             systemUi.setStatusBarColor(
                 color = Color.White,
@@ -84,24 +90,36 @@ class Act_chat : ComponentActivity() {
                     isMe = false
                 ))
 
+                val image = intent.getStringExtra("image") ?: ""
+                val title = intent.getStringExtra("title") ?: ""
+                val price = intent.getStringExtra("price") ?: ""
+
                 FullScreen(
 
                     backClick = { finish() },
-                    list = chatList
+                    list = chatList,
+                    imageUrl = image,
+                    title = title,
+                    price = price.toDouble()
 
                 )
             }
         }
     }//on create========================================
-    
+
 }//class ended==========================================
 
 @Preview(showBackground = true)
 @Composable
 private fun FullScreen(
     backClick: () -> Unit = {},
-    list: MutableList<ChatMessage> = mutableListOf()
+    list: MutableList<ChatMessage> = mutableListOf(),
+    imageUrl: String = "",
+    title: String = "",
+    price: Double = 0.0
 ) {
+
+    var isClosedVisible by remember { mutableStateOf(false) }
 
     Scaffold(
 
@@ -116,12 +134,13 @@ private fun FullScreen(
 
         )},
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+
 
     ) { innerPadding ->
 
 
-        Column(
+        Box(
 
             modifier = Modifier
                 .fillMaxSize()
@@ -139,6 +158,7 @@ private fun FullScreen(
                 state = lazyState,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .align(Alignment.TopStart)
                     .padding(start = 5.dp, end = 5.dp)
                 
             ) {
@@ -153,7 +173,7 @@ private fun FullScreen(
                     ChatBubble(
 
                         message = msg.message,
-                        isSender = msg.isMe
+                        isCustomer = msg.isMe
 
                     )
 
@@ -163,7 +183,24 @@ private fun FullScreen(
 
             //chat body
 
-        }//column
+            if (!isClosedVisible){
+
+                ProductAsk(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter),
+
+                    imageUrl = imageUrl,
+                    title = title,
+                    price = price,
+                    closeClick = { isClosedVisible = true }
+                )
+
+            }
+
+
+
+        }//box
 
     }//scaffold
 
@@ -291,14 +328,14 @@ private fun BottomNav(
     list : MutableList<ChatMessage> = mutableListOf()) {
 
     var messageText by remember { mutableStateOf("") }
-    var messageCount by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(elevation = 10.dp, shape = RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
+            .shadow(elevation = 12.dp, shape = RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
             .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
             .background(color = Color(0xFFFFFFFF))
+            .imePadding()
 
     ) {
 
@@ -460,14 +497,14 @@ private fun BottomNav(
 
 @Preview(showBackground = true)
 @Composable
-fun ChatBubble(message : String = "Hello", isSender : Boolean = false) {
+fun ChatBubble(message : String = "Hello", isCustomer : Boolean = true) {
 
     Row(
 
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        horizontalArrangement = if (isSender) Arrangement.End else Arrangement.Start
+        horizontalArrangement = if (isCustomer) Arrangement.End else Arrangement.Start
 
     ) {
 
@@ -475,12 +512,14 @@ fun ChatBubble(message : String = "Hello", isSender : Boolean = false) {
             fontSize = 15.sp,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Normal,
-            color =  if (isSender) Color(0xFFFFFFFF) else Color.Black ,
+            color =  if (isCustomer) Color(0xFFFFFFFF) else Color.Black ,
             modifier = Modifier
                 .wrapContentWidth()
-                .clip(shape = RoundedCornerShape(10.dp))
+                .clip(
+                    shape = if (isCustomer) RoundedCornerShape(topStart = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp) else RoundedCornerShape(topEnd = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp)
+                )
                 .background(
-                    color = if (isSender) Color(0xFFF36335) else Color(0xFFC9C7C7)
+                    color = if (isCustomer) Color(0xFFF36335) else Color(0xFFC9C7C7)
                 )
                 .padding(10.dp)
             )
@@ -489,4 +528,159 @@ fun ChatBubble(message : String = "Hello", isSender : Boolean = false) {
 
 }//fun end
 
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductAsk(
+    modifier: Modifier = Modifier,
+    imageUrl : String = "",
+    title : String = "",
+    price : Double = 0.0,
+    closeClick : () -> Unit = {}
+) {
+
+    Column(
+
+        modifier = modifier.fillMaxWidth() .padding(9.dp)
+
+    ) {
+
+        Row(
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(elevation = 2.dp, shape = RoundedCornerShape(8.dp))
+                .clip(shape = RoundedCornerShape(8.dp))
+                .background(color = Color.White)
+                .padding(7.dp)
+
+        ) {
+
+            //image
+
+            Box(
+                
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = Color(0xFFE1E1E1))
+                    .align(Alignment.CenterVertically)
+
+
+            ) {
+
+                AsyncImage( model = imageUrl,
+                    contentDescription = "Product image",
+                    placeholder = painterResource(R.drawable.img_loading_daraz),
+                    error = painterResource(R.drawable.img_loading_daraz),
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+
+            }//box
+
+            //image
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            //title and button
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Box(
+                    modifier = Modifier.fillMaxWidth().align(Alignment.Start)
+                ) {
+
+                    Text(title,
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .align(Alignment.CenterStart)
+                    )
+
+                    IconButton(
+                        onClick = closeClick,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .clip(shape = CircleShape)
+                            .size(30.dp)
+                            .align(Alignment.TopEnd)
+                    ) {
+
+                        Icon( painter = painterResource(R.drawable.ic_close),
+                            contentDescription = "Close",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .size(19.dp)
+                                .align(Alignment.Center)
+
+                        )
+
+                    }
+
+
+                }//row
+
+                Row(
+                    modifier = Modifier.wrapContentWidth().align(Alignment.Start)
+                ) {
+                    
+                    Icon( painter = painterResource(R.drawable.ic_taka),
+                        contentDescription = "Taka",
+                        tint = Color(0xFFFF5722),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .size(15.dp)
+                            .align(Alignment.CenterVertically)
+
+                    )
+
+                    Spacer(modifier = Modifier.width(2.dp))
+
+                    Text(price.toString(),
+                        fontSize = 17.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFFF5722),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.Bottom)
+                        )
+
+                }//row
+
+                Text("Ask Product",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W500,
+                    color = Color(0xFFFFFFFF),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .clip(shape = RoundedCornerShape(7.dp))
+                        .background(color = Color(0xFFFF5722))
+                        .padding(top = 5.dp, bottom = 5.dp, start = 13.dp, end = 13.dp)
+                        .align(Alignment.End)
+
+                    )
+
+            }//column
+
+            //title and button
+
+        }//row
+
+    }//column
+
+}//fun end
 
