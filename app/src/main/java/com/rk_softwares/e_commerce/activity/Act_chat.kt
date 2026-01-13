@@ -3,8 +3,11 @@ package com.rk_softwares.e_commerce.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +20,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,7 +46,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.rk_softwares.e_commerce.Other.ShortMessageHelper
 import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
@@ -66,6 +74,7 @@ class Act_chat : ComponentActivity() {
 
             val systemUi = rememberSystemUiController()
             val chatList = remember { mutableStateListOf<ChatMessage>() }
+            val clipBoardManager = LocalClipboardManager.current
 
 
             systemUi.setStatusBarColor(
@@ -78,6 +87,7 @@ class Act_chat : ComponentActivity() {
 
             E_commerceTheme {
 
+                /*
                 chatList.add(ChatMessage(
                     id = 1,
                     message = "Hello from customer",
@@ -90,6 +100,8 @@ class Act_chat : ComponentActivity() {
                     isMe = false
                 ))
 
+                 */
+
                 val image = intent.getStringExtra("image") ?: ""
                 val title = intent.getStringExtra("title") ?: ""
                 val price = intent.getStringExtra("price") ?: ""
@@ -100,7 +112,30 @@ class Act_chat : ComponentActivity() {
                     list = chatList,
                     imageUrl = image,
                     title = title,
-                    price = price.toDouble()
+                    price = price.toDouble(),
+                    copyClick = { id ->
+
+                        if (id > 0L){
+
+                            val message = chatList.find { it.id == id }
+
+                            clipBoardManager.setText(AnnotatedString(message?.message ?: ""))
+
+                            ShortMessageHelper.toast(this, "Copied")
+
+                        }
+
+                    },
+                    deleteClick = { id ->
+
+                        if (id > 0L){
+
+                            chatList.removeAll{ it.id == id }
+
+                        }
+
+
+                    }
 
                 )
             }
@@ -116,10 +151,15 @@ private fun FullScreen(
     list: MutableList<ChatMessage> = mutableListOf(),
     imageUrl: String = "",
     title: String = "",
-    price: Double = 0.0
+    price: Double = 0.0,
+    copyClick: (Long) -> Unit = {},
+    deleteClick: (Long) -> Unit = {}
 ) {
 
     var isClosedVisible by remember { mutableStateOf(false) }
+    var isListEmpty by remember { mutableStateOf(false) }
+    var isCopyDeleteDialogShow by remember { mutableStateOf(false) }
+    var messageID by remember { mutableStateOf(0L) }
 
     Scaffold(
 
@@ -134,7 +174,14 @@ private fun FullScreen(
 
         )},
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable(
+                indication = null,
+                interactionSource = null
+            ){
+                isCopyDeleteDialogShow = false
+            }
+        ,
 
 
     ) { innerPadding ->
@@ -148,6 +195,37 @@ private fun FullScreen(
 
         ) {
 
+            if (!isListEmpty){
+
+                Column(
+
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter)
+
+                ) {
+
+                    Spacer(modifier = Modifier
+                        .height(25.dp)
+                        .align(Alignment.CenterHorizontally))
+
+                    Text("Please do not share your personal information (e.g Name, Phone number, Address, Banking details or OTP) with anyone via this chat.",
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .padding(10.dp)
+                    )
+
+
+                }//column
+
+            }
+
+            if (list.isEmpty()) isListEmpty = false else isListEmpty = true
 
             //chat body
 
@@ -171,9 +249,14 @@ private fun FullScreen(
                 ){ msg ->
 
                     ChatBubble(
-
                         message = msg.message,
-                        isCustomer = msg.isMe
+                        isCustomer = msg.isMe,
+                        deleteLongClick = {
+
+                            messageID = msg.id
+                            isCopyDeleteDialogShow = true
+
+                        }
 
                     )
 
@@ -182,6 +265,32 @@ private fun FullScreen(
             }
 
             //chat body
+
+            //dialog
+
+            if (isCopyDeleteDialogShow){
+
+                CopyDeleteDialog(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Center),
+                    copyClick = {
+
+                        copyClick(messageID)
+                        isCopyDeleteDialogShow = false
+
+                    },
+                    deleteClick = {
+                        
+                        deleteClick(messageID)
+                        isCopyDeleteDialogShow = false
+
+                    }
+                )
+
+            }
+
+            //dialog
 
             if (!isClosedVisible){
 
@@ -497,12 +606,13 @@ private fun BottomNav(
 
 @Preview(showBackground = true)
 @Composable
-fun ChatBubble(message : String = "Hello", isCustomer : Boolean = true) {
+fun ChatBubble(message : String = "Hello", isCustomer : Boolean = false, deleteLongClick : () -> Unit = {}) {
 
     Row(
 
         modifier = Modifier
             .fillMaxWidth()
+            .animateContentSize()
             .padding(10.dp),
         horizontalArrangement = if (isCustomer) Arrangement.End else Arrangement.Start
 
@@ -516,12 +626,26 @@ fun ChatBubble(message : String = "Hello", isCustomer : Boolean = true) {
             modifier = Modifier
                 .wrapContentWidth()
                 .clip(
-                    shape = if (isCustomer) RoundedCornerShape(topStart = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp) else RoundedCornerShape(topEnd = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp)
+                    shape = if (isCustomer) RoundedCornerShape(
+                        topStart = 17.dp,
+                        topEnd = 5.dp,
+                        bottomStart = 17.dp,
+                        bottomEnd = 17.dp
+                    ) else RoundedCornerShape(
+                        topStart = 5.dp,
+                        topEnd = 17.dp,
+                        bottomStart = 17.dp,
+                        bottomEnd = 17.dp
+                    )
                 )
                 .background(
                     color = if (isCustomer) Color(0xFFF36335) else Color(0xFFC9C7C7)
                 )
                 .padding(10.dp)
+                .combinedClickable(
+                    onClick = {},
+                    onLongClick = { deleteLongClick() }
+                )
             )
 
     }//row
@@ -541,7 +665,9 @@ private fun ProductAsk(
 
     Column(
 
-        modifier = modifier.fillMaxWidth() .padding(9.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(9.dp)
 
     ) {
 
@@ -592,7 +718,9 @@ private fun ProductAsk(
             ) {
 
                 Box(
-                    modifier = Modifier.fillMaxWidth().align(Alignment.Start)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start)
                 ) {
 
                     Text(title,
@@ -632,7 +760,9 @@ private fun ProductAsk(
                 }//row
 
                 Row(
-                    modifier = Modifier.wrapContentWidth().align(Alignment.Start)
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Start)
                 ) {
                     
                     Icon( painter = painterResource(R.drawable.ic_taka),
@@ -681,6 +811,103 @@ private fun ProductAsk(
         }//row
 
     }//column
+
+}//fun end
+
+
+@Preview(showBackground = true)
+@Composable
+fun CopyDeleteDialog(
+    modifier: Modifier = Modifier, 
+    copyClick : () -> Unit = {},
+    deleteClick : () -> Unit = {}
+    ) {
+
+    Box(
+        modifier = modifier.fillMaxWidth().padding(7.dp)
+    ) {
+
+        Column(
+
+            modifier = Modifier
+                .wrapContentHeight()
+                .width(280.dp)
+                .shadow(elevation = 15.dp, shape = RoundedCornerShape(14.dp))
+                .clip(shape = RoundedCornerShape(14.dp))
+                .background(color = Color.White)
+                .padding(15.dp)
+                .align(Alignment.Center)
+        ) {
+
+            //copy
+            Box(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(color = Color(0xFFE89DF3))
+                    .align(Alignment.CenterHorizontally)
+                    .padding(12.dp)
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
+                        copyClick()
+                    }
+
+            ) {
+
+                Text("Copy",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Center)
+                )
+
+            }
+            //copy
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            //delete
+            Box(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(color = Color(0xFFE89DF3))
+                    .align(Alignment.CenterHorizontally)
+                    .padding(12.dp)
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){
+                        deleteClick()
+                    }
+
+            ) {
+
+                Text("Delete",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFFF44336),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Center)
+                )
+
+            }
+            //delete
+
+        }//column
+
+    }//box
 
 }//fun end
 

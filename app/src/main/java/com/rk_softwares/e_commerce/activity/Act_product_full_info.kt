@@ -68,6 +68,8 @@ class Act_product_full_info : AppCompatActivity() {
 
     //bottom bar
     private lateinit var fl_bottom : FrameLayout
+
+    private lateinit var ll_store : LinearLayout
     private lateinit var ll_chat : LinearLayout
     private lateinit var btn_buy_now : MaterialButton
     private lateinit var btn_add_cart : MaterialButton
@@ -141,6 +143,7 @@ class Act_product_full_info : AppCompatActivity() {
 
         //bottom
         fl_bottom = findViewById(R.id.fl_bottom)
+        ll_store = findViewById(R.id.ll_store)
         ll_chat = findViewById(R.id.ll_chat)
         btn_buy_now = findViewById(R.id.btn_buy_now)
         btn_add_cart = findViewById(R.id.btn_add_cart)
@@ -226,6 +229,18 @@ class Act_product_full_info : AppCompatActivity() {
                     it.thumbnail
                 )
 
+                ll_chat.isEnabled = true
+                ll_chat.alpha = 1f
+
+                ll_store.isEnabled = true
+                ll_store.alpha = 1f
+
+                btn_buy_now.isEnabled = true
+                btn_buy_now.alpha = 1f
+
+                btn_add_cart.isEnabled = true
+                btn_add_cart.alpha = 1f
+
                 ChatImageUrl = it.thumbnail
                 ChatTitle = it.title
                 ChatPrice = it.price.toString()
@@ -242,6 +257,17 @@ class Act_product_full_info : AppCompatActivity() {
 
         }//background task
 
+        ll_chat.isEnabled = false
+        ll_chat.alpha = 0.5f
+
+        ll_store.isEnabled = false
+        ll_store.alpha = 0.5f
+
+        btn_buy_now.isEnabled = false
+        btn_buy_now.alpha = 0.5f
+
+        btn_add_cart.isEnabled = false
+        btn_add_cart.alpha = 0.5f
 
 
     }
