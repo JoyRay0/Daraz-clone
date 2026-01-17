@@ -36,6 +36,7 @@ import com.rk_softwares.e_commerce.Other.ItemClick
 import com.rk_softwares.e_commerce.Other.KeyHelper
 import com.rk_softwares.e_commerce.Other.PermissionHelper
 import com.rk_softwares.e_commerce.R
+import com.rk_softwares.e_commerce.activity.Act_BuyNow
 import com.rk_softwares.e_commerce.activity.Act_chat
 import com.rk_softwares.e_commerce.activity.Act_product_full_info
 import com.rk_softwares.e_commerce.activity.Act_wishlist
@@ -267,7 +268,7 @@ class Fg_home_home : Fragment() {
         iv_coupon_img.setOnClickListener {
 
             //IntentHelper.intent(requireActivity(), Act_wishlist::class.java)
-            startActivity(Intent(requireActivity(), Act_chat::class.java))
+            startActivity(Intent(requireActivity(), Act_BuyNow::class.java))
 
         }
 

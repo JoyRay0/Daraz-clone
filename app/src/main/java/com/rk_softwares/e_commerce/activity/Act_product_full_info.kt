@@ -2,22 +2,36 @@ package com.rk_softwares.e_commerce.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.activity.addCallback
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -49,6 +63,8 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class Act_product_full_info : AppCompatActivity() {
 
@@ -107,6 +123,8 @@ class Act_product_full_info : AppCompatActivity() {
     private var ChatImageUrl : String = ""
     private var ChatTitle : String = ""
     private var ChatPrice : String = ""
+
+    private var Sku : String = ""
 
 
     private var list : ArrayList<String> = ArrayList()
@@ -245,6 +263,8 @@ class Act_product_full_info : AppCompatActivity() {
                 ChatTitle = it.title
                 ChatPrice = it.price.toString()
 
+                Sku = it.sku
+
 
                 productImageAdapter = ProductImageAdapter(this@Act_product_full_info, it.images, it.sku)
                 vp_product_image.adapter = productImageAdapter
@@ -316,6 +336,11 @@ class Act_product_full_info : AppCompatActivity() {
 
         }
 
+        btn_buy_now.setOnClickListener {
+
+            IntentHelper.setDataIntent(this, Act_BuyNow::class.java, "sku", Sku)
+
+        }
 
     }
 

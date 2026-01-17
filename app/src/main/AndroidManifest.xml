@@ -24,11 +24,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_commerce">
         <activity
+            android:name=".activity.Act_BuyNow"
+            android:exported="false"
+            android:label="@string/title_activity_act_buy_now"
+            android:theme="@style/Theme.E_commerce" />
+        <activity
             android:name=".activity.Act_chat"
             android:exported="false"
             android:label="@string/title_activity_act_chat"
             android:theme="@style/Theme.E_commerce"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.Act_wishlist"
             android:exported="false"
