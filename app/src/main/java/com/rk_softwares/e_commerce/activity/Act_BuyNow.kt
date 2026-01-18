@@ -42,10 +42,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -89,7 +92,10 @@ class Act_BuyNow : ComponentActivity() {
                         rating = result.rating,
                         thumbnail = result.thumbnail,
                         images = result.images,
-                        brand = result.brand
+                        brand = result.brand,
+                        stock = result.stock,
+                        shippingInformation = result.shippingInformation
+
 
                     ))
 
@@ -178,13 +184,12 @@ private fun FullScreen(
                     brand = product.brand,
                     price = product.price,
                     thumbnailImage = product.thumbnail,
-                    imageList = product.images
+                    imageList = product.images,
+                    productStock = product.stock
 
                 )
 
             }
-
-
 
         }//column
 
@@ -527,20 +532,21 @@ private fun ProductImage(
     brand : String = "No Brand",
     price : Double = 0.0,
     thumbnailImage : String = "",
-    imageList : List<String> = emptyList()
+    imageList : List<String> = emptyList(),
+    productStock : Int = 0
 
 ) {
 
     var selectedIndex by remember { mutableIntStateOf(0) }
     var productQuantity by remember { mutableIntStateOf(1) }
-    val list = remember { mutableStateListOf<String>() }
+    //val list = remember { mutableStateListOf<String>() }
 
-    list.clear()
+    //list.clear()
 
-    list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.zB1rsS80G2GPbY0mMvKnigHaEK%3Fpid%3DApi&f=1&ipt=86a3f0524572a730db9f55d783e9e8ddc83067443ebbed48da416478f93f31e7&ipo=images")
-    list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.kGmuLIMjc1TVVqyC43yAZgHaEK%3Fpid%3DApi&f=1&ipt=68157fbab4dca7f0c14cf71a0c7cf6af51f4c41c2cd87158b633ade229fa2cbe&ipo=images")
-    list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.MCLzVoExgXPyNi_V5gb1AwHaE7%3Fpid%3DApi&f=1&ipt=5142623a1e14b522723873ae4e7771e314e12cebbaa4c610711098921078f9ef&ipo=images")
-    list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.gabnTIrb9_VUBujEuAZp1QHaEK%3Fpid%3DApi&f=1&ipt=5ac9f3bb42707ffdfee677dd1b614a94f027ff201e9d53747190ccb17b82ce20&ipo=images")
+    //list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.zB1rsS80G2GPbY0mMvKnigHaEK%3Fpid%3DApi&f=1&ipt=86a3f0524572a730db9f55d783e9e8ddc83067443ebbed48da416478f93f31e7&ipo=images")
+    //list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.kGmuLIMjc1TVVqyC43yAZgHaEK%3Fpid%3DApi&f=1&ipt=68157fbab4dca7f0c14cf71a0c7cf6af51f4c41c2cd87158b633ade229fa2cbe&ipo=images")
+   // list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.MCLzVoExgXPyNi_V5gb1AwHaE7%3Fpid%3DApi&f=1&ipt=5142623a1e14b522723873ae4e7771e314e12cebbaa4c610711098921078f9ef&ipo=images")
+    //list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.gabnTIrb9_VUBujEuAZp1QHaEK%3Fpid%3DApi&f=1&ipt=5ac9f3bb42707ffdfee677dd1b614a94f027ff201e9d53747190ccb17b82ce20&ipo=images")
     //list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.1zIwY9hrcRVit24BKtTZcAHaD6%3Fpid%3DApi&f=1&ipt=c8dffcfb75d504d78f9334f81a645aa844e696898e3b871147aa999e4486ea03&ipo=images")
     //list.add("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.RmldSfev8EynQNF1x-MWqAHaEK%3Fpid%3DApi&f=1&ipt=8337be9ab20f1acd61ca96f27584bb0b80c5d52316fe7916c2e350b23005592b&ipo=images")
 
@@ -583,11 +589,23 @@ private fun ProductImage(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text("Product rating  $rating /5",
-            fontSize = 13.sp,
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Normal,
-            color = Color(0xFF484343),
+        Text(
+
+            buildAnnotatedString {
+
+                withStyle(style = SpanStyle(fontSize = 13.sp, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Normal ,color = Color(0xFF484343))){
+                    append("Product rating  ")
+                }
+
+                withStyle(style = SpanStyle(fontSize = 14.sp, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold ,color = Color(0xFF484343))){
+                    append("$rating")
+                }
+
+                withStyle(style = SpanStyle(fontSize = 13.sp, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Normal ,color = Color(0xFF484343))){
+                    append("/5")
+                }
+
+            },
             style = TextStyle(
                 platformStyle = PlatformTextStyle(includeFontPadding = false)
             ),
@@ -740,7 +758,7 @@ private fun ProductImage(
 
         ) {
 
-            list.chunked(3).forEachIndexed { mainIndex ,rowItem ->
+            imageList.chunked(3).forEachIndexed { mainIndex ,rowItem ->
 
                 Row(
                     modifier = Modifier
@@ -888,11 +906,16 @@ private fun ProductImage(
                     modifier = Modifier
                         .wrapContentWidth()
                         .clip(shape = RoundedCornerShape(5.dp))
-                        .clickable {
+                        .clickable (
+
+                            enabled = if (productStock == productQuantity) false else true
+
+                        ){
 
                             productQuantity += 1
 
                         }
+                        .alpha( if (productStock == productQuantity) 0.5f else 1f )
                         .background(color = Color(0xFFEEEEEE))
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.CenterVertically)
@@ -909,6 +932,170 @@ private fun ProductImage(
             color = Color(0x8AFCC2C2),
             thickness = 1.dp
         )
+
+        //product cost and other cost
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Box(
+
+            modifier = Modifier.fillMaxWidth()
+
+        ) {
+
+            Text(
+
+                buildAnnotatedString {
+
+                    withStyle(style = SpanStyle(
+
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black
+
+                    )) {
+
+                        append("Merchandise Subtotal ")
+
+                    }
+
+                    withStyle(style = SpanStyle(
+
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+
+                    )){
+
+                        append("(")
+
+                    }
+
+                    withStyle(style = SpanStyle(
+
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Gray
+
+                    )){
+
+                        append("$productQuantity")
+
+                    }
+
+                    withStyle(style = SpanStyle(
+
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+
+                    )){
+
+                        append(" item)")
+
+                    }
+
+                },
+
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterStart)
+
+            )
+
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterEnd)
+            ) {
+
+                Icon( painter = painterResource(R.drawable.ic_dollar),
+                    contentDescription = "dollar",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .size(13.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
+
+                Spacer(modifier = Modifier.width(2.dp))
+
+                val totalPrice = price * productQuantity
+
+                val actualPrice = if ((totalPrice.toString()).length > 6 ) totalPrice.toFloat() else totalPrice
+
+                Text(actualPrice.toString(),
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                    )
+
+            }//row
+
+        }//box
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Box(
+
+            modifier = Modifier.fillMaxWidth()
+
+        ) {
+
+            Text("Shipping Fee Subtotal",
+                fontSize = 13.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black,
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterStart)
+                )
+
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterEnd)
+            ) {
+
+                Icon( painter = painterResource(R.drawable.ic_dollar),
+                    contentDescription = "dollar",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .size(13.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
+
+                Spacer(modifier = Modifier.width(2.dp))
+
+                Text("10",
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                )
+
+            }//row
+
+        }//box
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        //product cost and other cost
 
     }//column
 
