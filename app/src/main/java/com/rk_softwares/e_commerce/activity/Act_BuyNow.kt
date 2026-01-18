@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,9 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,6 +45,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.SpanStyle
@@ -47,6 +53,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -539,6 +547,10 @@ private fun ProductImage(
 
     var selectedIndex by remember { mutableIntStateOf(0) }
     var productQuantity by remember { mutableIntStateOf(1) }
+    var voucherCode by remember { mutableStateOf("") }
+    val voucher by remember { mutableStateOf("YEAR2026") }
+    var isVoucherApplied by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
     //val list = remember { mutableStateListOf<String>() }
 
     //list.clear()
@@ -1027,7 +1039,7 @@ private fun ProductImage(
 
                 val totalPrice = price * productQuantity
 
-                val actualPrice = if ((totalPrice.toString()).length > 6 ) totalPrice.toFloat() else totalPrice
+                val actualPrice = if ((totalPrice.toString()).length > 5) totalPrice.toFloat() else totalPrice
 
                 Text(actualPrice.toString(),
                     fontSize = 15.sp,
@@ -1093,9 +1105,113 @@ private fun ProductImage(
 
         }//box
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Box(
+
+            modifier = Modifier.fillMaxWidth().align(Alignment.Start)
+
+        ) {
+
+            Text("Voucher & Code",
+                fontSize = 13.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black,
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterStart)
+                )
+
+            //text filed
+            Box(
+
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(shape = RoundedCornerShape(7.dp))
+                    .border(
+                        width = 1.dp,
+                        color = if (isVoucherApplied) Color.Transparent else Color(0xFFFF5722),
+                        shape = RoundedCornerShape(7.dp)
+                    )
+                    .alpha( if (isVoucherApplied) 0f else 1f )
+                    .padding(7.dp)
+                    .align(Alignment.CenterEnd)
+                    .imePadding()
+
+            ) {
+
+                if (voucherCode.isEmpty()){
+
+                    Text("Enter your voucher code",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.W500,
+                        color = Color.Gray,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.Center)
+                        )
+
+                }
+
+
+                if (!isVoucherApplied){
+
+                    BasicTextField(
+
+                        value = voucherCode,
+                        onValueChange = { if (it.length <= 10) voucherCode = it },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Go,
+                            keyboardType = KeyboardType.Text
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onGo = {
+                                keyboardController?.hide()
+
+                                if (voucherCode == voucher) isVoucherApplied = true else isVoucherApplied = false
+
+                            }
+                        ),
+                        textStyle = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.W500),
+                        maxLines = 1,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .padding(top = 3.dp, bottom = 3.dp, end = 3.dp)
+                            .align(Alignment.CenterStart)
+
+                    )
+
+                }
+
+            }
+
+            Text(voucher,
+                fontSize = 13.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Bold,
+                color = Color.Gray,
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(shape = RoundedCornerShape(7.dp))
+                    .alpha( if(isVoucherApplied) 1f else 0f )
+                    .background(color = Color(0xFFEAE8E8))
+                    .padding(5.dp)
+                    .align(Alignment.CenterEnd)
+            )
+
+            //text filed
+
+        }//box
 
         //product cost and other cost
+
 
     }//column
 
