@@ -55,23 +55,32 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import coil3.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.material.carousel.Arrangement
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
+import com.rk_softwares.e_commerce.database.Address
 import com.rk_softwares.e_commerce.model.Product
+import com.rk_softwares.e_commerce.model.UserAddress
 import com.rk_softwares.e_commerce.server.FullProductInfoServer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class Act_BuyNow : ComponentActivity() {
 
-    private lateinit var pruduct : FullProductInfoServer
+    private lateinit var product : FullProductInfoServer
+    private lateinit var address : Address
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,15 +92,14 @@ class Act_BuyNow : ComponentActivity() {
 
             val systemUi = rememberSystemUiController()
             val list = remember { mutableStateListOf<Product>() }
+            val addressList = remember { mutableStateListOf<UserAddress>() }
 
             systemUi.setStatusBarColor(color = Color.White, darkIcons = true)
             systemUi.setNavigationBarColor(color = Color.White)
 
-
-
             LaunchedEffect(Unit) {
 
-                pruduct.productImages(sku, onResult = { result ->
+                product.productImages(sku, onResult = { result ->
 
                     list.add(Product(
 
@@ -102,12 +110,36 @@ class Act_BuyNow : ComponentActivity() {
                         images = result.images,
                         brand = result.brand,
                         stock = result.stock,
-                        shippingInformation = result.shippingInformation
+                        shippingInformation = result.shippingInformation,
+                        availabilityStatus = result.availabilityStatus
 
 
                     ))
 
                 })
+
+            }
+
+            LaunchedEffect(Unit) {
+
+                val item = withContext(Dispatchers.IO){
+                    address.getAll().lastOrNull()
+                } ?: return@LaunchedEffect
+
+                addressList.clear()
+
+                addressList.add(UserAddress(
+
+                    name = item.get("name") ?: "N/A",
+                    number = item.get("number") ?: "N/A",
+                    city = item.get("city") ?: "",
+                    district = item.get("district") ?: "",
+                    address = item.get("address") ?: "N/A",
+                    addressCategory = item.get("address_category") ?: ""
+
+                ))
+
+                Log.d("_list", item.get("name") ?: "")
 
             }
 
@@ -117,7 +149,8 @@ class Act_BuyNow : ComponentActivity() {
                 FullScreen(
 
                     backClick = { finish() },
-                    data = list
+                    data = list,
+                    addressList = addressList
 
                 )
 
@@ -127,7 +160,8 @@ class Act_BuyNow : ComponentActivity() {
 
     private fun init(){
         
-        pruduct = FullProductInfoServer(this)
+        product = FullProductInfoServer(this)
+        address = Address(this)
         
     }
 
@@ -137,11 +171,13 @@ class Act_BuyNow : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 private fun FullScreen(
-
     backClick: () -> Unit = {},
-    data: List<Product> = emptyList()
+    data: List<Product> = emptyList(),
+    addressList : List<UserAddress> = emptyList()
 
 ) {
+
+    var totalCost by remember { mutableStateOf(0.0f) }
 
     Scaffold(
 
@@ -153,7 +189,9 @@ private fun FullScreen(
 
         bottomBar = {
 
-            BottomBar()
+            BottomBar(
+                totalPrice = totalCost.toString()
+            )
 
         },
 
@@ -175,7 +213,23 @@ private fun FullScreen(
                 thickness = 1.dp
             )
 
-            Address()
+            val address = addressList.firstOrNull()
+
+            address?.let {
+
+                Address(
+
+                    name = it.name,
+                    number = it.number,
+                    city = it.city,
+                    district = it.district,
+                    address = it.address,
+                    addressCategory = it.addressCategory
+
+                )
+
+            }
+
 
             HorizontalDivider(
                 color = Color.Transparent,
@@ -193,7 +247,9 @@ private fun FullScreen(
                     price = product.price,
                     thumbnailImage = product.thumbnail,
                     imageList = product.images,
-                    productStock = product.stock
+                    productStock = product.stock,
+                    stockInfo = product.availabilityStatus,
+                    tCost = { totalCost = it }
 
                 )
 
@@ -272,7 +328,7 @@ private fun Toolbar(backClick : () -> Unit = {}) {
 
 @Preview(showBackground = true)
 @Composable
-private fun BottomBar(totalPrice : Double = 5.5555, payClick : () -> Unit = {}) {
+private fun BottomBar(totalPrice : String = "0.0", payClick : () -> Unit = {}) {
 
     Box(
 
@@ -324,7 +380,7 @@ private fun BottomBar(totalPrice : Double = 5.5555, payClick : () -> Unit = {}) 
 
                     )
 
-                    Text(totalPrice.toString(),
+                    Text(totalPrice,
                         fontSize = 18.sp,
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Bold,
@@ -394,7 +450,9 @@ private fun BottomBar(totalPrice : Double = 5.5555, payClick : () -> Unit = {}) 
 private fun Address(
     name : String = "Rada krishna",
     number : String = "00000000000",
-    address : String = "Madhabdi, Narsungdi",
+    city : String = "Example",
+    district : String = "Example",
+    address : String = "Example",
     addressCategory : String = "HOME",
     editClick : () -> Unit = {}
 ) {
@@ -430,23 +488,51 @@ private fun Address(
             Column(
 
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
+                    .fillMaxWidth()
                     .align(Alignment.TopStart)
 
             ) {
 
-                Text(
-                    name,
-                    fontSize = 15.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .align(Alignment.Start)
-                )
+                Box(
+
+                    modifier = Modifier.fillMaxWidth()
+
+                ) {
+
+                    Text(
+                        name,
+                        fontSize = 15.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterStart)
+                    )
+
+                    Text("EDIT",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.W500,
+                        color = Color.Blue,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .clip(shape = RoundedCornerShape(7.dp))
+                            .clickable { editClick() }
+                            //.background(color = Color(0xFFFF9800))
+                            .padding(5.dp)
+                            .align(Alignment.CenterEnd)
+                    )
+
+                }//box
 
                 Spacer(modifier = Modifier.height(3.dp))
 
@@ -456,12 +542,15 @@ private fun Address(
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Normal,
                     color = Color.Gray,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
                     modifier = Modifier
                         .wrapContentWidth()
                         .align(Alignment.Start)
                 )
 
-                Spacer(modifier = Modifier.height(3.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Row(
                     modifier = Modifier
@@ -478,29 +567,37 @@ private fun Address(
 
                     ) {
 
-                        Text(addressCategory,
-                            fontSize = 10.sp,
+                        Text(addressCategory.uppercase(),
+                            fontSize = 12.sp,
                             fontFamily = FontFamily.SansSerif,
                             fontWeight = FontWeight.W500,
                             color = Color.Blue,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
                             modifier = Modifier
                                 .wrapContentWidth()
-                                .padding(start = 4.dp, end = 4.dp)
+                                .padding(start = 5.dp, end = 5.dp)
                                 .align(Alignment.Center)
                         )
 
                     }//box
 
 
-                    Spacer(modifier = Modifier.width(2.dp))
+                    Spacer(modifier = Modifier.width(3.dp))
 
-                    Text(address,
+                    Text("$address , $city , $district",
                         fontSize = 12.sp,
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal,
                         color = Color.Gray,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
                         modifier = Modifier
-                            .wrapContentWidth()
+                            .fillMaxWidth()
                             .align(Alignment.CenterVertically)
                     )
 
@@ -510,20 +607,6 @@ private fun Address(
 
             }//column
             //name and address
-
-            Text("EDIT",
-                fontSize = 12.sp,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.W500,
-                color = Color.Blue,
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .clip(shape = RoundedCornerShape(7.dp))
-                    .clickable { editClick() }
-                    //.background(color = Color(0xFFFF9800))
-                    .padding(5.dp)
-                    .align(Alignment.TopEnd)
-                )
 
         }//box
 
@@ -541,7 +624,9 @@ private fun ProductImage(
     price : Double = 0.0,
     thumbnailImage : String = "",
     imageList : List<String> = emptyList(),
-    productStock : Int = 0
+    productStock : Int = 0,
+    stockInfo : String = "In Stock",
+    tCost : (Float) -> Unit = {}
 
 ) {
 
@@ -550,6 +635,11 @@ private fun ProductImage(
     var voucherCode by remember { mutableStateOf("") }
     val voucher by remember { mutableStateOf("YEAR2026") }
     var isVoucherApplied by remember { mutableStateOf(false) }
+    val shippingFee by remember { mutableIntStateOf(10) }
+    var discount by remember { mutableIntStateOf(0) }
+    var productPrice by remember { mutableStateOf(0.0) }
+    var totalCost by remember { mutableStateOf(0.0) }
+
     val keyboardController = LocalSoftwareKeyboardController.current
     //val list = remember { mutableStateListOf<String>() }
 
@@ -690,7 +780,7 @@ private fun ProductImage(
                         .align(Alignment.Start)
                 )
 
-                Spacer(modifier = Modifier.height(3.dp))
+                Spacer(modifier = Modifier.height((3).dp))
 
                 Text(brand,
                     fontSize = 12.sp,
@@ -705,7 +795,7 @@ private fun ProductImage(
                         .align(Alignment.Start)
                 )
 
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
                 Row(
                     modifier = Modifier.wrapContentWidth()
@@ -728,10 +818,57 @@ private fun ProductImage(
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.W500,
                         color = Color.Black,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
                         modifier = Modifier
                             .wrapContentWidth()
                             .align(Alignment.CenterVertically)
 
+                    )
+
+                }//row
+
+                Spacer(modifier = Modifier.height(3.dp))
+
+                Row(
+
+                    modifier = Modifier.wrapContentWidth()
+
+                ) {
+
+                    Text("$stockInfo :",
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
+                        )
+
+                    Spacer(modifier = Modifier.width(3.dp))
+
+                    Text(productStock.toString(),
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
                     )
 
                 }//row
@@ -760,7 +897,7 @@ private fun ProductImage(
 
         Spacer(modifier = Modifier.height(7.dp))
 
-        //if (imageList.isEmpty()) return
+        if (imageList.isEmpty()) return
 
         Column(
 
@@ -1041,6 +1178,8 @@ private fun ProductImage(
 
                 val actualPrice = if ((totalPrice.toString()).length > 5) totalPrice.toFloat() else totalPrice
 
+                productPrice = actualPrice.toDouble()
+
                 Text(actualPrice.toString(),
                     fontSize = 15.sp,
                     fontFamily = FontFamily.SansSerif,
@@ -1091,7 +1230,7 @@ private fun ProductImage(
 
                 Spacer(modifier = Modifier.width(2.dp))
 
-                Text("10",
+                Text(shippingFee.toString(),
                     fontSize = 15.sp,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold,
@@ -1106,6 +1245,66 @@ private fun ProductImage(
         }//box
 
         Spacer(modifier = Modifier.height(12.dp))
+
+        if (isVoucherApplied){
+
+            discount = 2
+
+            Box(
+
+                modifier = Modifier.fillMaxWidth()
+
+            ) {
+
+                Text("Discount",
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterStart)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterEnd)
+                ) {
+
+                    Icon( painter = painterResource(R.drawable.ic_dollar),
+                        contentDescription = "dollar",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .size(13.dp)
+                            .align(Alignment.CenterVertically)
+
+                    )
+
+                    Spacer(modifier = Modifier.width(2.dp))
+
+                    Text(discount.toString(),
+                        fontSize = 15.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .align(Alignment.CenterVertically)
+                    )
+
+                }//row
+
+            }//box
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+        }else{
+
+            discount = 0
+
+        }
 
         Box(
 
@@ -1211,6 +1410,10 @@ private fun ProductImage(
         }//box
 
         //product cost and other cost
+
+        totalCost = (productPrice + shippingFee) - discount
+
+        tCost(totalCost.toFloat())
 
 
     }//column
