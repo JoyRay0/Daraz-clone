@@ -99,17 +99,10 @@ class Act_setting : AppCompatActivity() {
         logOut()
         iv_back.setOnClickListener {
 
-            //IntentHelper.intent(this, Act_home::class.java)
-            IntentHelper.setDataIntent(this, Act_home::class.java, "item", "Fg_account")
+            finish()
 
         }
         sendDataWithIntent()
-
-        onBackPressedDispatcher.addCallback(this, true){
-
-            IntentHelper.intent(this@Act_setting, Act_home::class.java)
-
-        }
 
         rl_country.setOnClickListener {
 
@@ -167,14 +160,12 @@ class Act_setting : AppCompatActivity() {
         tv?.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, key, data)
-            finishAffinity()
 
         }
 
         rl?.setOnClickListener {
 
             IntentHelper.setDataIntent(this, Act_child_settings::class.java, key, data)
-            finishAffinity()
 
         }
 

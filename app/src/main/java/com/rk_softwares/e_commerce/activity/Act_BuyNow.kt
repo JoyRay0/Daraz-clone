@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -43,8 +44,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -65,6 +68,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import coil3.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.rk_softwares.e_commerce.Other.IntentHelper
+import com.rk_softwares.e_commerce.Other.StorageHelper
 import com.rk_softwares.e_commerce.R
 import com.rk_softwares.e_commerce.activity.ui.theme.E_commerceTheme
 import com.rk_softwares.e_commerce.database.Address
@@ -74,12 +79,15 @@ import com.rk_softwares.e_commerce.server.FullProductInfoServer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.nio.file.WatchEvent
 
 
 class Act_BuyNow : ComponentActivity() {
 
     private lateinit var product : FullProductInfoServer
     private lateinit var address : Address
+
+    private lateinit var storageHelper: StorageHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +101,9 @@ class Act_BuyNow : ComponentActivity() {
             val systemUi = rememberSystemUiController()
             val list = remember { mutableStateListOf<Product>() }
             val addressList = remember { mutableStateListOf<UserAddress>() }
+            var isAddressEnabled by remember { mutableStateOf(false) }
+            var isLogin by remember { mutableStateOf(false) }
+            var isDataLoaded by remember { mutableStateOf(false) }
 
             systemUi.setStatusBarColor(color = Color.White, darkIcons = true)
             systemUi.setNavigationBarColor(color = Color.White)
@@ -111,10 +122,13 @@ class Act_BuyNow : ComponentActivity() {
                         brand = result.brand,
                         stock = result.stock,
                         shippingInformation = result.shippingInformation,
-                        availabilityStatus = result.availabilityStatus
+                        availabilityStatus = result.availabilityStatus,
+                        sku = result.sku
 
 
                     ))
+
+                    if (result.sku.isEmpty()) isDataLoaded = false else isDataLoaded = true
 
                 })
 
@@ -125,6 +139,8 @@ class Act_BuyNow : ComponentActivity() {
                 val item = withContext(Dispatchers.IO){
                     address.getAll().lastOrNull()
                 } ?: return@LaunchedEffect
+
+                if (item.isEmpty()) isAddressEnabled = false else isAddressEnabled = true
 
                 addressList.clear()
 
@@ -139,18 +155,22 @@ class Act_BuyNow : ComponentActivity() {
 
                 ))
 
-                Log.d("_list", item.get("name") ?: "")
-
             }
 
-            
+            val userData = storageHelper.getData("user_data")
+
+            if (userData == null) isLogin = false else isLogin = true
+
             E_commerceTheme {
 
                 FullScreen(
 
                     backClick = { finish() },
                     data = list,
-                    addressList = addressList
+                    addressList = addressList,
+                    isAddressEnabled = isAddressEnabled,
+                    isLogIn = isLogin,
+                    isDataLoaded = isDataLoaded
 
                 )
 
@@ -162,6 +182,7 @@ class Act_BuyNow : ComponentActivity() {
         
         product = FullProductInfoServer(this)
         address = Address(this)
+        storageHelper = StorageHelper(this, "settings")
         
     }
 
@@ -173,11 +194,16 @@ class Act_BuyNow : ComponentActivity() {
 private fun FullScreen(
     backClick: () -> Unit = {},
     data: List<Product> = emptyList(),
-    addressList : List<UserAddress> = emptyList()
+    addressList : List<UserAddress> = emptyList(),
+    isAddressEnabled: Boolean = false,
+    isLogIn: Boolean = false,
+    isDataLoaded : Boolean = false
 
 ) {
 
     var totalCost by remember { mutableStateOf(0.0f) }
+    var isDialogOpen by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Scaffold(
 
@@ -190,72 +216,115 @@ private fun FullScreen(
         bottomBar = {
 
             BottomBar(
-                totalPrice = totalCost.toString()
+                totalPrice = totalCost.toString(),
+                payClick = { if ((isAddressEnabled) && (isLogIn)) isDialogOpen = false else isDialogOpen = true },
+                dataLoaded = isDataLoaded
             )
 
         },
 
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+
         
     ) { innerPadding ->
 
-        Column(
+        Box(
 
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
 
         ) {
 
-            HorizontalDivider(
-                color = Color(0xB2EAB7B7),
-                thickness = 1.dp
-            )
+            Column(
 
-            val address = addressList.firstOrNull()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
 
-            address?.let {
+            ) {
 
-                Address(
+                HorizontalDivider(
+                    color = Color(0xB2EAB7B7),
+                    thickness = 1.dp
+                )
 
-                    name = it.name,
-                    number = it.number,
-                    city = it.city,
-                    district = it.district,
-                    address = it.address,
-                    addressCategory = it.addressCategory
+                val address = addressList.firstOrNull()
 
+                address?.let {
+
+                    Address(
+
+                        name = it.name,
+                        number = it.number,
+                        city = it.city,
+                        district = it.district,
+                        address = it.address,
+                        addressCategory = it.addressCategory,
+                        editClick = {
+
+                            IntentHelper.setDataIntent(context, Act_child_settings::class.java, "address", "AddressBook")
+
+                        }
+
+                    )
+
+                }
+
+                HorizontalDivider(
+                    color = Color.Transparent,
+                    thickness = 3.dp
+                )
+
+                val product = data.firstOrNull()
+
+                product?.let {
+
+                    ProductImage(
+                        rating = product.rating,
+                        title = product.title,
+                        brand = product.brand,
+                        price = product.price,
+                        thumbnailImage = product.thumbnail,
+                        imageList = product.images,
+                        productStock = product.stock,
+                        stockInfo = product.availabilityStatus,
+                        tCost = { totalCost = it },
+                        imageClick = {
+
+                            IntentHelper.setDataIntent(context, Act_product_image::class.java, "sku_", it.sku)
+
+                        }
+
+                    )
+
+                }
+
+            }//column
+
+            if (isDialogOpen){
+
+                Dialog(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                    isAddressEnabled = isAddressEnabled,
+                    isLogIn = isLogIn,
+                    cancelClick = { isDialogOpen = false },
+                    addressClick = {
+
+                        IntentHelper.setDataIntent(context, Act_child_settings::class.java, "address", "AddressBook")
+                        
+                    },
+                    loginClick = {
+
+
+                    }
                 )
 
             }
 
-
-            HorizontalDivider(
-                color = Color.Transparent,
-                thickness = 3.dp
-            )
-
-            val product = data.firstOrNull()
-
-            product?.let {
-
-                ProductImage(
-                    rating = product.rating,
-                    title = product.title,
-                    brand = product.brand,
-                    price = product.price,
-                    thumbnailImage = product.thumbnail,
-                    imageList = product.images,
-                    productStock = product.stock,
-                    stockInfo = product.availabilityStatus,
-                    tCost = { totalCost = it }
-
-                )
-
-            }
-
-        }//column
+        }//box
 
     }//scaffold
 
@@ -328,7 +397,7 @@ private fun Toolbar(backClick : () -> Unit = {}) {
 
 @Preview(showBackground = true)
 @Composable
-private fun BottomBar(totalPrice : String = "0.0", payClick : () -> Unit = {}) {
+private fun BottomBar(totalPrice : String = "0.0", payClick : () -> Unit = {}, dataLoaded : Boolean = false) {
 
     Box(
 
@@ -414,9 +483,14 @@ private fun BottomBar(totalPrice : String = "0.0", payClick : () -> Unit = {}) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(14.dp))
-                    .clickable {
+                    .clickable(
+
+                        enabled = dataLoaded
+
+                    ) {
                         payClick()
                     }
+                    .alpha(if (dataLoaded) 1f else 0.5f )
                     .background(color = Color(0xFFFC6131))
                     .padding(7.dp)
                     .align(Alignment.CenterVertically)
@@ -449,7 +523,7 @@ private fun BottomBar(totalPrice : String = "0.0", payClick : () -> Unit = {}) {
 @Composable
 private fun Address(
     name : String = "Rada krishna",
-    number : String = "00000000000",
+    number : String = "0",
     city : String = "Example",
     district : String = "Example",
     address : String = "Example",
@@ -626,7 +700,8 @@ private fun ProductImage(
     imageList : List<String> = emptyList(),
     productStock : Int = 0,
     stockInfo : String = "In Stock",
-    tCost : (Float) -> Unit = {}
+    tCost : (Float) -> Unit = {},
+    imageClick : () -> Unit = {}
 
 ) {
 
@@ -654,7 +729,10 @@ private fun ProductImage(
 
     Column(
 
-        modifier = Modifier.fillMaxWidth().background(color = Color.White).padding(5.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .padding(5.dp)
 
     ) {
 
@@ -719,13 +797,15 @@ private fun ProductImage(
                 .align(Alignment.Start)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         //main image and price
 
         Row(
 
-            modifier = Modifier.fillMaxWidth().align(Alignment.Start)
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
 
         ){
 
@@ -737,6 +817,7 @@ private fun ProductImage(
                     .height(75.dp)
                     .width(75.dp)
                     .clip(shape = RoundedCornerShape(13.dp))
+                    .clickable { imageClick() }
                     .align(Alignment.CenterVertically)
 
             ) {
@@ -924,11 +1005,10 @@ private fun ProductImage(
 
                         Box(
                             modifier = Modifier
-                                //.weight(1f)
                                 .width(100.dp)
                                 .height(100.dp)
                                 .clip(shape = RoundedCornerShape(14.dp))
-                                .clickable{
+                                .clickable {
 
                                     selectedIndex = globalIndex
 
@@ -1017,12 +1097,12 @@ private fun ProductImage(
                     modifier = Modifier
                         .wrapContentWidth()
                         .clip(shape = RoundedCornerShape(5.dp))
-                        .clickable( enabled = (productQuantity > 1)) {
+                        .clickable(enabled = (productQuantity > 1)) {
 
                             productQuantity -= 1
 
                         }
-                        .alpha( if (productQuantity == 1) 0.5f else 1f )
+                        .alpha(if (productQuantity == 1) 0.5f else 1f)
                         .background(color = Color(0xFFEEEEEE))
                         .padding(start = 12.dp, end = 12.dp)
                         .align(Alignment.CenterVertically)
@@ -1055,16 +1135,16 @@ private fun ProductImage(
                     modifier = Modifier
                         .wrapContentWidth()
                         .clip(shape = RoundedCornerShape(5.dp))
-                        .clickable (
+                        .clickable(
 
                             enabled = if (productStock == productQuantity) false else true
 
-                        ){
+                        ) {
 
                             productQuantity += 1
 
                         }
-                        .alpha( if (productStock == productQuantity) 0.5f else 1f )
+                        .alpha(if (productStock == productQuantity) 0.5f else 1f)
                         .background(color = Color(0xFFEEEEEE))
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.CenterVertically)
@@ -1308,7 +1388,9 @@ private fun ProductImage(
 
         Box(
 
-            modifier = Modifier.fillMaxWidth().align(Alignment.Start)
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
 
         ) {
 
@@ -1333,7 +1415,7 @@ private fun ProductImage(
                         color = if (isVoucherApplied) Color.Transparent else Color(0xFFFF5722),
                         shape = RoundedCornerShape(7.dp)
                     )
-                    .alpha( if (isVoucherApplied) 0f else 1f )
+                    .alpha(if (isVoucherApplied) 0f else 1f)
                     .padding(7.dp)
                     .align(Alignment.CenterEnd)
                     .imePadding()
@@ -1399,7 +1481,7 @@ private fun ProductImage(
                 modifier = Modifier
                     .wrapContentWidth()
                     .clip(shape = RoundedCornerShape(7.dp))
-                    .alpha( if(isVoucherApplied) 1f else 0f )
+                    .alpha(if (isVoucherApplied) 1f else 0f)
                     .background(color = Color(0xFFEAE8E8))
                     .padding(5.dp)
                     .align(Alignment.CenterEnd)
@@ -1417,5 +1499,138 @@ private fun ProductImage(
 
 
     }//column
+
+}//fun end
+
+
+@Preview(showBackground = true)
+@Composable
+private fun Dialog(
+    modifier: Modifier = Modifier,
+    isAddressEnabled : Boolean = false,
+    isLogIn : Boolean = false,
+    cancelClick : () -> Unit = {},
+    addressClick : () -> Unit = {},
+    loginClick : () -> Unit = {}
+
+) {
+
+    Box(
+
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+
+    ) {
+
+        Column(
+
+            modifier = Modifier
+                .width(260.dp)
+                //.fillMaxWidth()
+                .shadow(elevation = 10.dp, shape = RoundedCornerShape(12.dp))
+                .clip(shape = RoundedCornerShape(12.dp))
+                .background(color = Color.White)
+                .padding(15.dp)
+                .align(Alignment.Center)
+
+        ) {
+
+            //address
+            Row(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){ addressClick() }
+
+            ) {
+
+                Image( painter = if (isAddressEnabled) painterResource(R.drawable.ic_checked) else painterResource(R.drawable.ic_close_fill) ,
+                    contentDescription = "Address",
+                    //tint = if (isAddressEnabled) Color(0xFF8BC34A) else Color(0xFFF44336),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .size(17.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
+
+                Spacer(modifier = Modifier.width(7.dp))
+
+                Text( text = if (isAddressEnabled) "Address" else "Address required",
+                    fontSize = 17.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W500,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                    )
+
+            }//row
+            //address
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            //login
+            Row(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        indication = null,
+                        interactionSource = null
+                    ){ loginClick() }
+
+
+            ) {
+
+                Image( painter = if (isLogIn) painterResource(R.drawable.ic_checked) else painterResource(R.drawable.ic_close_fill),
+                    contentDescription = "Login",
+                    //tint = if (isLogIn) Color(0xFF8BC34A) else Color(0xFFF44336),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .size(17.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
+
+                Spacer(modifier = Modifier.width(7.dp))
+
+                Text( text = if (isLogIn) "Login" else "Login required",
+                    fontSize = 17.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W500,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically)
+                )
+
+            }//row
+            //login
+
+            Spacer(modifier = Modifier.height(17.dp))
+
+            Text("Cancel",
+                fontSize = 14.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black,
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .clickable{ cancelClick() }
+                    //.background(color = Color.Blue)
+                    .align(Alignment.End)
+                    .padding(8.dp)
+                )
+
+        }//column
+
+    }//box
 
 }//fun end
