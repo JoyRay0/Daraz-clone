@@ -1,5 +1,6 @@
 package com.rk_softwares.e_commerce.activity
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -318,6 +319,7 @@ private fun FullScreen(
                     },
                     loginClick = {
 
+                        IntentHelper.intent(context as Activity, Act_login::class.java)
 
                     }
                 )

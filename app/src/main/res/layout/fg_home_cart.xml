@@ -21,94 +21,73 @@
 
     </FrameLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_below="@id/fl_toolbar"
-
         >
 
+        <!-- empty cart -->
         <LinearLayout
+            android:id="@+id/ll_empty_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="gone"
             >
 
-            <!-- empty cart -->
-            <LinearLayout
-                android:id="@+id/ll_empty_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lottie"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    app:lottie_rawRes="@raw/cart"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="There are no items in this cart"
-                    android:textSize="13sp"
-                    android:gravity="center"
-                    android:textColor="#AB9A9A"
-                    android:textStyle="normal"
-                    android:fontFamily="@font/roboto"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_start_shopping"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="continue shopping"
-                    android:textColor="#FF5722"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:padding="7dp"
-                    android:elevation="5dp"
-                    android:background="@drawable/sh_cart_continue_shopping_btn"
-                    android:tooltipText="Continue your shopping"
-                    />
-
-            </LinearLayout>
-
-            <!-- fill cart -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cart_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="gone"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:lottie_rawRes="@raw/cart"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 />
 
-            <!-- suggestion product -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_suggestion_item"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:visibility="visible"
-                android:layout_marginTop="40dp"
-                app:spanCount="2"
+                android:text="There are no items in this cart"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:textColor="#AB9A9A"
+                android:textStyle="normal"
+                android:fontFamily="@font/roboto"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_start_shopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="continue shopping"
+                android:textColor="#FF5722"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="7dp"
+                android:elevation="5dp"
+                android:background="@drawable/sh_cart_continue_shopping_btn"
+                android:tooltipText="Continue your shopping"
                 />
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

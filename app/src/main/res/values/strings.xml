@@ -8,4 +8,5 @@
     <string name="title_activity_act_wishlist">Act_wishlist</string>
     <string name="title_activity_act_chat">Act_chat</string>
     <string name="title_activity_act_buy_now">Act_BuyNow</string>
+    <string name="title_activity_act_login">Act_login</string>
 </resources>
